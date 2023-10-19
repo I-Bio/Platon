@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование оценки{% endblock %}
+
+
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Редактирование оценки</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Тест - {{ result.test.name }}</h3>
+                </div>
+
+                <div class="card-body bg-gradient-dark">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-8 col-sm-12">
+                                <div class="card-header bg-success">
+                                    <h3 class="card-title">Новая оценка</h3>
+                                </div>
+                                <div class="card-body bg-dark">
+                                    <div class="row mb-1">
+                                        <div class="input-group">
+                                            <input type="number" class="form-control bg-dark" name="score" placeholder="Ввод" min="0" max="100" value="{{ result.get_score }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="card">
+                                    <div class="card-header bg-success">
+                                        <h3 class="card-title">Старая оценка</h3>
+                                    </div>
+                                    <div class="card-body bg-dark">
+                                        <div class="align-items-center">
+                                            <h3 class="text-center">{{ result.get_score }}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Отправить</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn bg-cyan col-12">Сохранить</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn bg-cyan col-12" name="saveAndReturn">Сохранить и вернуться к оценкам</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

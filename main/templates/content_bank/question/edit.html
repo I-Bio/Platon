@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование вопроса{% endblock %}
+
+
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Вопрос</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Основное</h3>
+                </div>
+
+                <div class="card-body bg-gradient-dark">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Название - ID</label>
+                                <input type="text" class="form-control bg-dark" name="question_name" placeholder="Введите название.." value="{{ form.question_name.value }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Вопрос</label>
+                                <textarea class="form-control bg-dark" rows="3" name="question" placeholder="Введите вопрос.." style="height: 150px;">{{ form.question.value }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Тип ответа</label>
+
+                                <select class="form-control bg-dark" id="questionType" name="question_type" onchange="updateAnswerOptions(); resetAnswerCheckbox();">
+                                    <option value="0">Одиночный выбор</option>
+                                    <option value="1" {% if form.instance.multiple_answers %}selected="selected"{% endif %}>Множественный выбор</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Варианты ответов</h3>
+                        </div>
+
+                        <div class="card-body">
+                            
+                            <div class="cont-quest">
+                                {% if form.instance.pk %}
+                                    {% for option in form.instance.options.all %}
+
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox pl-0">
+                                            <textarea class="custom-select bg-dark col-lg-5 col-sm-8 col-8" name="option_text[]" rows="3" placeholder="Ввод" style="height: 70px;">{{ option.option_name }}</textarea>
+
+                                            <button type="button" class="btn btn-danger float-right" name="delThisFieldButton" onclick="deleteAnswer(this);">Удалить</button>
+
+                                            <input class="custom-control-input float-right" name="selectCheckbox" id="selectCheckbox0" type="checkbox" oninput="updateSelectAllButton();"/>
+                                            <label class="custom-control-label float-right" for="selectCheckbox0"></label>
+
+                                            <div class="custom-control">
+                                                <input class="custom-control-input" name="answerCheckbox" type="checkbox" id="answerCheckbox0" {% if option.is_answer %}checked{% endif %}>
+                                                <label for="answerCheckbox0" class="custom-control-label">Ответ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="text-red" id="warning">
+
+                                </div>
+                            </div>
+
+                            <div class="row small-box">
+                                <button type="button" class="btn bg-cyan float-left mx-2" id="addQuestionButton">Добавить</button>
+
+                                <button type="button" class="btn bg-cyan float-right mx-2" id="deleteSelectedButton">Удалить выбранное</button>
+                                <button type="button" class="btn bg-cyan float-right mx-2" id="selectAllButton">Выбрать всё</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Отправить</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn bg-cyan col-12" name="save" id="submitButton">Сохранить</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn bg-cyan col-12" name="saveAndReturn" id="submitButton">Сохранить и вернуться к списку</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {% load static %}
+
+        <script src="{% static 'content_bank/quest_creation.js' %}"></script>
+    </div>
+</section>
+
+<template id="answerOptionTemplate">
+    <div class="form-group">
+        <div class="custom-control custom-checkbox pl-0">
+            <textarea class="custom-select bg-dark col-lg-5 col-sm-8 col-8" name="option_text[]" rows="3" placeholder="Ввод" style="height: 70px;"></textarea>
+            
+            <button type="button" class="btn btn-danger float-right" name="delThisFieldButton" onclick="deleteAnswer(this);">Удалить</button>
+            
+            <input class="custom-control-input float-right" name="selectCheckbox" id="selectCheckbox0" type="checkbox" oninput="updateSelectAllButton();"/>
+            <label class="custom-control-label float-right" for="selectCheckbox0"></label>
+            
+            <div class="custom-control">
+                <input class="custom-control-input" name="answerCheckbox" type="checkbox" id="answerCheckbox0">
+                <label for="answerCheckbox0" class="custom-control-label">Ответ</label>
+            </div>
+        </div>
+    </div>
+</template>
+
+{% endblock %}

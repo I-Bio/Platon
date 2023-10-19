@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{% if form.instance.pk %}Редактирование{% else %}Создание{% endif %} файла{% endblock %}
+
+
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">{% if form.instance.pk %}Редактирование{% else %}Создание{% endif %} файла</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+
+    <div class="container-fluid">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Файл</h3>
+                </div>
+                <div class="card-body bg-gradient-dark">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button type="button" class="btn bg-success">
+                                            <label class="m-0 p-0" for="file">Добавить файл</label>
+                                        </button>
+                                    </div>
+                                    <input type="file" name="file" class="custom-file-input form-control" style="display: none" id="file" required>
+                                    <input type="text" id="filename" class="form-control bg-dark" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Название</label>
+                                <input type="text" id="name" name="name" class="form-control bg-dark" placeholder="Ввод" value="{{form.name.value}}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Отправить</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row small-box">
+                                <button type="submit" class="btn bg-cyan col-12" id="submitButton" name="saveAndReturn">Сохранить файл</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% load static %}
+        <script src="{% static 'content_bank/fileForm.js' %}"></script>
+    </div>
+</section>
+{% endblock %}

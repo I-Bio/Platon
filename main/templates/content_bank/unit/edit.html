@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование вопроса{% endblock %}
+
+
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Создание темы</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Основное</h3>
+                </div>
+
+                <div class="card-body bg-gradient-dark">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Название</label>
+                                <input type="text" class="form-control bg-dark" id="ID" name="name" placeholder="Ввод" value="{{form.name.value}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label>Предмет</label>
+                                <select class="form-control bg-dark" id="typeQuest" name="subject">
+                                    {% for value, name in form.fields.subject.choices %}
+                                        <option value="{{ value }}" {% if form.subject.value == value %}selected{% endif %}>{{ name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Отправить</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row small-box">
+                                <button type="submit" class="btn bg-cyan col-12" id="submitButton">Сохранить Тему</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {% load static %}
+        <script src="{% static 'content_bank/themeForm.js' %}"></script>
+    </div>
+
+</section>
+
+{% endblock %}
