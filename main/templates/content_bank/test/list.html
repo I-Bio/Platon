@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Список вопросов{% endblock %}
+
+
+{% block content %}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Список тестов</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+
+    <div class="container-fluid">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Поиск тестов</h3>
+                    <div class="col-8 flex-row float-right">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-dark">
+                                                        <i class="fas fa-search"></i>
+                                                    </span>
+                            </div>
+                            <input type="text" id="searchField" class="form-control p-0 h-auto bg-dark">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body bg-gradient-dark">
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="submit" class="btn bg-cyan" name="create" value="Создать вопрос">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12" id="AllQuestions">
+                            <div class="small-box bg-dark">
+                                <ul class="p-0" id="BankList">
+                                    {% for el in test %}
+
+                                    <li class="list-group mb-1">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <a type="button" class="btn bg-cyan" href="{% url 'test_edit' el.pk %}">Редактировать</a>
+                                            </div>
+                                            <p class="form-control bg-dark">{{ el.question_name }}</p>
+                                            <div class="input-group-append">
+                                                <button type="button" name="delButton" class="btn bg-danger" data-toggle="modal" data-target="#modal" id="{{ el.pk }}">Удалить</button>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+        <div class="modal fade" id="modal">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Подтверждение</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modalText"></p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <button type="button" id="RemoveButton" data-dismiss="modal" class="btn btn-danger">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% load static %}
+        <script defer src="{% static 'content_bank/base_catalog.js' %}"></script>
+    </div>
+</section>
+{% endblock %}
