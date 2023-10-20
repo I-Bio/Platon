@@ -11,7 +11,7 @@ def score_to_grade(score):
         return 3
     return 2
 
-### Auth models
+
 
 class StudentGroup(models.Model):
     name = models.CharField(max_length=50)
@@ -19,9 +19,10 @@ class StudentGroup(models.Model):
     def __str__(self):
         return self.name
 
+
 class User(AbstractUser):
-    
-    study_group = models.ForeignKey(StudentGroup, on_delete=models.CASCADE, null=True)
+    studyGroup = models.ForeignKey(StudentGroup, on_delete=models.CASCADE, null=True)
+    # userGroup = models.ForeignKey(UserGroup, on_delete=models.CASCADE, default=UserGroup.objects.get_or_create(name='Free'))
 
     def update_grades_for_outdated_tasks(self):
         outdated_tests = Test.objects.filter(end_date__lt = timezone.now()).exclude(pk__in = self.testresult_set.all().values('test'))
@@ -41,7 +42,6 @@ class User(AbstractUser):
 
         return ret
 
-### Question models
 
 class QuestionOption(models.Model):
     option_name = models.CharField(max_length=512)
@@ -49,6 +49,7 @@ class QuestionOption(models.Model):
 
     def __str__(self):
         return self.option_name
+
 
 class Question(models.Model):
     question_name = models.CharField(max_length=128, default="")
@@ -70,6 +71,7 @@ class Papa(models.Model):
 
     def __str__(self):
         return self.papa
+
 ### Subject
 
 class Subject(models.Model):
