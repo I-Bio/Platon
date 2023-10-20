@@ -1,5 +1,4 @@
-from Scripts.bottle import redirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from main.models import StudentGroup, User
