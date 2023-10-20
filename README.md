@@ -2,8 +2,12 @@
 Web-приложение
 ПРОЧТИ!!!
 
-Ниже приведённые 3 команды необходимы для инсталяция зависимостей проекта
+Ниже приведённые 4 команды необходимы для инсталяция зависимостей проекта
 
-virtualenv .venv
-.venv/Scripts/activate
-pip install -r requirements.txt
+1) pip install --user virtualenv     (Сработает только если вы не в виртуальном окружении)
+
+2) virtualenv .venv
+
+3) .venv/Scripts/activate          (если тупо в терминали прописать deactivate, когда виртуалка включена, то вы выйдете из неё)
+
+4) pip install -r requirements.txt       
