@@ -1,5 +1,4 @@
 from django.urls import path
-from . import views_auth
 from main.views.student.tests.testResultDisplay import TestResultDisplay
 from main.views.student.tests.testStudentTesting import TestStudentTesting
 from main.views.tutor.unit.elements.unitLectureEdit import UnitLectureEdit
@@ -8,6 +7,8 @@ from main.views.tutor.unit.elements.unitTaskEdit import UnitTaskEdit
 from main.views.tutor.unit.elements.unitTestEdit import UnitTestEdit
 from main.views.tutor.unit.elements.unitTestCreate import UnitTestCreate
 from main.views.general.index import Index
+from .views.authenticate.login import Login
+from .views.authenticate.registration import Registration
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
 from .views.tutor.student.grades.studentGrades import StudentGrades
@@ -28,8 +29,8 @@ from .views.tutor.unit.unitEdit import UnitEdit
 from main.views.general.unitContent import UnitContent
 
 urlpatterns = [
-    path('login/', views_auth.login_view, name="login"),
-    path('registration/', views_auth.register, name="registration"),
+    path('login/', Login.as_view(), name="login"),
+    path('registration/', Registration.as_view(), name="registration"),
 
     path('', Index.as_view(), name="index"),
 
