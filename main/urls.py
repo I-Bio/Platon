@@ -7,6 +7,9 @@ from main.views.tutor.unit.elements.unitTaskEdit import UnitTaskEdit
 from main.views.tutor.unit.elements.unitTestEdit import UnitTestEdit
 from main.views.tutor.unit.elements.unitTestCreate import UnitTestCreate
 from main.views.general.index import Index
+from .views.admin.DoneView import DoneView
+from .views.admin.AddGroupUser import AddGroupUser
+
 from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
@@ -69,4 +72,8 @@ urlpatterns = [
 
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
+
+    path('add_group_user/', AddGroupUser.as_view(), name='add_group_user'),
+    path('done/', DoneView.as_view(), name='done'),
+
 ]
