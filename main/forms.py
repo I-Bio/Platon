@@ -6,6 +6,7 @@ from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
 from .models import StudentGroup, TeacherGroup, AdminGroup
+from django.contrib.auth.models import Group, Permission
 
 
 ### Auth forms
@@ -138,7 +139,7 @@ class TaskForm(forms.ModelForm):
         fields = ['name', 'description', 'start_date', 'end_date']
 
 
-class AddGroupUser(forms.Form):
+class AddGroupUserForm(forms.Form):
     student = 'Student'
     teacher = 'Teacher'
     admin = 'Admin'
@@ -152,7 +153,7 @@ class AddGroupUser(forms.Form):
     user_type = forms.ChoiceField(choices=user_choices)
     name = forms.CharField(max_length=50)
 
-    modelMapping = {
+    model_mapping = {
         student: StudentGroup,
         teacher: TeacherGroup,
         admin: AdminGroup,
@@ -163,6 +164,10 @@ class AddGroupUser(forms.Form):
         name = self.cleaned_data['name']
         key = ...
 
-        model_class = self.modelMapping.get(user_type)
+        model_class = self.model_mapping.get(user_type)
         if model_class:
             model_class.objects.create(name=name)
+
+            group = Group.objects.create(name=name)
+            permissions = Permission.objects.none()
+            group.permissions.set(permissions)
