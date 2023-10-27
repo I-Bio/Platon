@@ -10,6 +10,7 @@ from main.views.general.index import Index
 from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
+from .views.student.task.assignStudentVerification import AssignStudent
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
 from .views.tutor.student.grades.studentGrades import StudentGrades
 from .views.tutor.student.groupsList import GroupsList
@@ -69,4 +70,6 @@ urlpatterns = [
 
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
+
+    path('assign_for_review/', AssignStudent.as_view())
 ]

@@ -170,3 +170,6 @@ class Unit(models.Model):
 
 ### Test model
 
+class TeacherAssign(User):
+    group = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
+

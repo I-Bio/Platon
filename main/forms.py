@@ -5,6 +5,8 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
+from .models import TeacherAssign
+
 
 ### Auth forms
 
@@ -126,3 +128,6 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = models.Task
         fields = ['name', 'description', 'start_date', 'end_date']
+
+class StudentSelectForm(forms.Form):
+    student = forms.ModelChoiceField(queryset=TeacherAssign.objects.all(), empty_label="Выберите студента")
