@@ -8,7 +8,7 @@ from main.models import Unit, TestResult, Test
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: not u.is_staff, login_url='/index/', redirect_field_name=None)
-class TestStudentTesting(View, StudentGroupRequiredMixin):
+class TestStudentTesting(StudentGroupRequiredMixin, View):
     def get(self, request, unit_id, test_id):
         unit = Unit.objects.filter(pk=unit_id)
 

@@ -6,7 +6,7 @@ from main.models import Unit, Test, TestResult
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
-class TestResultDisplay(View, StudentGroupRequiredMixin):
+class TestResultDisplay(StudentGroupRequiredMixin, View):
     def get(self, request, unit_id, test_id):
         unit = Unit.objects.filter(pk=unit_id)
 
