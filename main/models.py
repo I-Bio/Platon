@@ -22,7 +22,7 @@ class StudentGroup(models.Model):
         return self.name
 
 
-class TeacherGroup(models.Model):
+class TutorGroup(models.Model):
     name = models.CharField(max_length=50)
     key = models.IntegerField(null=True, blank=True)
 

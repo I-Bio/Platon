@@ -1,9 +1,12 @@
 from django.shortcuts import redirect, render
 from django.views import View
+
+from main.mixins.studentGroupRequired import StudentGroupRequiredMixin
 from main.models import Unit, Test, TestResult
 
+
 # @login_required(login_url='/login/', redirect_field_name=None)
-class TestResultDisplay(View):
+class TestResultDisplay(View, StudentGroupRequiredMixin):
     def get(self, request, unit_id, test_id):
         unit = Unit.objects.filter(pk=unit_id)
 

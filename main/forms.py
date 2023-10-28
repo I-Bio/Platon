@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import StudentGroup, TeacherGroup, AdminGroup
+from .models import StudentGroup, TutorGroup, AdminGroup
 from django.contrib.auth.models import Group, Permission
 
 
@@ -141,12 +141,12 @@ class TaskForm(forms.ModelForm):
 
 class AddGroupUserForm(forms.Form):
     student = 'Student'
-    teacher = 'Teacher'
+    tutor = 'Teacher'
     admin = 'Admin'
 
     user_choices = [
         (student, 'Студент'),
-        (teacher, 'Преподаватель'),
+        (tutor, 'Преподаватель'),
         (admin, 'Администратор'),
     ]
 
@@ -155,7 +155,7 @@ class AddGroupUserForm(forms.Form):
 
     model_mapping = {
         student: StudentGroup,
-        teacher: TeacherGroup,
+        tutor: TutorGroup,
         admin: AdminGroup,
     }
 

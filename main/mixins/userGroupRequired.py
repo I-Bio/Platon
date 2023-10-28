@@ -5,11 +5,11 @@ from django.http import HttpResponse
 class UserGroupRequiredMixin(AccessMixin):
     login_url = '/'
     redirect_field_name = None
-    userGroup = None   # Переопределять либо как "группа", либо как список ["группа1", "группа2"]
+    userGroup = None  # Переопределять либо как "группа", либо как список ["группа1", "группа2"]
 
     def hasExistGroup(self):
-        resultString = self.request.user.groups.filter(name = self.userGroup).exists()
-        resultList = self.request.user.groups.filter(name__in = self.userGroup).exists()
+        resultString = self.request.user.groups.filter(name=self.userGroup).exists()
+        resultList = self.request.user.groups.filter(name__in=self.userGroup).exists()
         result = resultString or resultList
         return result
 
