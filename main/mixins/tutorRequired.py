@@ -4,4 +4,4 @@ from main.models import TutorGroup
 
 class TutorRequiredMixin(UserGroupRequiredMixin):
     login_url = '/login'
-    userGroup = TutorGroup.objects.all()
+    userGroup = list(TutorGroup.objects.all())

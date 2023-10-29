@@ -4,4 +4,4 @@ from main.models import StudentGroup
 
 class StudentGroupRequiredMixin(UserGroupRequiredMixin):
     login_url = '/login'
-    userGroup = StudentGroup.objects.all()
+    userGroup = list(StudentGroup.objects.all())
