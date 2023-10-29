@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import TeacherAssign
+from .models import StudentGroup, User
 
 
 ### Auth forms
@@ -130,4 +130,11 @@ class TaskForm(forms.ModelForm):
         fields = ['name', 'description', 'start_date', 'end_date']
 
 class StudentSelectForm(forms.Form):
-    student = forms.ModelChoiceField(queryset=TeacherAssign.objects.all(), empty_label="Выберите студента")
+    group = forms.ModelChoiceField(queryset=StudentGroup.objects.all(), empty_label="Выберите группу", label="Группа студента")
+    student = forms.ModelChoiceField(queryset=User.objects.all(), empty_label="Выберите студента", label="Студент")
+
+class UserTaskForm(forms.ModelForm):
+    class Meta:
+        model = models.UserTask
+        fileds = ['grade']
+        exclude = ['name_task', 'user_id', 'last_name', 'first_name', 'group_id', 'main_task_id', 'time_delivery']

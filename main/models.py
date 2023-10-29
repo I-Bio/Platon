@@ -173,3 +173,16 @@ class Unit(models.Model):
 class TeacherAssign(User):
     group = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
 
+class UserTask(models.Model):
+    name_task = models.CharField(max_length=256)
+    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
+    last_name = models.CharField(max_length=256, null=True)
+    first_name = models.CharField(max_length=256, null=True)
+    group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
+    main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
+    grade = models.IntegerField(null=True)
+    time_delivery = models.DateTimeField(null=True)
+
+class GroupCheck(models.Model):
+    usser_id = models.IntegerField(null=True)
+    group_check = models.IntegerField(null=True)

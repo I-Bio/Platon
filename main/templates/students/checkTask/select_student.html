@@ -1,5 +1,6 @@
-<form method="post">
+<form action="{% url 'assign_for_review' %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="Выбрать студента">
+  <input type="submit" name="action" value="add" />
+  <input type="submit" name="action" value="delite" />
 </form>

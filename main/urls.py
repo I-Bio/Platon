@@ -11,6 +11,7 @@ from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
+from .views.student.task.showAndEstimateGrade import GradeTask
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
 from .views.tutor.student.grades.studentGrades import StudentGrades
 from .views.tutor.student.groupsList import GroupsList
@@ -71,5 +72,7 @@ urlpatterns = [
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
 
-    path('assign_for_review/', AssignStudent.as_view())
+    path('assign_for_review/', AssignStudent.as_view(), name='assign_for_review'),
+    path('grade/<int:user_id>/<int:main_task_id>/<int:who_check>', GradeTask.as_view(), name='grade_group'),
+
 ]
