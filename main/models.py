@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
@@ -170,9 +171,6 @@ class Unit(models.Model):
 
 ### Test model
 
-class TeacherAssign(User):
-    group = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
-
 class UserTask(models.Model):
     name_task = models.CharField(max_length=256)
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
@@ -183,6 +181,13 @@ class UserTask(models.Model):
     grade = models.IntegerField(null=True)
     time_delivery = models.DateTimeField(null=True)
 
+    def __str__(self):
+        return self.name_task
+
 class GroupCheck(models.Model):
     usser_id = models.IntegerField(null=True)
     group_check = models.IntegerField(null=True)
+    main_task_id = models.IntegerField(null=True)
+
+    user_check_id = models.JSONField(default=list, blank=True, null=True)
+

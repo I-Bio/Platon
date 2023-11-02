@@ -72,7 +72,7 @@ urlpatterns = [
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
 
-    path('assign_for_review/', AssignStudent.as_view(), name='assign_for_review'),
+    path('assign_for_review/<int:group_id>/<int:main_task_id>/', AssignStudent.as_view(), name='select_students'),
     path('grade/<int:user_id>/<int:main_task_id>/<int:who_check>', GradeTask.as_view(), name='grade_group'),
 
 ]

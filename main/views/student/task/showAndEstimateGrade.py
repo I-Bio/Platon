@@ -15,18 +15,19 @@ class GradeTask(View):
 
         info_group_id = StudentGroup.objects.filter(name=task_info[0].group_id)
 
-        # print(info_group_check[0].group_check, info_group_id[0].id)
+        print("JIB<RF")
+        group_check_info = GroupCheck.objects.filter(usser_id=who_check, main_task_id=main_task_id)
 
-        try:
-            flag = False
-            if info_group_check[0].group_check == info_group_id[0].id:
-                for user_check in info_group_check:
-                    if user_check.usser_id == who_check:
-                        flag = True
-        except:
-            return HttpResponse('У вас нет доступа или нет такого задания')
-        if flag == False:
-            return HttpResponse('У вас нет доступа')
+        flag = False
+        if group_check_info[0]:
+            for list_user in group_check_info[0].user_check_id:
+                if list_user == user_id:
+                    flag = True
+        else:
+            return HttpResponse('Вас не назначили на проверку этого задания этой группы')
+
+        if flag != True:
+            return HttpResponse('Вас не назначили проверять этого человека')
 
         context = {
             'form' : form,
@@ -51,7 +52,7 @@ class GradeTask(View):
                 user_task.grade = selected_grade
                 user_task.save()
 
-                return redirect('grade_group', user_id=user_id, main_task_id=main_task_id, who_check=who_check )
+                return redirect('select_student.html', user_id=user_id, main_task_id=main_task_id, who_check=who_check )
         else:
             form = UserTask()
         return render(request, 'students/checkTask/grade_group.html', {'form': form})

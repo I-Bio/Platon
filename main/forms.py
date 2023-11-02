@@ -129,9 +129,7 @@ class TaskForm(forms.ModelForm):
         model = models.Task
         fields = ['name', 'description', 'start_date', 'end_date']
 
-class StudentSelectForm(forms.Form):
-    group = forms.ModelChoiceField(queryset=StudentGroup.objects.all(), empty_label="Выберите группу", label="Группа студента")
-    student = forms.ModelChoiceField(queryset=User.objects.all(), empty_label="Выберите студента", label="Студент")
+
 
 class UserTaskForm(forms.ModelForm):
     class Meta:
