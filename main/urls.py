@@ -1,3 +1,5 @@
+import uuid
+
 from django.urls import path
 from main.views.student.tests.testResultDisplay import TestResultDisplay
 from main.views.student.tests.testStudentTesting import TestStudentTesting
@@ -33,7 +35,7 @@ from main.views.general.unitContent import UnitContent
 
 urlpatterns = [
     path('login/', Login.as_view(), name="login"),
-    path('registration/', Registration.as_view(), name="registration"),
+    path('registration/<str:key>', Registration.as_view(), name="registration"),
 
     path('', Index.as_view(), name="index"),
 

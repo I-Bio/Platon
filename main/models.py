@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
@@ -15,27 +17,33 @@ def score_to_grade(score):
 
 
 class StudentGroup(models.Model):
-    name = models.CharField(max_length=50)
-    key = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class TutorGroup(models.Model):
-    name = models.CharField(max_length=50)
-    key = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class AdminGroup(models.Model):
-    name = models.CharField(max_length=50)
-    key = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
+
+
+class RegistrationLinks(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    group_name = models.CharField(max_length=50)
+    end_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.group_name
 
 
 class User(AbstractUser):
