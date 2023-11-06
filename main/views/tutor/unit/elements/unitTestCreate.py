@@ -2,13 +2,14 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from main.forms import TestForm
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit, Question
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 
-class UnitTestCreate(View):
+class UnitTestCreate(TutorRequiredMixin, View):
     def get(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
 

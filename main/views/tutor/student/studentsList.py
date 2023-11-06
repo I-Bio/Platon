@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from main.mixins.userGroupRequired import UserGroupRequiredMixin
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import StudentGroup, User
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
-class StudentsList(UserGroupRequiredMixin, View):
+class StudentsList(TutorRequiredMixin, View):
     def get(self, request, group_pk):
         group = StudentGroup.objects.filter(pk=group_pk)
 
