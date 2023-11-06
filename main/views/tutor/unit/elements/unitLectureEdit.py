@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from main.forms import TestForm, LectureForm
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit, Question, Lecture
 
 
@@ -10,7 +11,7 @@ from main.models import Unit, Question, Lecture
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 # def unit_lecture_edit_view(request: HttpRequest, unit_id, lecture_id):
 
-class UnitLectureEdit(LoginRequiredMixin, View):
+class UnitLectureEdit(LoginRequiredMixin, TutorRequiredMixin, View):
     def get(self, request, unit_id, lecture_id):
         unit = Unit.objects.filter(pk=unit_id)
 

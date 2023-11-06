@@ -1,3 +1,5 @@
+import uuid
+
 from django.urls import path
 from main.views.student.tests.testResultDisplay import TestResultDisplay
 from main.views.student.tests.testStudentTesting import TestStudentTesting
@@ -7,6 +9,9 @@ from main.views.tutor.unit.elements.unitTaskEdit import UnitTaskEdit
 from main.views.tutor.unit.elements.unitTestEdit import UnitTestEdit
 from main.views.tutor.unit.elements.unitTestCreate import UnitTestCreate
 from main.views.general.index import Index
+from .views.admin.DoneView import DoneView
+from .views.admin.AddGroupUserView import AddGroupUserView
+
 from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
@@ -32,7 +37,7 @@ from main.views.general.unitContent import UnitContent
 
 urlpatterns = [
     path('login/', Login.as_view(), name="login"),
-    path('registration/', Registration.as_view(), name="registration"),
+    path('registration/<str:key>', Registration.as_view(), name="registration"),
 
     path('', Index.as_view(), name="index"),
 
@@ -71,8 +76,12 @@ urlpatterns = [
 
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
-
+  
     path('assign_for_review/<int:group_id>/<int:main_task_id>/', AssignStudent.as_view(), name='select_students'),
     path('grade/<int:user_id>/<int:main_task_id>/<int:who_check>', GradeTask.as_view(), name='grade_group'),
+  
+    path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
+    path('done/', DoneView.as_view(), name='done'),
+
 
 ]
