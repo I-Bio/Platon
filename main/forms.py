@@ -5,8 +5,9 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import StudentGroup, TutorGroup, AdminGroup
+from .models import StudentGroup, TutorGroup, AdminGroup, User
 from django.contrib.auth.models import Group, Permission
+
 
 
 ### Auth forms
@@ -138,7 +139,14 @@ class TaskForm(forms.ModelForm):
         model = models.Task
         fields = ['name', 'description', 'start_date', 'end_date']
 
+        
+class UserTaskForm(forms.ModelForm):
+    class Meta:
+        model = models.UserTask
+        fileds = ['grade']
+        exclude = ['name_task', 'user_id', 'last_name', 'first_name', 'group_id', 'main_task_id', 'time_delivery']
 
+        
 class AddGroupUserForm(forms.Form):
     student = 'Student'
     tutor = 'Teacher'

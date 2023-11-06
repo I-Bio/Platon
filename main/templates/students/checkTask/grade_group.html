@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Оценки группы</title>
+</head>
+<body>
+
+    <h1>Задание: "{{task_name}}"     студента {{ task_info.last_name }} {{ task_info.first_name }}  </h1>
+    <h2>Тут должен быить файл </h2>
+    <form action="{% url 'grade_group' user_id=user_id main_task_id=main_task_id who_check=who_check %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Оценить" />
+    </form>
+
+</body>
+</html>

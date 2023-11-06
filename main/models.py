@@ -1,7 +1,7 @@
 import uuid
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 
 
@@ -195,4 +195,24 @@ class Unit(models.Model):
     def __str__(self):
         return self.name
 
-### Test model
+
+class UserTask(models.Model):
+    name_task = models.CharField(max_length=256)
+    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
+    last_name = models.CharField(max_length=256, null=True)
+    first_name = models.CharField(max_length=256, null=True)
+    group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
+    main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
+    grade = models.IntegerField(null=True)
+    time_delivery = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.name_task
+
+class GroupCheck(models.Model):
+    usser_id = models.IntegerField(null=True)
+    group_check = models.IntegerField(null=True)
+    main_task_id = models.IntegerField(null=True)
+
+    user_check_id = models.JSONField(default=list, blank=True, null=True)      
+     

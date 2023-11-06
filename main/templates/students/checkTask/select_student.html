@@ -1,0 +1,42 @@
+<form action="{% url 'select_students' group_id=group_id main_task_id=main_task_id %}" method="post">
+
+<h1>Проверка задания: {{ task.name }} группы {{ group.name }}</h1>
+
+<h2>выбрать студентов для проверки</h2>
+{% if students %}
+<ul>
+    {% for student in students %}
+        <li>
+            <label>
+                <input type="checkbox" name="student" value="{{ student.id }}">
+                {{ student.last_name }} {{ student.first_name }}
+            </label>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Студенты не найдены для выбранной группы.</p>
+{% endif %}
+
+<h2>выбрать студентов для проверки работ других студентов</h2>
+{% if students %}
+<ul>
+    {% for student in students %}
+        <li>
+            <label>
+                <input type="checkbox" name="student_check" value="{{ student.id }}">
+                {{ student.last_name }} {{ student.first_name }} {{ student.id }}
+            </label>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Студенты не найдены для выбранной группы.</p>
+{% endif %}
+
+
+
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Назначить студентов">
+</form>
