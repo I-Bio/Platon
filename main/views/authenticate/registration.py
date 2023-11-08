@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.contrib.auth import login
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.core.exceptions import PermissionDenied
 
 from main.forms import RegistrationForm
 from main.models import StudentGroup, User, RegistrationLinks
@@ -17,11 +18,11 @@ class Registration(View):
             key_uuid = uuid.UUID(key)
             registration_link = RegistrationLinks.objects.get(id=key_uuid)
         except (ValueError, RegistrationLinks.DoesNotExist):
-            return HttpResponse(status=404)
+            raise Http404
 
         if registration_link.end_date < timezone.now():
             registration_link.delete()
-            return HttpResponse(status=403)
+            raise PermissionDenied()
 
         return render(request, "auth/registration.html", {'form': RegistrationForm()})
 
