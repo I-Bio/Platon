@@ -206,6 +206,8 @@ class UserTask(models.Model):
     grade = models.IntegerField(null=True)
     time_delivery = models.DateTimeField(null=True)
 
+
+
     def __str__(self):
         return self.name_task
 

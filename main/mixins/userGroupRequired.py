@@ -19,7 +19,12 @@ class UserGroupRequiredMixin(AccessMixin):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
+        if request.user.is_staff:
+             perms = True
+
         if not perms:
             return HttpResponse(status=403)
+
+
 
         return super().dispatch(request, *args, **kwargs)
