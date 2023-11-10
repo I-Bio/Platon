@@ -139,27 +139,29 @@ class TaskForm(forms.ModelForm):
         model = models.Task
         fields = ['name', 'description', 'start_date', 'end_date']
 
-        
+
 class UserTaskForm(forms.ModelForm):
     class Meta:
         model = models.UserTask
         fileds = ['grade']
         exclude = ['name_task', 'user_id', 'last_name', 'first_name', 'group_id', 'main_task_id', 'time_delivery']
 
-        
+
 class AddGroupUserForm(forms.Form):
     student = 'Student'
     tutor = 'Teacher'
     admin = 'Admin'
+    none = 'None'
 
     user_choices = [
-        (student, 'Студент'),
-        (tutor, 'Преподаватель'),
-        (admin, 'Администратор'),
+        (none, '---'),
+        (student, 'Студенты'),
+        (tutor, 'Преподаватели'),
+        (admin, 'Администрация'),
     ]
-
-    user_type = forms.ChoiceField(choices=user_choices)
     name = forms.CharField(max_length=50)
+    user_type = forms.ChoiceField(choices=user_choices)
+
 
     model_mapping = {
         student: StudentGroup,
@@ -170,7 +172,6 @@ class AddGroupUserForm(forms.Form):
     def save(self):
         user_type = self.cleaned_data['user_type']
         name = self.cleaned_data['name']
-        key = ...
 
         model_class = self.model_mapping.get(user_type)
         if model_class:
