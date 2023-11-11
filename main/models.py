@@ -104,6 +104,7 @@ class Papa(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=256, default="")
+    creator = models.IntegerField();
 
     def __str__(self):
         return self.name
@@ -168,6 +169,12 @@ class TestResult(models.Model):
         return score_to_grade(self.get_score())
 
 
+class StudentFile(models.Model):
+    creator = models.IntegerField()
+    task_id = models.IntegerField()
+    file = models.FileField(upload_to="student_files/")
+
+
 class Task(models.Model):
     name = models.CharField(max_length=256, default="")
     description = models.TextField(default="")
@@ -205,6 +212,7 @@ class UserTask(models.Model):
     main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
     grade = models.IntegerField(null=True)
     time_delivery = models.DateTimeField(null=True)
+
 
     def __str__(self):
         return self.name_task

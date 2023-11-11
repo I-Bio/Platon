@@ -17,6 +17,7 @@ from .views.authenticate.registration import Registration
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
+from .views.student.task.taskUpload import TaskUpload
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
 from .views.tutor.student.grades.studentGrades import StudentGrades
 from .views.tutor.student.groupsList import GroupsList
@@ -83,5 +84,5 @@ urlpatterns = [
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
     path('done/', DoneView.as_view(), name='done'),
 
-
+    path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload')
 ]
