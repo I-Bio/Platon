@@ -1,17 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Group User</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
+{% extends "base.html" %}
 
-    {{form.as_p}}
+{% load static %}
+{% block content %}
 
-    <button type="submit">Submit</button>
-</form>
 
-</body>
-</html>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Создание группы</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Основное</h3>
+                </div>
+
+                <div class="card-body bg-gradient-dark">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Название</label>
+                                <input type="text" class="form-control bg-dark" id="ID" name="name"
+                                       placeholder="Ввод" value="{{form.name.value|default_if_none:''}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label>Группы</label>
+                                <select class="form-control bg-dark" id="typeQuest" name="user_type">
+                                    {% for value, label in form.user_type.field.choices %}
+                                    <option value="{{value}}" {% if value == form.user_type.value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Отправить</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row small-box">
+                                <button type="submit" class="btn bg-cyan col-12" id="" name="saveButton" >Сохранить</button>
+                            </div>
+                            <div class="row small-box">
+                                <button type="submit" class="btn bg-cyan col-12" id="submitButton" name="continueButton">Сохранить и продолжить</button>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    <script defer src="{% static 'content_bank/themeForm.js' %}"></script>
+    </div>
+
+</section>
+
+{% endblock %}
