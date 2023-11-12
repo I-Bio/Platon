@@ -78,14 +78,14 @@ urlpatterns = [
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
   
-    path('assign_for_review/<int:group_id>/<int:main_task_id>/', AssignStudent.as_view(), name='select_students'),
     path('grade/<int:user_id>/<int:main_task_id>/<int:who_check>', GradeTask.as_view(), name='grade_group'),
-  
+
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
     path('done/', DoneView.as_view(), name='done'),
 
-    # path('completed_and_notcompleted_work', StudentsWorkList.as_view(), name='completed_and_notcompleted_work')
+    path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(), name='completed_and_notcompleted_work'),
 
-    path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(), name='completed_and_notcompleted_work')
+    path('assign_for_review/<int:user_id>/<int:main_task_id>/<int:group_id>', AssignStudent.as_view(), name='select_students'),
+
 
 ]

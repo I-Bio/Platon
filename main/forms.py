@@ -179,3 +179,19 @@ class AddGroupUserForm(forms.Form):
             group = Group.objects.create(name=name)
             permissions = Permission.objects.none()
             group.permissions.set(permissions)
+
+
+class ChooseStudentsToChecker(forms.ModelForm):
+
+    class Meta:
+        model = models.GroupCheck
+        fields = ['usser_id', 'group_check', 'main_task_id']
+
+    def clean(self):
+
+        cleaned_data = super(ChooseStudentsToChecker, self).clean()
+
+        if 'questions[]' in self.data:
+            cleaned_data['questions[]'] = list(map(lambda el: int(el), self.data.getlist('questions[]')))
+
+        return self.cleaned_data
