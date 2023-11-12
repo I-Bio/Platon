@@ -16,7 +16,7 @@ class AddGroupUserView(View):
 
         form.save()
 
-
         if 'continueButton' in request.POST:
             return redirect('add_group_user')
+
         return redirect('index')

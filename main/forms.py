@@ -199,3 +199,22 @@ class AddGroupUserForm(forms.Form):
             group = Group.objects.create(name=name)
             permissions = Permission.objects.none()
             group.permissions.set(permissions)
+
+
+class AddGradeForm(forms.Form):
+
+    grade = forms.IntegerField()
+
+    def save(self, user):
+        if user:
+            grade = self.cleaned_data['grade']
+            user.grade = grade
+            user.save()
+
+
+
+
+
+
+
+

@@ -210,7 +210,7 @@ class UserTask(models.Model):
     first_name = models.CharField(max_length=256, null=True)
     group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
     main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
-    grade = models.IntegerField(null=True)
+    grade = models.IntegerField(null=True, blank=True)
     time_delivery = models.DateTimeField(null=True)
 
 

@@ -9,7 +9,6 @@ from main.views.tutor.unit.elements.unitTaskEdit import UnitTaskEdit
 from main.views.tutor.unit.elements.unitTestEdit import UnitTestEdit
 from main.views.tutor.unit.elements.unitTestCreate import UnitTestCreate
 from main.views.general.index import Index
-from .views.admin.DoneView import DoneView
 from .views.admin.AddGroupUserView import AddGroupUserView
 
 from .views.authenticate.login import Login
@@ -24,6 +23,7 @@ from .views.tutor.student.groupsList import GroupsList
 from .views.tutor.student.studentsList import StudentsList
 from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
+from .views.tutor.task.addGradeView import AddGradeView
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
 from .views.tutor.unit.elements.unitLectureCreate import UnitLectureCreate
@@ -82,7 +82,8 @@ urlpatterns = [
     path('grade/<int:user_id>/<int:main_task_id>/<int:who_check>', GradeTask.as_view(), name='grade_group'),
   
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
-    path('done/', DoneView.as_view(), name='done'),
 
-    path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload')
+    path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
+
+    path('add_grade/<int:user_id>', AddGradeView.as_view(), name='add_grade'),
 ]
