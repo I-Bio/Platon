@@ -9,20 +9,21 @@ from django.http import Http404
 
 class AddGradeView(View):
 
-    def get(self, request, user_id: int):
+    def get(self, request, user_id: int, main_task_id: int):
         try:
-            user = UserTask.objects.get(user_id=user_id)
-            files = StudentFile.objects.filter(creator=user_id)
+            user = UserTask.objects.filter(user_id=user_id, main_task_id=main_task_id).first()
+            files = StudentFile.objects.filter(creator=user_id, task_id=main_task_id)
 
         except (UserTask.DoesNotExist, StudentFile.DoesNotExist):
             raise Http404
 
+        print(user.first_name)
         return render(request, template_name="tutor/addGrade.html",
                       context={'form': AddGradeForm, 'user': user, 'files': files})
 
-    def post(self, request, user_id: int):
-        user = UserTask.objects.get(user_id=user_id)
-        files = StudentFile.objects.filter(creator=user_id)
+    def post(self, request, user_id: int, main_task_id: int):
+        user = UserTask.objects.filter(user_id=user_id, main_task_id=main_task_id).first()
+        files = StudentFile.objects.filter(creator=user_id, task_id=main_task_id)
         form = AddGradeForm(request.POST)
 
         if not form.is_valid():

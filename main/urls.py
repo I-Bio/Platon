@@ -85,5 +85,5 @@ urlpatterns = [
 
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
 
-    path('add_grade/<int:user_id>', AddGradeView.as_view(), name='add_grade'),
+    path('add_grade/<int:user_id>/<int:main_task_id>', AddGradeView.as_view(), name='add_grade'),
 ]
