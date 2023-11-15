@@ -39,7 +39,7 @@ class AdminGroup(models.Model):
 
 class RegistrationLinks(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    group_name = models.CharField(max_length=50)
+    group_name = models.CharField(max_length=50, unique=True)
     end_date = models.DateTimeField()
 
     def __str__(self):

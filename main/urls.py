@@ -17,6 +17,7 @@ from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
 from .views.student.task.taskUpload import TaskUpload
+from .views.tutor.link.createInviteLinkView import CreateInviteLinkView
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
 from .views.tutor.student.grades.studentGrades import StudentGrades
 from .views.tutor.student.groupsList import GroupsList
@@ -86,4 +87,6 @@ urlpatterns = [
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
 
     path('add_grade/<int:user_id>/<int:main_task_id>', AddGradeView.as_view(), name='add_grade'),
+
+    path('create_invite_link/', CreateInviteLinkView.as_view(), name='create_invite_link'),
 ]

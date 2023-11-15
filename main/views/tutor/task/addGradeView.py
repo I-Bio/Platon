@@ -17,7 +17,6 @@ class AddGradeView(View):
         except (UserTask.DoesNotExist, StudentFile.DoesNotExist):
             raise Http404
 
-        print(user.first_name)
         return render(request, template_name="tutor/addGrade.html",
                       context={'form': AddGradeForm, 'user': user, 'files': files})
 

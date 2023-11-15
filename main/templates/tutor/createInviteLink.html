@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    {{registration_link}}
+    <button type="submit">Создать ссылку</button>
+</form>

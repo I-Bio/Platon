@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import StudentGroup, TutorGroup, AdminGroup, User
+from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks
 from django.contrib.auth.models import Group, Permission
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -202,7 +202,6 @@ class AddGroupUserForm(forms.Form):
 
 
 class AddGradeForm(forms.Form):
-
     grade = forms.IntegerField()
 
     def save(self, user):
@@ -210,6 +209,26 @@ class AddGradeForm(forms.Form):
             grade = self.cleaned_data['grade']
             user.grade = grade
             user.save()
+
+
+class CreateInviteLinkForm(forms.Form):
+    group_name = forms.ModelChoiceField(queryset=StudentGroup.objects.all(), empty_label=None, label='Выберите группу')
+    end_date = forms.DateTimeField()
+
+    def save(self):
+        group_name = self.cleaned_data['group_name']
+        end_date = self.cleaned_data['end_date']
+
+        link = RegistrationLinks.objects.create(group_name=group_name, end_date=end_date)
+
+    def __init__(self, *args, **kwargs):
+        is_staff = kwargs.pop('is_staff', False)
+        super(CreateInviteLinkForm, self).__init__(*args, **kwargs)
+        if is_staff:
+            all_groups = list(StudentGroup.objects.all()) + list(TutorGroup.objects.all()) + list(AdminGroup.objects.all())
+            self.fields['group_name'] = forms.ChoiceField(choices=[(group.name, str(group)) for group in all_groups], label='Выберите группу')
+
+
 
 
 
