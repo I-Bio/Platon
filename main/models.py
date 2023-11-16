@@ -213,7 +213,7 @@ class UserTask(models.Model):
 
 class GroupCheck(models.Model):
     usser_id = models.IntegerField(null=True)
-    group_check = models.IntegerField(null=True)
+    group_check = models.IntegerField(null=True) # потом удалю
     main_task_id = models.IntegerField(null=True)
 
     user_check_id = models.JSONField(default=list, blank=True, null=True)      

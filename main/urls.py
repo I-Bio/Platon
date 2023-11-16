@@ -85,7 +85,7 @@ urlpatterns = [
 
     path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(), name='completed_and_notcompleted_work'),
 
-    path('assign_for_review/<int:user_id>/<int:main_task_id>/<int:group_id>', AssignStudent.as_view(), name='select_students'),
+    path('assign_for_review/<int:user_id>/<int:main_task_id>', AssignStudent.as_view(), name='select_students'),
 
 
 ]

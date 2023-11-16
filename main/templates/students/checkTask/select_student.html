@@ -10,7 +10,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-light">Назначение студента(ов) на проверку студента {{ info_user_id.last_name }} {{ info_user_id.first_name }}</h1>
+                            <h1 class="m-0 text-light">Назначение студента {{ info_task_user.last_name }} {{ info_task_user.first_name }} на проверку студентов </h1>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
             <section class="content">
 
                 <div class="container-fluid">
-                    <form method="POST" action="{% url 'select_students' user_id=user_id main_task_id=main_task_id group_id=group_id %}">
+                    <form method="POST" action="{% url 'select_students' user_id=user_id main_task_id=main_task_id %}">
                     {% csrf_token %}
                         <div class="card">
                             <div class="card-header bg-success">
@@ -37,13 +37,13 @@
                                         <div class="splide__track small-box bg-dark splide__track--slide splide__track--ttb splide__track--draggable" id="inTest-track" style="padding-top: 0px; padding-bottom: 0px; height: calc((10rem - 0px) - 0px);" aria-live="polite" aria-atomic="true">
                                             <ul class="splide__list" id="TestList" role="presentation" style="transform: translateY(0px);">
 
-                                                {% for stud in info_users_id%}
+                                                {% for stud in filet_users%}
                                                 <li class="splide__slide">
                                                     <div class="input-group">
                                                         <p class="form-control bg-dark">{{ stud.last_name }} {{ stud.first_name }}</p>
                                                         <div class="input-group-prepend">
-                                                            <button name="removeButton" type="button" class="btn bg-danger">Убрать</button>
-                                                            <input type="hidden" name="questions[]">
+                                                            <button name="removeButton" type="button" id="{{ stud.pk }}" class="btn bg-danger" >Убрать</button>
+                                                            <input type="hidden" name="questions[]" value="{{ stud.pk }}">
                                                         </div>
                                                     </div>
                                                 </li>
@@ -69,15 +69,7 @@
                                         <div class="splide__track small-box bg-dark splide__track--slide splide__track--ttb splide__track--draggable" id="inBank-track" style="padding-top: 0px; padding-bottom: 0px; height: calc((10rem - 0px) - 0px);" aria-live="polite" aria-atomic="true">
                                                 <ul class="splide__list" id="BankList" role="presentation" style="transform: translateY(0px);">
 
-{#                                                    <li class="splide__slide is-active is-visible" id="inBank-slide01" role="tabpanel" aria-roledescription="slide" aria-label="1 of 9" style="height: calc(25%);">#}
-{#                                                        <div class="input-group">#}
-{#                                                           <div class="input-group-prepend">#}
-{#                                                                <button name="addButton" type="button" class="btn bg-cyan">Добавить</button>#}
-{#                                                            </div>#}
-{#                                                            <p class="form-control bg-dark">Жора Примеров</p>#}
-{#                                                        </div>#}
-{#                                                    </li>#}
-                                                    {% for stud in info_users_id %}
+                                                    {% for stud in sasy %}
                                                     <li class="splide__slide is-active is-visible" id="inBank-slide01" role="tabpanel" aria-roledescription="slide" aria-label="1 of 9" style="height: calc(25%);">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
