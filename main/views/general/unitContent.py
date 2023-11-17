@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from main.models import Unit, Lecture, Reference, File, Test, Task
+from main.models import Unit, Lecture, Reference, File, Test, Task, Subject
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
@@ -15,7 +15,17 @@ class UnitContent(View):
 
         unit = unit.first()
 
-        return render(request, "content_bank/unit/content.html", {'unit': unit})
+
+
+
+
+        print(unit.subject.tutor_id.pk)
+
+        flag = False
+        if request.user.pk == unit.subject.tutor_id.pk:
+            flag = True
+
+        return render(request, "content_bank/unit/content.html", {'unit': unit, 'flag' : flag})
 
     def post(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id).first()

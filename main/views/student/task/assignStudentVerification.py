@@ -47,7 +47,6 @@ class AssignStudent(View):
             a = GroupCheck(usser_id=user_id, main_task_id=main_task_id, user_check_id=list_checker_student)
         a.save()
 
-        print(list_checker_student)
         form = ChooseStudentsToChecker(request.POST)
 
         if form.is_valid() == True:

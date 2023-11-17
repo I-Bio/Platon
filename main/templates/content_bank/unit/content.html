@@ -21,7 +21,7 @@
                 <p class="m-0">Содержимое</p>
             </div>
             {% csrf_token %}
-            {% if user.is_staff %}
+            {% if flag %} #Проверка на статус персонала
             <div class="card-body">
                 <div class="small-box shadow-none">
                     <button type="button" class="btn bg-cyan" data-toggle="modal" data-target="#modal-add">Добавить элемент</button>

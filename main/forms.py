@@ -68,9 +68,11 @@ class QuestionForm(forms.ModelForm):
 
 
 class SubjectForm(forms.ModelForm):
+
     class Meta:
         model = models.Subject
-        fields = ['name']
+        fields = ['name', 'tutor_id']
+
 
 
 class UnitForm(forms.ModelForm):
