@@ -38,7 +38,7 @@ class RegistrationForm(forms.Form):
 
     email = forms.EmailField(min_length=3, initial="")
 
-    group = forms.ModelChoiceField(queryset=models.StudentGroup.objects.all(), to_field_name="name", empty_label=None)
+    group = forms.CharField(min_length=3, max_length=32, initial="")
 
     password = forms.CharField(min_length=8, max_length=32, initial="")
 
