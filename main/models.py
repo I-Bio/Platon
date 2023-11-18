@@ -222,5 +222,17 @@ class GroupCheck(models.Model):
     group_check = models.IntegerField(null=True)
     main_task_id = models.IntegerField(null=True)
 
-    user_check_id = models.JSONField(default=list, blank=True, null=True)      
+    user_check_id = models.JSONField(default=list, blank=True, null=True)
+
+
+class Notification(models.Model):
+    header = models.CharField(max_length=40)
+    body = models.CharField(max_length=128)
+    is_checked = models.BooleanField(default=False)
+    time_delivery = models.DateTimeField(default=timezone.now)
+    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.user_id)
+
      

@@ -13,6 +13,7 @@ from .views.admin.AddGroupUserView import AddGroupUserView
 
 from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
+from .views.notification.noticationMenuView import NotificationMenuView
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
@@ -89,4 +90,6 @@ urlpatterns = [
     path('add_grade/<int:user_id>/<int:main_task_id>', AddGradeView.as_view(), name='add_grade'),
 
     path('create_invite_link/', CreateInviteLinkView.as_view(), name='create_invite_link'),
+
+    path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu')
 ]
