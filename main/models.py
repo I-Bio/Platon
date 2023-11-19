@@ -39,7 +39,7 @@ class AdminGroup(models.Model):
 
 class RegistrationLinks(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    group_name = models.CharField(max_length=50)
+    group_name = models.CharField(max_length=50, unique=True)
     end_date = models.DateTimeField()
 
     def __str__(self):
@@ -105,7 +105,7 @@ class Subject(models.Model):
     name = models.CharField(max_length=256, default="")
     tutor_id = models.ForeignKey('User', on_delete=models.PROTECT, null=True)
     users_id = models.JSONField(default=list, blank=True, null=True)
-
+    creator = models.IntegerField();
 
     def __str__(self):
         return self.name
@@ -171,6 +171,12 @@ class TestResult(models.Model):
         return score_to_grade(self.get_score())
 
 
+class StudentFile(models.Model):
+    creator = models.IntegerField()
+    task_id = models.IntegerField()
+    file = models.FileField(upload_to="student_files/")
+
+
 class Task(models.Model):
     name = models.CharField(max_length=256, default="")
     description = models.TextField(default="")
@@ -209,10 +215,8 @@ class UserTask(models.Model):
     first_name = models.CharField(max_length=256, null=True)
     group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
     main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
-    grade = models.IntegerField(null=True)
+    grade = models.IntegerField(null=True, blank=True)
     time_delivery = models.DateTimeField(null=True)
-
-
 
     def __str__(self):
         return self.name_task
@@ -222,5 +226,17 @@ class GroupCheck(models.Model):
     group_check = models.IntegerField(null=True) # потом удалю
     main_task_id = models.IntegerField(null=True)
 
-    user_check_id = models.JSONField(default=list, blank=True, null=True)      
+    user_check_id = models.JSONField(default=list, blank=True, null=True)
+
+
+class Notification(models.Model):
+    header = models.CharField(max_length=40)
+    body = models.CharField(max_length=128)
+    is_checked = models.BooleanField(default=False)
+    time_delivery = models.DateTimeField(default=timezone.now)
+    user_id = models.ForeignKey('User', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.user_id)
+
      

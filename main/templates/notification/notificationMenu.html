@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="col-md-12">
+        <div class="card card-success">
+            <div class="card-header border border-light border-bottom-0">
+                <h3 class="card-title">Уведомления</h3>
+                <div class="card-tools">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-append">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-0 bg-gray-dark border border-light">
+                <div class="table-responsive mailbox-messages">
+                    <table class="table table-striped">
+                        <tbody>
+                        {% for notification in notifications %}
+                        <tr>
+                            <td class="mailbox-star"></td>
+                            <td class="mailbox-name">{{notification.header}}</td>
+                            <td class="mailbox-subject">{{notification.body}}</td>
+                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-date">{{notification.time_delivery|timesince|add:" назад"}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}
