@@ -1,14 +1,18 @@
 import uuid
+from django.db.utils import IntegrityError
+
 from django.utils import timezone
 
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.contrib.auth import login
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.core.exceptions import PermissionDenied, ValidationError
 
 from main.forms import RegistrationForm
 from main.models import StudentGroup, User, RegistrationLinks
+from django.contrib.auth.models import Group
 
 
 class Registration(View):
@@ -17,31 +21,45 @@ class Registration(View):
             key_uuid = uuid.UUID(key)
             registration_link = RegistrationLinks.objects.get(id=key_uuid)
         except (ValueError, RegistrationLinks.DoesNotExist):
-            return HttpResponse(status=404)
+            raise Http404
 
         if registration_link.end_date < timezone.now():
             registration_link.delete()
-            return HttpResponse(status=403)
+            raise PermissionDenied()
 
-        return render(request, "auth/registration.html", {'form': RegistrationForm()})
+        return render(request, "auth/registration.html",
+                      {'form': RegistrationForm(), 'registration_link': registration_link})
 
-    def post(self, request: HttpRequest):
+    def post(self, request: HttpRequest, key: str):
+        key_uuid = uuid.UUID(key)
+        registration_link = RegistrationLinks.objects.get(id=key_uuid)
+
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
-            user = User.objects.create_user(
-                username=form.cleaned_data['email'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                email=form.cleaned_data['email'],
-                study_group=StudentGroup.objects.get(name=form.cleaned_data['group']),
-                password=form.cleaned_data['password']
-            )
+            try:
+                user = User.objects.create_user(
+                    username=form.cleaned_data['email'],
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    email=form.cleaned_data['email'],
+                    password=form.cleaned_data['password']
+                )
 
-            user.save()
+                group = Group.objects.get(name=form.cleaned_data['group'])
+
+                user.save()
+                user.groups.add(group)
+            except IntegrityError:
+                error = 'Данная почта уже была зарегистрирована'
+                return render(request, "auth/registration.html", {'form': form, 'registration_link': registration_link, 'error': error})
 
             if user is not None:
                 login(request, user)
                 return redirect('index')
+        else:
+            error = 'Проверьте корректность введенных данных'
+            return render(request, "auth/registration.html",
+                          {'form': form, 'registration_link': registration_link, 'error': error})
 
-        return render(request, "auth/registration.html", {'form': form})
+        return render(request, "auth/registration.html", {'form': form, 'registration_link': registration_link})

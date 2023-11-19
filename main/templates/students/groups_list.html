@@ -2,6 +2,7 @@
 
 {% block title %}Список групп{% endblock %}
 
+{% load static %}
 
 {% block content %}
 <div class="content-header">
@@ -55,7 +56,7 @@
                 </div>
             </div>
         </form>
-        <script defer src="SearchModule.js"></script>
+        <script defer src="{% static 'content_bank/SearchModule.js' %}"></script>
     </div>
 </section>
 {% endblock %}
