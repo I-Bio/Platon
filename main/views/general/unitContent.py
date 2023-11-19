@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from main.models import Unit, Lecture, Reference, File, Test, Task
+from main.models import Unit, Lecture, Reference, File, Test, Task, Subject
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
@@ -15,7 +15,26 @@ class UnitContent(View):
 
         unit = unit.first()
 
-        return render(request, "content_bank/unit/content.html", {'unit': unit})
+        # print('привет', unit.subject.users_id)
+        flag_stud = False
+        flag_tutor = False
+
+
+
+        if request.user.pk == unit.subject.tutor_id.pk:
+            flag_tutor = True
+
+        if request.user.pk in unit.subject.users_id:
+            flag_stud = True
+        else:
+            return HttpResponse("Вы не зачислены на курс")
+
+        context = {
+            'unit': unit,
+            'flag_tutor' : flag_tutor,
+            'flag_stud' : flag_stud,
+                   }
+        return render(request, "content_bank/unit/content.html", context=context)
 
     def post(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id).first()

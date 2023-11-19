@@ -84,9 +84,11 @@ class QuestionForm(forms.ModelForm):
 
 
 class SubjectForm(forms.ModelForm):
+
     class Meta:
         model = models.Subject
-        fields = ['name']
+        fields = ['name', 'tutor_id']
+
 
 
 class UnitForm(forms.ModelForm):
@@ -202,6 +204,23 @@ class AddGroupUserForm(forms.Form):
             group.permissions.set(permissions)
 
 
+
+class ChooseStudentsToChecker(forms.ModelForm):
+
+    class Meta:
+        model = models.GroupCheck
+        fields = ['usser_id', 'group_check', 'main_task_id']
+
+    def clean(self):
+
+        cleaned_data = super(ChooseStudentsToChecker, self).clean()
+
+        if 'questions[]' in self.data:
+            cleaned_data['questions[]'] = list(map(lambda el: int(el), self.data.getlist('questions[]')))
+
+        return self.cleaned_data
+
+      
 class AddGradeForm(forms.Form):
     grade = forms.IntegerField()
 
@@ -236,13 +255,5 @@ class CreateInviteLinkForm(forms.Form):
             self.fields['group_name'].queryset = StudentGroup.objects.all()
             self.fields['group_name'].empty_label = None
             self.fields['group_name'].label = 'Выберите группу'
-
-
-
-
-
-
-
-
 
 

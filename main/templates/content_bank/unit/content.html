@@ -21,7 +21,8 @@
                 <p class="m-0">Содержимое</p>
             </div>
             {% csrf_token %}
-            {% if user.is_staff %}
+            {% if flag_tutor %} {# Проверка на статус персонала#}
+
             <div class="card-body">
                 <div class="small-box shadow-none">
                     <button type="button" class="btn bg-cyan" data-toggle="modal" data-target="#modal-add">Добавить элемент</button>
@@ -46,6 +47,7 @@
                         </div>
                     </div>
                 </div>
+
                 {% endfor %}
                 {% for reference in unit.references.all %}
                 <div class="small-box" data-name="elementReference">
@@ -131,7 +133,7 @@
                 
                 
             </div>
-            {% else %}
+            {% elif flag_stud %}
             <div class="card-body">
 
                 {% for lecture in unit.lectures.all %}
@@ -202,10 +204,12 @@
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+                <h1>Упс, у вас нет прав для просмотра этого материала</h1>
             {% endif %}
         </div>
 
-        {% if user.is_staff %}
+        {% if flag_tutor %}
         {% load static %}
         <script defer src="{% static 'content_bank/courseCatalog.js' %}"></script>
         <div class="modal fade" id="modal-add">

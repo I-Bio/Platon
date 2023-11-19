@@ -17,6 +17,8 @@ from .views.notification.noticationMenuView import NotificationMenuView
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
+from .views.student.task.showWorkStudents import StudentsWorkList
+from .views.tutor.student.gradeCardList import ShowGradeCardList
 from .views.student.task.taskUpload import TaskUpload
 from .views.tutor.link.createInviteLinkView import CreateInviteLinkView
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
@@ -80,10 +82,15 @@ urlpatterns = [
     path('unit/<int:unit_id>/task/create/', UnitTaskCreate.as_view(), name='unit_task_create'),
     path('unit/<int:unit_id>/task/edit/<int:task_id>/', UnitTaskEdit.as_view(), name='unit_task_edit'),
   
-    path('assign_for_review/<int:group_id>/<int:main_task_id>/', AssignStudent.as_view(), name='select_students'),
     path('grade/<int:user_id>/<int:main_task_id>/<int:who_check>', GradeTask.as_view(), name='grade_group'),
-  
+
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
+
+    path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(), name='completed_and_notcompleted_work'),
+
+    path('assign_for_review/<int:user_id>/<int:main_task_id>', AssignStudent.as_view(), name='select_students'),
+
+    path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(), name='show_grade_card_list')
 
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
 

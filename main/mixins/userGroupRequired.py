@@ -25,4 +25,6 @@ class UserGroupRequiredMixin(AccessMixin):
         if not perms:
             return HttpResponse(status=403)
 
+
+
         return super().dispatch(request, *args, **kwargs)
