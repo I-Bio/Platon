@@ -15,17 +15,26 @@ class UnitContent(View):
 
         unit = unit.first()
 
+        # print('привет', unit.subject.users_id)
+        flag_stud = False
+        flag_tutor = False
 
 
 
-
-        print(unit.subject.tutor_id.pk)
-
-        flag = False
         if request.user.pk == unit.subject.tutor_id.pk:
-            flag = True
+            flag_tutor = True
 
-        return render(request, "content_bank/unit/content.html", {'unit': unit, 'flag' : flag})
+        if request.user.pk in unit.subject.users_id:
+            flag_stud = True
+        else:
+            return HttpResponse("Вы не зачислены на курс")
+
+        context = {
+            'unit': unit,
+            'flag_tutor' : flag_tutor,
+            'flag_stud' : flag_stud,
+                   }
+        return render(request, "content_bank/unit/content.html", context=context)
 
     def post(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id).first()
