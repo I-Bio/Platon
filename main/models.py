@@ -157,7 +157,9 @@ class TestResult(models.Model):
     test = models.ForeignKey(to=Test, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
 
-    result = models.FloatField(default=0)
+    result = models.IntegerField(default=0)
+
+
 
     def set_result_from_score(self, score):
         self.result = score * self.test.get_questions_count() / 100
@@ -176,6 +178,10 @@ class Task(models.Model):
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
 
+
+
+
+
     def __str__(self):
         return self.name
 
@@ -186,18 +192,18 @@ class Unit(models.Model):
 
     subject = models.ForeignKey(Subject, models.CASCADE)
 
-    lectures = models.ManyToManyField(Lecture)
-    references = models.ManyToManyField(Reference)
-    files = models.ManyToManyField(File)
-    tests = models.ManyToManyField(Test)
-    tasks = models.ManyToManyField(Task)
+    lectures = models.ManyToManyField(Lecture, blank=True)
+    references = models.ManyToManyField(Reference, blank=True)
+    files = models.ManyToManyField(File, blank=True)
+    tests = models.ManyToManyField(Test, blank=True)
+    tasks = models.ManyToManyField(Task, blank=True)
 
     def __str__(self):
         return self.name
 
 
 class UserTask(models.Model):
-    name_task = models.CharField(max_length=256)
+    name_task = models.CharField(max_length=256) # название, которое дает пользователь своей работе
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
     last_name = models.CharField(max_length=256, null=True)
     first_name = models.CharField(max_length=256, null=True)
