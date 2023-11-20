@@ -58,10 +58,6 @@ class ShowGradeCardList(TutorRequiredMixin, View):
 
 
 
-        print(users)
-
-
-
         context = {
             'info_group_name' : info_group,
             'info_subject' : info_subject,

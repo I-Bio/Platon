@@ -14,11 +14,13 @@ from .views.admin.AddGroupUserView import AddGroupUserView
 
 from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
+from .views.student.grades.gradeCardListStudentspy import ShowGradeCardStudent
 from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
 from .views.student.task.showWorkStudents import StudentsWorkList
 from .views.tutor.student.gradeCardList import ShowGradeCardList
+
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
 from .views.tutor.student.grades.studentGrades import StudentGrades
 from .views.tutor.student.groupsList import GroupsList
@@ -36,6 +38,9 @@ from .views.tutor.unit.questions.questionsList import QuestionsList
 from .views.tutor.unit.unitCreate import UnitCreate
 from .views.tutor.unit.unitEdit import UnitEdit
 from main.views.general.unitContent import UnitContent
+
+
+
 
 urlpatterns = [
     path('login/', Login.as_view(), name="login"),
@@ -88,7 +93,8 @@ urlpatterns = [
 
     path('assign_for_review/<int:user_id>/<int:main_task_id>', AssignStudent.as_view(), name='select_students'),
 
-    path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(), name='show_grade_card_list')
+    path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(), name='show_grade_card_list'),
+    path('show_grade_card_list_students/<int:user_id>/<int:subject_id>', ShowGradeCardStudent.as_view() , name='show_grade_card_list_students'),
 
 
 ]
