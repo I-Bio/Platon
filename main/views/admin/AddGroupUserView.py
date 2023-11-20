@@ -1,12 +1,22 @@
-from django.views.generic import FormView
+from django.views.generic import View
+from django.shortcuts import render, redirect
 from main.forms import AddGroupUserForm
 
 
-class AddGroupUserView(FormView):
-    form_class = AddGroupUserForm
-    template_name = 'admin/add_group_user.html'
-    success_url = '/done'
+class AddGroupUserView(View):
 
-    def form_valid(self, form):
+    def get(self, request):
+        return render(request, template_name="admin/add_group_user.html", context={'form': AddGroupUserForm()})
+
+    def post(self, request):
+        form = AddGroupUserForm(request.POST)
+
+        if not form.is_valid():
+            return render(request, template_name="admin/add_group_user.html", context={'form': form})
+
         form.save()
-        return super(AddGroupUserView, self).form_valid(form)
+
+        if 'continueButton' in request.POST:
+            return redirect('add_group_user')
+
+        return redirect('index')
