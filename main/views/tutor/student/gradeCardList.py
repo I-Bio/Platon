@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.views import View
 
-from main.mixins.tutorRequired import TutorRequiredMixin
+from main.mixins.studentGroupRequired import StudentGroupRequiredMixin
 from main.models import StudentGroup, Subject, Task, UserTask, Unit, TestResult, User
 
 
-class ShowGradeCardList(TutorRequiredMixin, View):
+class ShowGradeCardList(StudentGroupRequiredMixin, View):
     def get(self, request, group_id, subject_id):
         info_group = StudentGroup.objects.filter(id=group_id).first().name
         info_task_user = User.objects.filter(groups=group_id)
@@ -55,10 +55,6 @@ class ShowGradeCardList(TutorRequiredMixin, View):
 
             users.append({'name': f"{user.last_name} {user.first_name}",
                           'works' : works})
-
-
-
-        print(users)
 
 
 
