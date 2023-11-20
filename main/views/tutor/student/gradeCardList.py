@@ -5,7 +5,11 @@ from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import StudentGroup, Subject, Task, UserTask, Unit, TestResult, User
 
 
-class ShowGradeCardList(TutorRequiredMixin, View):
+class StudentREquired:
+    pass
+
+
+class ShowGradeCardList(StudentREquired, View):
     def get(self, request, group_id, subject_id):
         info_group = StudentGroup.objects.filter(id=group_id).first().name
         info_task_user = User.objects.filter(groups=group_id)
