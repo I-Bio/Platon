@@ -232,6 +232,7 @@ class AddGradeForm(forms.Form):
 
 
 class CreateInviteLinkForm(forms.Form):
+    group_name = forms.ModelChoiceField(queryset=StudentGroup.objects.none(), label='')
     end_date = forms.DateTimeField()
 
     def save(self):
@@ -243,15 +244,14 @@ class CreateInviteLinkForm(forms.Form):
         except IntegrityError:
             ...
 
-
-
     def __init__(self, *args, **kwargs):
         is_staff = kwargs.pop('is_staff', False)
+        is_tutor = kwargs.pop('is_tutor', False)
         super(CreateInviteLinkForm, self).__init__(*args, **kwargs)
         if is_staff:
             all_groups = list(StudentGroup.objects.all()) + list(TutorGroup.objects.all()) + list(AdminGroup.objects.all())
             self.fields['group_name'] = forms.ChoiceField(choices=[(group.name, str(group)) for group in all_groups], label='Выберите группу')
-        else:
+        if is_tutor:
             self.fields['group_name'].queryset = StudentGroup.objects.all()
             self.fields['group_name'].empty_label = None
             self.fields['group_name'].label = 'Выберите группу'

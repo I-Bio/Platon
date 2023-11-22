@@ -129,7 +129,7 @@
                         </ul>
                     </li>
                     {% if user.is_authenticated %}
-                    {% if user.is_staff %}
+                    {% if user.is_staff or user.is_tutor %}
                     <li class="nav-header">Меню преподавателя</li>
                     <li class="nav-item">
                         <a href="{% url 'groups_list' %}" class="nav-link">
