@@ -34,12 +34,12 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.Form):
-    first_name = forms.CharField(min_length=3, max_length=32, initial="")
-    last_name = forms.CharField(min_length=3, max_length=32, initial="")
+    first_name = forms.CharField(min_length=1, max_length=32, initial="")
+    last_name = forms.CharField(min_length=1, max_length=32, initial="")
 
     email = forms.EmailField(min_length=3, initial="")
 
-    group = forms.CharField(min_length=3, max_length=32, initial="")
+    group = forms.CharField(min_length=1, max_length=32, initial="")
 
     password = forms.CharField(min_length=8, max_length=32, initial="")
 

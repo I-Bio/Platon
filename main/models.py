@@ -48,7 +48,7 @@ class RegistrationLinks(models.Model):
 
 class User(AbstractUser):
 
-    # userGroup = models.ForeignKey(UserGroup, on_delete=models.CASCADE, default=UserGroup.objects.get_or_create(name='Free'))
+    is_tutor = models.BooleanField(default=False)
 
     def update_grades_for_outdated_tasks(self):
         outdated_tests = Test.objects.filter(end_date__lt=timezone.now()).exclude(
