@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.views import View
 
-from main.mixins.tutorRequired import TutorRequiredMixin
+from main.mixins.studentGroupRequired import StudentGroupRequiredMixin
 from main.models import Unit, Subject, UserTask, TestResult, User
 
 
-class ShowGradeCardStudent(TutorRequiredMixin, View):
+class ShowGradeCardStudent(StudentGroupRequiredMixin, View):
     def get(self, request, user_id, subject_id):
         unit_info = Unit.objects.filter(subject_id=subject_id)
         info_subject = Subject.objects.filter(id=subject_id).first()

@@ -12,11 +12,13 @@ class UnitCreate(TutorRequiredMixin, View):
         return render(request, "content_bank/unit/edit.html", {'form': UnitForm()})
 
     def post(self, request):
-        form = UnitForm(request.POST)
-
-        if not form.is_valid():
-            return render(request, "content_bank/unit/edit.html", {'form': form})
-
-        form.save()
+        dict = {'name': request.Post.name,'tutor_id': request.user.pk}
+        print(dict)
+        # form = UnitForm(dict)
+        #
+        # if not form.is_valid():
+        #     return render(request, "content_bank/unit/edit.html", {'form': form})
+        #
+        # form.save()
 
         return redirect('index')

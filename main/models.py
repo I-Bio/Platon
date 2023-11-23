@@ -105,7 +105,7 @@ class Subject(models.Model):
     name = models.CharField(max_length=256, default="")
     tutor_id = models.ForeignKey('User', on_delete=models.PROTECT, null=True)
     users_id = models.JSONField(default=list, blank=True, null=True)
-    creator = models.IntegerField();
+    #creator = models.IntegerField()
 
     def __str__(self):
         return self.name

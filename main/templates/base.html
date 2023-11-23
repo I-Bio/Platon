@@ -96,7 +96,7 @@
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                  циплины
+                                  Дисциплины
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -163,10 +163,18 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{% url 'create_invite_link' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Создание приглашения
+                            </p>
+                        </a>
+                    </li>
                     {% else %}
                     <li class="nav-header">Меню студента</li>
                     <li class="nav-item">
-                        <a href="{% url 'own_grades' %}" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="nav-icon far"></i>
                             <p>
                                 Мои оценки
@@ -177,7 +185,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon far"></i>
                             <p>
-                                Моё распределение
+                                Работы на проверку
                             </p>
                         </a>
                     </li>
