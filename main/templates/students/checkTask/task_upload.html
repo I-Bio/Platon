@@ -16,8 +16,8 @@
 </div>
 <section class="content">
     <div class="container-fluid">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        <form method="post" enctype="multipart/form-data" action="{% url 'student_task_upload' task_id=task_id %}">
+
             <div class="card">
                             <div class="card-header bg-success">
                                 <h3 class="card-title">Основное</h3>
@@ -37,15 +37,19 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <button type="button" class="btn bg-gray-dark border border-light">
-                                                    <label class="m-0 p-0" for="file">Добавить файл</label>
-                                                </button>
-                                                <input type="file" class="custom-file-input form-control" multiple="" name="files" style="display: none" id="file">
+<!--                                                <button type="button" class="btn bg-gray-dark border border-light">-->
+<!--                                                    <label class="m-0 p-0" for="file">Добавить файл</label>-->
+<!--                                                </button>-->
+<!--                                                <input type="file" class="custom-file-input form-control" multiple="" name="files" style="display: none" id="file">-->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div> <h3 class="text-center"><input type="number" class="form-control bg-gray-dark border border-light col-6 pb-10 " id="formGroupExampleInput" placeholder="Оценить свою работу"></h3></div>
+                                <div>
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <!--                                    <h3 class="text-center"><input type="number" class="form-control bg-gray-dark border border-light col-6 pb-10 " id="formGroupExampleInput" placeholder="Оценить свою работу"></h3>-->
+                                </div>
                                 <div class="row" id="fileContainer">
                                 </div>
                             </div>

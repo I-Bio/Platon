@@ -160,6 +160,8 @@ class TaskForm(forms.ModelForm):
         
 class StudentTaskForm(forms.Form):
     files = MultipleFileField()
+    own_grade = forms.IntegerField()
+
 
 
 class UserTaskForm(forms.ModelForm):
