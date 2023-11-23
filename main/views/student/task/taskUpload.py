@@ -3,11 +3,20 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from main.forms import StudentTaskForm
-from main.models import Task, StudentFile, UserTask, User
+from main.models import Task, StudentFile, UserTask, User, Unit, Subject
 
 
 class TaskUpload(View):
     def get(self, request, task_id):
+        info_unit = Unit.objects.all()
+        #проверка на доступ к курсу
+        for theme in info_unit:
+            for task in theme.tasks.all():
+                if task_id == task.pk:
+                    subject = theme.subject
+
+        if (request.user.pk in subject.users_id) == False:
+            return HttpResponse(status=403)
 
         return render(request, "students/checkTask/task_upload.html", {'form' : StudentTaskForm(), 'task_id' : task_id})
 
