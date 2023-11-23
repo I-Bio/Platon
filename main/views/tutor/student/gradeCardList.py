@@ -2,11 +2,16 @@ from django.shortcuts import render
 from django.views import View
 
 from main.mixins.studentGroupRequired import StudentGroupRequiredMixin
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import StudentGroup, Subject, Task, UserTask, Unit, TestResult, User
 
 
-class ShowGradeCardList(StudentGroupRequiredMixin, View):
+class ShowGradeCardList(TutorRequiredMixin, View):
     def get(self, request, group_id, subject_id):
+
+        tutor_grade_weight, student_grade_weight, own_grade_weight = 0.85, 0.1, 0.05
+
+        print(StudentGroup.objects.filter(id=group_id).first())
         info_group = StudentGroup.objects.filter(id=group_id).first().name
         info_task_user = User.objects.filter(groups=group_id)
         unit_info = Unit.objects.filter(subject_id=subject_id)
@@ -31,9 +36,10 @@ class ShowGradeCardList(StudentGroupRequiredMixin, View):
         works_sets = []
         for list in grade_tasks_lists:
             for task in list:
+                grade = task.grade * tutor_grade_weight + task.checker_grade * student_grade_weight + task.own_grade * own_grade_weight
                 works_sets.append({'name_id' : task.user_id.pk,
                                    'work_name' : task.main_task_id.name,
-                                   'grade' : task.grade,
+                                   'grade' : grade,
                                    'date' : task.time_delivery})
 
         grade_tests_lists = [TestResult.objects.filter(test=task.pk) for task in all_tests]
