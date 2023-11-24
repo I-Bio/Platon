@@ -96,7 +96,7 @@
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                  циплины
+                                  Дисциплины
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -163,6 +163,15 @@
                             </p>
                         </a>
                     </li>
+                    <li>
+                        <a href="{% url 'completed_and_notcompleted_work' task_id=1 group_id=1 %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                                <p>
+                                    Задания
+                                </p>
+                        </a>
+                    </li>
+                    
                     {% else %}
                     <li class="nav-header">Меню студента</li>
                     <li class="nav-item">
@@ -174,12 +183,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon far"></i>
-                            <p>
-                                Моё распределение
-                            </p>
-                        </a>
+                            <a href=" {% url 'student_task_upload' task_id=1 %} " class="nav-link">
+                                <i class="nav-icon far"></i>
+                                <p>
+                                    Моё распределение
+                                </p>
+                            </a>
                     </li>
                     {% endif %}
                     {% endif %}

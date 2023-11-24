@@ -29,13 +29,12 @@ class TaskUpload(View):
             return HttpResponse('Успешно')
         else:
             form = StudentTaskForm()
-            print("Пуська")
+
 
         return render(request, "students/checkTask/task_upload.html", {'form': form, 'task_id' : task_id})
 
     def createFiles(self, request, form, task_id, own_grade):
         files = form.cleaned_data["files"]
-        print("Создало")
 
         arr_id = []
         for file in files:

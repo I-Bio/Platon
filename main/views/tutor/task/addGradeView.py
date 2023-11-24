@@ -2,7 +2,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 
 from main.forms import AddGradeForm
-from main.models import UserTask, StudentFile
+from main.models import UserTask, StudentFile, Task, User
 
 from django.http import Http404
 
@@ -12,13 +12,22 @@ class AddGradeView(View):
     def get(self, request, user_id: int, main_task_id: int):
         try:
             user = UserTask.objects.filter(user_id=user_id, main_task_id=main_task_id).first()
+            print(user.grade)
             files = StudentFile.objects.filter(creator=user_id, task_id=main_task_id)
-
+            task_name = Task.objects.filter(id=main_task_id).first()
         except (UserTask.DoesNotExist, StudentFile.DoesNotExist):
             raise Http404
 
-        return render(request, template_name="tutor/addGrade.html",
-                      context={'form': AddGradeForm, 'user': user, 'files': files})
+
+        context = {
+
+            'form': AddGradeForm,
+            'user': user,
+            'files': files,
+            'task_name' : task_name,
+        }
+
+        return render(request, template_name="tutor/addGrade.html", context=context)
 
     def post(self, request, user_id: int, main_task_id: int):
         user = UserTask.objects.filter(user_id=user_id, main_task_id=main_task_id).first()

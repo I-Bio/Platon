@@ -8,6 +8,7 @@ from main.models import Unit, Lecture, Reference, File, Test, Task, Subject
 # @login_required(login_url='/login/', redirect_field_name=None)
 class UnitContent(View):
     def get(self, request, unit_id):
+        print(request.user.pk)
         unit = Unit.objects.filter(pk=unit_id)
 
         if not unit.exists():
