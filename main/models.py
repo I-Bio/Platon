@@ -217,9 +217,9 @@ class UserTask(models.Model):
     group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True) #
     main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
 
-    grade = models.IntegerField(null=True, blank=True)
-    own_grade = models.IntegerField(null=True, blank=True)
-    checker_grade = models.IntegerField(null=True, blank=True)
+    grade = models.IntegerField(null=True, blank=True, default=0)
+    own_grade = models.IntegerField(null=True, blank=True, default=0)
+    checker_grade = models.IntegerField(null=True, blank=True, default=0)
 
     time_delivery = models.DateTimeField(auto_now_add=True)
 

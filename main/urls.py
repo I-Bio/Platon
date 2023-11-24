@@ -30,6 +30,7 @@ from .views.tutor.student.studentsList import StudentsList
 from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
 from .views.tutor.task.addGradeView import AddGradeView
+from .views.tutor.task.showUncompletedTasks import showUncompletedTasks
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
 from .views.tutor.unit.elements.unitLectureCreate import UnitLectureCreate
@@ -91,7 +92,7 @@ urlpatterns = [
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
 
     path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(),
-         name='completed_and_notcompleted_work'),
+         name='completed_and_notcompleted_work'), #EDRGVEWRGWSERBWR
 
     path('assign_for_review/<int:user_id>/<int:main_task_id>', AssignStudent.as_view(), name='select_students'),
 
@@ -106,5 +107,7 @@ urlpatterns = [
 
     path('create_invite_link/', CreateInviteLinkView.as_view(), name='create_invite_link'),
 
-    path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu')
+    path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
+
+    path('show_uncompleted_tasks/<int:task_id>/<int:group_id>', showUncompletedTasks.as_view(), name='show_uncompleted_tasks')
 ]
