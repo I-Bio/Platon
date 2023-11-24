@@ -98,7 +98,7 @@ urlpatterns = [
 
     path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(),
          name='show_grade_card_list'),
-    path('show_grade_card_list_students/<int:user_id>/<int:subject_id>', ShowGradeCardStudent.as_view(),
+    path('show_grade_card_list_students/<int:user_id>/', ShowGradeCardStudent.as_view(),
          name='show_grade_card_list_students'),
 
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),

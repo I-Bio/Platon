@@ -210,7 +210,6 @@ class Unit(models.Model):
 
 class UserTask(models.Model):
 
-    file_list_id = models.JSONField(default=list, blank=True, null=True) #список id файлов прикрепленных студентом
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
     last_name = models.CharField(max_length=256, null=True) #
     first_name = models.CharField(max_length=256, null=True) #
