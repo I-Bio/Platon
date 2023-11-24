@@ -196,11 +196,13 @@ class AddGroupUserForm(forms.Form):
 
         model_class = self.model_mapping.get(user_type)
         if model_class:
-            model_class.objects.create(name=name)
-
             group = Group.objects.create(name=name)
             permissions = Permission.objects.none()
             group.permissions.set(permissions)
+
+            model_class.objects.create(name=group)
+
+
 
 
 class ChooseStudentsToChecker(forms.ModelForm):

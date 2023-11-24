@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 
@@ -16,24 +16,24 @@ def score_to_grade(score):
 
 
 class StudentGroup(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class TutorGroup(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class AdminGroup(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class RegistrationLinks(models.Model):

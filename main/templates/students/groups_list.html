@@ -41,10 +41,12 @@
                                     <li class="list-group mb-1">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <a name="editButton" type="button" class="btn bg-cyan" href="{% url 'students_list' group.pk %}">
+                                                <a name="editButton" type="button" class="btn bg-cyan"
+                                                   href="{% url 'students_list' group.pk %}">
                                                     Список студентов
                                                 </a>
                                             </div>
+                                            
                                             <p class="form-control bg-dark">{{ group.name }}</p>
                                         </div>
                                     </li>

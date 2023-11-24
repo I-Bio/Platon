@@ -45,7 +45,7 @@ class Registration(View):
                     email=form.cleaned_data['email'],
                     password=form.cleaned_data['password']
                 )
-                user_group = form.cleaned_data['group']
+                user_group = Group.objects.get(name=form.cleaned_data['group'])
 
                 if TutorGroup.objects.filter(name=user_group):
                     user.is_tutor = True
