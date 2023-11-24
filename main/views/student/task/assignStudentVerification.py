@@ -7,23 +7,16 @@ from main.models import GroupCheck, User, Task, StudentGroup, UserTask
 
 
 class AssignStudent(View):
-
-
     def get(self, request, user_id, main_task_id):
-        a = GroupCheck.objects.get_or_create(usser_id=user_id, main_task_id=main_task_id, user_check_id=[])
-
         info_task_user = UserTask.objects.filter(user_id=user_id).first()
         user_name = User.objects.filter(id=info_task_user.pk).first()
 
         info_user = User.objects.filter(groups__name=info_task_user.group_id)
 
-        info_user_id_list = GroupCheck.objects.filter(usser_id=user_id).first().user_check_id #нужно вывести в левой колонке
+        info_user_id_list = GroupCheck.objects.filter(usser_id=user_id).first().user_check_id
         filet_users = User.objects.filter(id__in=info_user_id_list)
 
         sasy = info_user.exclude(id__in=filet_users)
-
-
-
 
 
         context = {

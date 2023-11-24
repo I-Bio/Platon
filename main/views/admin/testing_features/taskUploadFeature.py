@@ -3,20 +3,23 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from main.forms import StudentTaskForm
+from main.mixins.adminRequired import AdminRequiredMixin
 from main.models import Task, StudentFile
 
 
-class TaskUpload(View):
-    def get(self, request, task_id):
+class TaskUploadFeature(AdminRequiredMixin, View):
+    def get(self, request):
         return render(request, "students/checkTask/task_upload.html", {'form' : StudentTaskForm()})
 
-    def post(self, request, task_id):
-        form = StudentTaskForm(request.POST, request.FILES)
+    def post(self, request):
+        #form = StudentTaskForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            self.createFiles(request, form, task_id)
-        else:
-            print("Пуська")
+        print(request.POST, request.FILES)
+
+        # if form.is_valid():
+        #     self.createFiles(request, form, task_id)
+        # else:
+        #     print("Пуська")
 
         return render(request, "students/checkTask/task_upload.html", {'form': StudentTaskForm()})
 

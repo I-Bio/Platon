@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 
 
-
 def score_to_grade(score):
     if score > 90:
         return 5
@@ -47,7 +46,6 @@ class RegistrationLinks(models.Model):
 
 
 class User(AbstractUser):
-
     is_tutor = models.BooleanField(default=False)
 
     def update_grades_for_outdated_tasks(self):
@@ -100,16 +98,13 @@ class Papa(models.Model):
         return self.papa
 
 
-
 class Subject(models.Model):
     name = models.CharField(max_length=256, default="")
     tutor_id = models.ForeignKey('User', on_delete=models.PROTECT, null=True)
     users_id = models.JSONField(default=list, blank=True, null=True)
-    #creator = models.IntegerField()
 
     def __str__(self):
         return self.name
-
 
 
 class Lecture(models.Model):
@@ -159,8 +154,6 @@ class TestResult(models.Model):
 
     result = models.IntegerField(default=0)
 
-
-
     def set_result_from_score(self, score):
         self.result = score * self.test.get_questions_count() / 100
 
@@ -184,13 +177,8 @@ class Task(models.Model):
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
 
-
-
-
-
     def __str__(self):
         return self.name
-
 
 
 class Unit(models.Model):
@@ -209,7 +197,7 @@ class Unit(models.Model):
 
 
 class UserTask(models.Model):
-    name_task = models.CharField(max_length=256) # название, которое дает пользователь своей работе
+    name_task = models.CharField(max_length=256)  # название, которое дает пользователь своей работе
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
     last_name = models.CharField(max_length=256, null=True)
     first_name = models.CharField(max_length=256, null=True)
@@ -221,9 +209,10 @@ class UserTask(models.Model):
     def __str__(self):
         return self.name_task
 
+
 class GroupCheck(models.Model):
     usser_id = models.IntegerField(null=True)
-    group_check = models.IntegerField(null=True) # потом удалю
+    group_check = models.IntegerField(null=True)  # потом удалю
     main_task_id = models.IntegerField(null=True)
 
     user_check_id = models.JSONField(default=list, blank=True, null=True)
@@ -238,5 +227,3 @@ class Notification(models.Model):
 
     def __str__(self):
         return str(self.user_id)
-
-     
