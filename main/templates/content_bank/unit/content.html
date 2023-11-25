@@ -115,8 +115,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success border-0">Задание</span>
                         </div>
-                        <a class="text-success form-control bg-dark">
-                            <span class="name-text">{{task.name}}</span>
+                        <a class="text-success form-control bg-dark" href=" {% url 'completed_and_notcompleted_work' task_id=task.pk group_id=1 %} ">
+                            <span class="name-text">  {{task.name}}</span>
                         </a>
                         <div class="input-group-append">
                             <button type="button" id="task-{{task.pk}}" name="delButton" class="btn bg-danger" data-toggle="modal" data-target="#modal-delete">Удалить</button>
@@ -197,7 +197,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success border-0">Задание</span>
                         </div>
-                        <a href="#PathToFile" class="text-success form-control bg-dark">
+                        <a href=" {% url 'student_task_upload' task_id=1 %} " class="text-success form-control bg-dark">
                             <span class="name-text">{{task.name}}</span>
                         </a>
                     </div>

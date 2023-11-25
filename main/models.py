@@ -222,13 +222,12 @@ class UserTask(models.Model):
 
     time_delivery = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name_task
+
 
 class GroupCheck(models.Model):
-    usser_id = models.IntegerField(null=True)
+    usser_id = models.ForeignKey('User', on_delete=models.PROTECT)
     group_check = models.IntegerField(null=True) # потом удалю
-    main_task_id = models.IntegerField(null=True)
+    main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
 
     user_check_id = models.JSONField(default=list, blank=True, null=True)
 

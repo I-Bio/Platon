@@ -35,8 +35,8 @@
                     {% for stud in user_info %}
                     <li class="list-group-item bg-gray-dark border border-light">
                         <span class="badge badge-info w-4 p-3">{{ name_group }}</span>
-                        <a href="AddGrade.html"> {{ stud.last_name }} {{ stud.first_name }}
-                                {% if stud.pk in user_id_list %}
+                        <a href=""> {{ stud.last_name }} {{ stud.first_name }}
+                                {% if stud.pk in list_checked %}
                                     <span class="badge badge-success">Выполнено</span>
                                 {% else %}
                                     <span class="badge badge-danger">Не выполнено</span>

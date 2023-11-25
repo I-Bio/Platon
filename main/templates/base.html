@@ -163,14 +163,20 @@
                             </p>
                         </a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a href="{% url 'completed_and_notcompleted_work' task_id=1 group_id=1 %}" class="nav-link">
                             <i class="nav-icon far"></i>
-                                <p>
-                                    Задания
-                                </p>
+                            <p>
+                                Задания
+                            </p>
                         </a>
                     </li>
+
+
+
+
+
+
 
 
                     {% else %}
@@ -192,7 +198,7 @@
                             </a>
                     </li>
                     <li class="nav-item">
-                            <a href=" {% url 'show_uncompleted_tasks' task_id=1 group_id=1 %} " class="nav-link">
+                            <a href=" {% url 'tasks_to_check' main_task_id=1 %} " class="nav-link">
                                 <i class="nav-icon far"></i>
                                 <p>
                                     Моё распределение

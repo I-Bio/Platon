@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-light">Задание: {{ name_main_task_info }} </h1>
+                <h1 class="m-0 text-light">Задание: {{ name_task }} </h1>
             </div>
         </div>
     </div>
@@ -19,16 +19,16 @@
     <div class="dropdown content-header">
         <button class="btn btn-secondary dropdown-toggle bg-gray-dark" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Группы
+            Задание
         </button>
 
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start"
              style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(8px, 52px, 0px);">
-            {% for group in name_groups %}
-            <a class="dropdown-item"
-               href="{% url 'show_uncompleted_tasks' task_id=task_id group_id=group.pk %}">
-                {{ group }} </a>
+            {% for task in arr_name_tasks %}
+            <a class="dropdown-item" href="{% url 'tasks_to_check' main_task_id=task.pk%}">
+                {{ task.name }}
+            </a>
             {% endfor %}
         </div>
 
@@ -38,16 +38,15 @@
 
                 <ul class="list-group list-group-flush content-header ">
                     {% for stud in user_info %}
-                        {% if stud.pk in arr_completed_task_user_id%}
-                        {% else %}
-                        <li class="list-group-item bg-gray-dark border border-light">
-                            <span class="badge badge-info w-4 p-3">{{ name_group }}</span>
-
-                            <a href="{% url 'add_grade' user_id=stud.pk main_task_id=task_id %}">
-                                {{ stud.last_name }} {{ stud.first_name }}
-                                <span class="badge badge-danger">Не выполнено</span>
-                            </a>
-                        {% endif %}
+                    <li class="list-group-item bg-gray-dark border border-light">
+                        <span class="badge badge-info w-4 p-3">{{ name_group }}</span>
+                        <a href="{% url 'add_grade' user_id=stud.pk main_task_id=main_task_id %}"> {{ stud.last_name }} {{ stud.first_name }}
+                                {% if stud.pk in list_checked %}
+                                    <span class="badge badge-success">Выполнено</span>
+                                {% else %}
+                                    <span class="badge badge-danger">Не выполнено</span>
+                                {% endif %}
+                        </a>
                     </li>
                     {% endfor %}
 

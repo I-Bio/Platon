@@ -109,5 +109,5 @@ urlpatterns = [
 
     path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
 
-    path('show_uncompleted_tasks/<int:task_id>/<int:group_id>', showUncompletedTasks.as_view(), name='show_uncompleted_tasks')
+    path('tasks_to_check/<int:main_task_id>/', showUncompletedTasks.as_view(), name='tasks_to_check')
 ]

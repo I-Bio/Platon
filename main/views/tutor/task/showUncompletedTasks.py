@@ -1,39 +1,47 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.views import View
 
-from main.models import StudentGroup, Task, UserTask, User
+from main.models import StudentGroup, Task, UserTask, User, GroupCheck
 
 
 class showUncompletedTasks(View):
-    def get(self, request, task_id, group_id):
-        name_groups = StudentGroup.objects.all()
-        name_main_task_info = Task.objects.filter(id=task_id)[0]
-        name_group = StudentGroup.objects.filter(id=group_id)[0]
-        print(name_main_task_info)
-        user_task_info = UserTask.objects.filter(group_id=group_id, main_task_id=task_id)
-        user_info = User.objects.filter(groups=group_id)
+    def get(self, request, main_task_id):
+        group_check = GroupCheck.objects.filter(usser_id=request.user.pk)
+
+        if group_check.count() == 0:
+            raise PermissionDenied()
+
+        group_check = group_check.all()
+
+        arr_name_tasks = []
+        for name_task in group_check:
+            arr_name_tasks.append(name_task.main_task_id)
 
 
-        arr_completed_task_user_id = []
-        for user_task in user_task_info:
-            arr_completed_task_user_id.append(user_task.user_id.pk)
+        group_check = GroupCheck.objects.filter(usser_id=request.user.pk, main_task_id=main_task_id)
 
-        print(user_info, arr_completed_task_user_id)
+        name_group = request.user.groups.all().first()
+        name_task = group_check.first().main_task_id
 
-        for stud in user_info:
-            if stud.pk in arr_completed_task_user_id:
-                print(stud.last_name, stud.pk, 'выполнил')
-            else:
-                print(stud.last_name, stud.pk, 'не выполнил')
+        list_whom_can_check = group_check.first().user_check_id
+        user_info = User.objects.filter(groups=request.user.groups.all().first(), id__in=list_whom_can_check)
+
+
+        task_user = UserTask.objects.filter(group_id=request.user.groups.all().first().pk, main_task_id=main_task_id)
+        list_checked = []
+        for task in task_user:
+            list_checked.append(task.user_id.pk)
+
+
 
         context = {
-            'task_id' : task_id,
-            'group_id' : group_id,
-
-            'name_groups' : name_groups,
-            'name_main_task_info' : name_main_task_info,
+            'arr_name_tasks' : arr_name_tasks,
             'user_info' : user_info,
             'name_group' : name_group,
-            'arr_completed_task_user_id' : arr_completed_task_user_id,
+            'name_task' : name_task,
+            'list_checked' : list_checked,
+
+            'main_task_id' : main_task_id,
         }
         return render(request, 'tutor/tasks_to_be_checked.html', context=context)
