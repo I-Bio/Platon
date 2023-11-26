@@ -27,6 +27,8 @@ class showUncompletedTasks(View):
 
 
         group_check = group_check.filter(main_task_id=main_task_id)
+        if group_check.count() == 0:
+            raise PermissionDenied()
 
         name_group = request.user.groups.all().first()
         name_task = group_check.first().main_task_id
