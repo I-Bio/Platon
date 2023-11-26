@@ -8,11 +8,12 @@ from main.models import StudentGroup, Task, UserTask, User, GroupCheck
 class showUncompletedTasks(View):
     def get(self, request, main_task_id):
 
-        main_task_id = UserTask.objects.filter(user_id=request.user.pk).first().main_task_id.pk
+        group_obj = GroupCheck.objects.filter(user_id=request.user.pk).first()
 
-        if main_task_id == None:
+        if group_obj == None:
             raise PermissionDenied()
 
+        main_task_id = group_obj.main_task_id.pk
 
         group_check = GroupCheck.objects.filter(usser_id=request.user.pk)
 
