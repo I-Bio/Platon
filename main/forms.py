@@ -226,11 +226,21 @@ class ChooseStudentsToChecker(forms.ModelForm):
 class AddGradeForm(forms.Form):
     grade = forms.IntegerField()
 
-    def save(self, user):
-        if user:
+    def save(self, user_task):
+        if user_task:
             grade = self.cleaned_data['grade']
-            user.grade = grade
-            user.save()
+            user_task.grade = grade
+            user_task.save()
+
+
+class AddGradeStudentForm(forms.Form):
+    grade = forms.IntegerField()
+
+    def save(self, user_task):
+        if user_task:
+            grade = self.cleaned_data['grade']
+            user_task.checker_grade = grade
+            user_task.save()
 
 
 class CreateInviteLinkForm(forms.Form):

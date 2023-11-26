@@ -7,6 +7,11 @@ from main.models import StudentGroup, Task, UserTask, User, GroupCheck
 
 class showUncompletedTasks(View):
     def get(self, request, main_task_id):
+
+        main_task_id = UserTask.objects.filter(user_id=request.user.pk).first().main_task_id.pk
+
+
+
         group_check = GroupCheck.objects.filter(usser_id=request.user.pk)
 
         if group_check.count() == 0:

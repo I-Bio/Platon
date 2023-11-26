@@ -56,9 +56,11 @@
 
                                 <div class="row">
                                     <div class="col-12 mt-0">
+                                        {% if user.is_tutor or user.is_staff  %}
                                         <button type="submit" class="btn bg-primary col-12"
                                                 name="selectForReviewButton">Назначить на проверку
                                         </button>
+                                        {% endif %}
                                     </div>
                                     <div class="col-lg-12 col-md-12 mt-2">
                                         <ul class="list-group ">
