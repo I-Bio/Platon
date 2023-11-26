@@ -10,6 +10,8 @@ class showUncompletedTasks(View):
 
         main_task_id = UserTask.objects.filter(user_id=request.user.pk).first().main_task_id.pk
 
+        if main_task_id == None:
+            raise PermissionDenied()
 
 
         group_check = GroupCheck.objects.filter(usser_id=request.user.pk)
