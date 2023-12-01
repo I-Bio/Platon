@@ -11,9 +11,9 @@ from main.models import Subject, StudentGroup, User
 class AdderToTheCourseView(TutorRequiredMixin, View):
     def get(self, request):
         subjects = Subject.objects.filter(tutor_id=request.user.pk)
-        enrolled_group_names = subjects[0].enrolled_student_group
-        enrolled_groups = StudentGroup.objects.filter(name__in=enrolled_group_names)
-        not_enrolled_groups = StudentGroup.objects.exclude(name__in=enrolled_group_names)
+        enrolled_groups_id = subjects[0].enrolled_groups_id
+        enrolled_groups = StudentGroup.objects.filter(name__in=enrolled_groups_id)
+        not_enrolled_groups = StudentGroup.objects.exclude(name__in=enrolled_groups_id)
 
         return render(request, template_name="tutor/addingToTheCourse.html",
                       context={'form': AdderToTheCourceForm, 'subjects': subjects, 'enrolled_groups': enrolled_groups,
@@ -35,7 +35,7 @@ class AdderToTheCourseView(TutorRequiredMixin, View):
 
             form.save(enrolled_student_group_values)
 
-            enrolled_group_names = subjects[subjects_of_this_teacher-1].enrolled_student_group
+            enrolled_group_names = subjects[subjects_of_this_teacher-1].enrolled_groups_id
             enrolled_groups = StudentGroup.objects.filter(name__in=enrolled_group_names)
             not_enrolled_groups = StudentGroup.objects.exclude(name__in=enrolled_group_names)
 
@@ -46,7 +46,7 @@ class AdderToTheCourseView(TutorRequiredMixin, View):
                                    'subjects_of_this_teacher': subjects_of_this_teacher})
 
         if "subjects_of_this_teacher" in request.POST:
-            enrolled_group_names = subjects[subjects_of_this_teacher-1].enrolled_student_group
+            enrolled_group_names = subjects[subjects_of_this_teacher-1].enrolled_groups_id
             enrolled_groups = StudentGroup.objects.filter(name__in=enrolled_group_names)
             not_enrolled_groups = StudentGroup.objects.exclude(name__in=enrolled_group_names)
 

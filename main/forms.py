@@ -266,4 +266,4 @@ class AdderToTheCourceForm(forms.Form):
         subjects_of_this_teacher = self.cleaned_data['subjects_of_this_teacher']
         enrolled_student_group_values = selected_group
 
-        subject = Subject.objects.filter(pk=subjects_of_this_teacher).update(enrolled_student_group=enrolled_student_group_values)
+        subject = Subject.objects.filter(pk=subjects_of_this_teacher).update(enrolled_groups_id=enrolled_student_group_values)
