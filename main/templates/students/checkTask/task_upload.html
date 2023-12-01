@@ -14,14 +14,16 @@
             </div>
         </div>
     </div>
-    <section class="content">
-        <div class="container-fluid">
-            <form name="main" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+
+<section class="content">
+    <div class="container-fluid">
+        <form method="post" enctype="multipart/form-data" action="{% url 'student_task_upload' task_id=task_id %}">
+            {% csrf_token %}
                 <div class="card">
                     <div class="card-header bg-success">
                         <h3 class="card-title">Основное</h3>
                     </div>
+
 
                     <div class="card-body bg-gradient-dark">
                         <div class="row">
@@ -44,17 +46,22 @@
                                                name="files" style="display: none" id="file">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div><h3 class="text-center"><input type="number"
+
+                                <div><h3 class="text-center"><input type="number"
                                                             name="own_grade"
                                                             class="form-control bg-gray-dark border border-light col-6 pb-10 "
                                                             id="formGroupExampleInput"
-                                                            placeholder="Оценить свою работу"></h3></div>
-                        <div class="row" id="fileContainer">
+                                                            placeholder="Оценить свою работу"></h3>
+                                </div>
+                              
+                                <div class="row" id="fileContainer">
+                                </div>
+                              
+                            </div>
                         </div>
                     </div>
                 </div>
+                        
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card-primary bg-gradient-dark">

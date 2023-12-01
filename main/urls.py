@@ -32,6 +32,7 @@ from .views.tutor.student.studentsList import StudentsList
 from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
 from .views.tutor.task.addGradeView import AddGradeView
+from .views.tutor.task.showUncompletedTasks import showUncompletedTasks
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
 from .views.tutor.unit.elements.unitLectureCreate import UnitLectureCreate
@@ -93,13 +94,13 @@ urlpatterns = [
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
 
     path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(),
-         name='completed_and_notcompleted_work'),
+         name='completed_and_notcompleted_work'), #EDRGVEWRGWSERBWR
 
     path('assign_for_review/<int:user_id>/<int:main_task_id>', AssignStudent.as_view(), name='select_students'),
 
     path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(),
          name='show_grade_card_list'),
-    path('show_grade_card_list_students/<int:user_id>/<int:subject_id>', ShowGradeCardStudent.as_view(),
+    path('show_grade_card_list_students/<int:user_id>/', ShowGradeCardStudent.as_view(),
          name='show_grade_card_list_students'),
 
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
@@ -110,8 +111,10 @@ urlpatterns = [
 
     path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
 
-    path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
 
+    path('tasks_to_check/<int:main_task_id>/', showUncompletedTasks.as_view(), name='tasks_to_check')
+
+    path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
 
 
     # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
@@ -121,4 +124,5 @@ urlpatterns = [
 
     # ВЫШЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
     # ИХ В основной ФУНКЦИОНАЛ НЕЛЬЗЯ ДОБАВЛЯТЬ
+
 ]

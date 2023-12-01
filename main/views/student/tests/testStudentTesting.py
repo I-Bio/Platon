@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views import View
@@ -10,6 +11,21 @@ from main.models import Unit, TestResult, Test
 # @user_passes_test(lambda u: not u.is_staff, login_url='/index/', redirect_field_name=None)
 class TestStudentTesting(StudentGroupRequiredMixin, View):
     def get(self, request, unit_id, test_id):
+
+
+        info_unit = Unit.objects.all()
+        # проверка на доступ к курсу
+        for theme in info_unit:
+            for test in theme.tests.all():
+                if test_id == test.pk:
+                    subject = theme.subject
+
+        if (request.user.pk in subject.users_id) == False:
+            return HttpResponse(status=403)
+
+
+
+
         unit = Unit.objects.filter(pk=unit_id)
 
         if not unit.exists():
@@ -27,6 +43,7 @@ class TestStudentTesting(StudentGroupRequiredMixin, View):
 
         if test.start_date > timezone.now() or test.end_date < timezone.now() + timezone.timedelta(minutes=2):
             return redirect('unit_content', unit_id)
+
 
         return render(request, "content_bank/test/testing.html", {'test': test})
 

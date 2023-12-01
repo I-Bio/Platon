@@ -197,24 +197,25 @@ class Unit(models.Model):
 
 
 class UserTask(models.Model):
-    name_task = models.CharField(max_length=256)  # название, которое дает пользователь своей работе
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
-    last_name = models.CharField(max_length=256, null=True)
-    first_name = models.CharField(max_length=256, null=True)
-    group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
+    last_name = models.CharField(max_length=256, null=True) #
+    first_name = models.CharField(max_length=256, null=True) #
+    group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True) #
     main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
-    grade = models.IntegerField(null=True, blank=True)
-    time_delivery = models.DateTimeField(null=True)
 
-    def __str__(self):
-        return self.name_task
+    grade = models.IntegerField(null=True, blank=True, default=0)
+    own_grade = models.IntegerField(null=True, blank=True, default=0)
+    checker_grade = models.IntegerField(null=True, blank=True, default=0)
+
+    time_delivery = models.DateTimeField(auto_now_add=True)
+
+
 
 
 class GroupCheck(models.Model):
-    usser_id = models.IntegerField(null=True)
-    group_check = models.IntegerField(null=True)  # потом удалю
-    main_task_id = models.IntegerField(null=True)
-
+    usser_id = models.ForeignKey('User', on_delete=models.PROTECT)
+    group_check = models.IntegerField(null=True)
+    main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
     user_check_id = models.JSONField(default=list, blank=True, null=True)
 
 
@@ -225,5 +226,7 @@ class Notification(models.Model):
     time_delivery = models.DateTimeField(default=timezone.now)
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
 
+
     def __str__(self):
         return str(self.user_id)
+      

@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views import View
 
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import UserTask, Task, StudentGroup, User
 
 
-class StudentsWorkList(View):
+class StudentsWorkList(TutorRequiredMixin, View):
     def get(self, request, task_id, group_id):
         users_task_info = UserTask.objects.filter(group_id=group_id, main_task_id=task_id)
         name_main_task_info = Task.objects.filter(id=task_id).first()

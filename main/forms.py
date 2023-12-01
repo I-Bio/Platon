@@ -160,6 +160,8 @@ class TaskForm(forms.ModelForm):
 
 class StudentTaskForm(forms.Form):
     files = MultipleFileField()
+    own_grade = forms.IntegerField()
+
 
 
 class UserTaskForm(forms.ModelForm):
@@ -220,11 +222,21 @@ class ChooseStudentsToChecker(forms.ModelForm):
 class AddGradeForm(forms.Form):
     grade = forms.IntegerField()
 
-    def save(self, user):
-        if user:
+    def save(self, user_task):
+        if user_task:
             grade = self.cleaned_data['grade']
-            user.grade = grade
-            user.save()
+            user_task.grade = grade
+            user_task.save()
+
+
+class AddGradeStudentForm(forms.Form):
+    grade = forms.IntegerField()
+
+    def save(self, user_task):
+        if user_task:
+            grade = self.cleaned_data['grade']
+            user_task.checker_grade = grade
+            user_task.save()
 
 
 class CreateInviteLinkForm(forms.Form):
@@ -256,6 +268,10 @@ class CreateInviteLinkForm(forms.Form):
             self.fields['group_name'].queryset = StudentGroup.objects.all()
             self.fields['group_name'].empty_label = None
             self.fields['group_name'].label = 'Выберите группу'
+
+
+class SelectSubjet(forms.Form):
+    subject = forms.IntegerField()
 
 
 class AdderToTheCourceForm(forms.Form):
