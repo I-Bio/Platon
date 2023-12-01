@@ -15,10 +15,11 @@
     </div>
 </div>
 
+
 <section class="content">
 
     <div class="container-fluid">
-        <form>
+        <form method="POST" action=" {% url 'groups_list' %}">
             <div class="card">
                 <div class="card-header bg-success">
                     <h3 class="card-title">Поиск групп</h3>
@@ -33,30 +34,66 @@
                 </div>
 
                 <div class="card-body bg-gradient-dark">
+                    <div>
+
+                        {% csrf_token %}
+                        <select class="form-control col-lg-2 col-md-2 mb-4 bg-gray-dark"
+                                name="subject"
+                                onchange="this.form.submit()">
+
+                            {% if subject_selected_object %}
+                            <option value="{{subject_selected_object.pk}}" selected>{{subject_selected_object.name}}
+                            </option>
+                            {% endif %}
+
+                            {% for subject in subjects %}
+
+                            {% if subject.pk != subject_selected_object.pk %}
+                            <option value="{{subject.pk}}">{{subject.name}}</option>
+                            {% endif %}
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
                     <div class="row">
                         <div class="col-lg-12" id="AllQuestions">
                             <div class="small-box bg-dark">
                                 <ul class="p-0" id="BankList">
                                     {% for group in groups %}
+
                                     <li class="list-group mb-1">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <a name="editButton" type="button" class="btn bg-cyan" href="{% url 'students_list' group.pk %}">
-                                                    Список студентов
-                                                </a>
+                                                <button name="editButton" type="button" class="btn bg-cyan">
+                                                    <a href="StudentCatalog.html">Список студентов</a>
+                                                </button>
+                                                <button type="button" class="btn bg-primary">
+                                                    {% if subject_selected_object %}
+                                                    <a href="{% url 'show_grade_card_list' group_id=group.id subject_id=subject_selected_object.pk %}">Табель</a>
+                                                    {% else %}
+                                                    <a href="{% url 'show_grade_card_list' group_id=group.id subject_id=1 %}">Табель</a>
+                                                    {% endif %}
+                                                </button>
                                             </div>
-                                            <p class="form-control bg-dark">{{ group.name }}</p>
+                                            <p class="form-control bg-dark">{{group}}</p>
                                         </div>
                                     </li>
+
                                     {% endfor %}
+
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </form>
         <script defer src="{% static 'content_bank/SearchModule.js' %}"></script>
     </div>
+
+
 </section>
 {% endblock %}

@@ -269,3 +269,9 @@ class CreateInviteLinkForm(forms.Form):
             self.fields['group_name'].label = 'Выберите группу'
 
 
+class SelectSubjet(forms.Form):
+    subject = forms.IntegerField()
+
+
+
+
