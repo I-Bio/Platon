@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views import View
 
-from main.mixins.studentGroupRequired import StudentGroupRequiredMixin
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import StudentGroup, Subject, Task, UserTask, Unit, TestResult, User
 

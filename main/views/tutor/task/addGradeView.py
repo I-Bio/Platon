@@ -12,7 +12,6 @@ class AddGradeView(View):
     def get(self, request, user_id: int, main_task_id: int):
         try:
             user = UserTask.objects.filter(user_id=user_id, main_task_id=main_task_id).first()
-            # print(user.grade)
             files = StudentFile.objects.filter(creator=user_id, task_id=main_task_id)
             task_name = Task.objects.filter(id=main_task_id).first()
         except (UserTask.DoesNotExist, StudentFile.DoesNotExist):

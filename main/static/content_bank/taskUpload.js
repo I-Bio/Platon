@@ -24,7 +24,7 @@ $("#file").change(
 	}
 );
 
-// $("#submitButton").click(Submit);
+$("#submitButton").click(Submit);
 
 function RemoveFile(event){
 	let fileElement = event.target.parentNode.parentNode.parentNode.parentNode;
@@ -37,10 +37,11 @@ function RemoveFile(event){
 }
 
 function Submit(){
-	let formData = new FormData();
+	let formData = new FormData(document.forms.main);
+	formData.delete("files");
 
-	for (let key in filesToUpload){
-		formData.append("file[]", filesToUpload[key]);
+	for (let item of filesToUpload.values()){
+		formData.append("files", item);
 	}
 
 	$.ajax({
@@ -50,12 +51,7 @@ function Submit(){
 		headers: {'X-CSRFToken': csrf},
 		contentType: false,
 		processData: false,
-		data: {
-
-		},
-		files : {
-			formData
-		},
+		data: formData,
 		dataType : 'json',
 		success: function (response){
 		}

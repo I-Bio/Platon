@@ -66,9 +66,11 @@
                                     <li class="list-group mb-1">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
+
                                                 <button name="editButton" type="button" class="btn bg-cyan">
                                                     <a href="StudentCatalog.html">Список студентов</a>
                                                 </button>
+                                              
                                                 <button type="button" class="btn bg-primary">
                                                     {% if subject_selected_object %}
                                                     <a href="{% url 'show_grade_card_list' group_id=group.id subject_id=subject_selected_object.pk %}">Табель</a>
@@ -76,6 +78,7 @@
                                                     <a href="{% url 'show_grade_card_list' group_id=group.id subject_id=1 %}">Табель</a>
                                                     {% endif %}
                                                 </button>
+                                              
                                             </div>
                                             <p class="form-control bg-dark">{{group}}</p>
                                         </div>
@@ -91,9 +94,9 @@
                 </div>
             </div>
         </form>
+      
         <script defer src="{% static 'content_bank/SearchModule.js' %}"></script>
+      
     </div>
-
-
 </section>
 {% endblock %}

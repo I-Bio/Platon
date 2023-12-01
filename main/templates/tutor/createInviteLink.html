@@ -31,7 +31,8 @@
                                        {% for value, label in form.group_name.field.choices %}
                                         <option value="{{ value }}">{{ label }}</option>
                                        {% endfor %}
-                                   {% else %}
+                                    {% endif %}
+                                   {% if is_tutor %}
                                        {% for group in form.group_name.field.queryset %}
                                        <option value="{{ group.pk }}">{{ group.name }}</option>
                                        {% endfor %}

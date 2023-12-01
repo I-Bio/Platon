@@ -5,9 +5,10 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks
+from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks, Subject
 from django.contrib.auth.models import Group, Permission
 from django.db.utils import IntegrityError
+
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -25,6 +26,7 @@ class MultipleFileField(forms.FileField):
         else:
             result = single_file_clean(data, initial)
         return result
+
 
 ### Auth forms
 
@@ -84,11 +86,9 @@ class QuestionForm(forms.ModelForm):
 
 
 class SubjectForm(forms.ModelForm):
-
     class Meta:
         model = models.Subject
         fields = ['name', 'tutor_id']
-
 
 
 class UnitForm(forms.ModelForm):
@@ -157,7 +157,7 @@ class TaskForm(forms.ModelForm):
         model = models.Task
         fields = ['name', 'description', 'start_date', 'end_date']
 
-        
+
 class StudentTaskForm(forms.Form):
     files = MultipleFileField()
     own_grade = forms.IntegerField()
@@ -186,7 +186,6 @@ class AddGroupUserForm(forms.Form):
     name = forms.CharField(max_length=50)
     user_type = forms.ChoiceField(choices=user_choices)
 
-
     model_mapping = {
         student: StudentGroup,
         tutor: TutorGroup,
@@ -199,22 +198,19 @@ class AddGroupUserForm(forms.Form):
 
         model_class = self.model_mapping.get(user_type)
         if model_class:
-            model_class.objects.create(name=name)
-
             group = Group.objects.create(name=name)
             permissions = Permission.objects.none()
             group.permissions.set(permissions)
 
+            model_class.objects.create(name=group)
 
 
 class ChooseStudentsToChecker(forms.ModelForm):
-
     class Meta:
         model = models.GroupCheck
         fields = ['usser_id', 'group_check', 'main_task_id']
 
     def clean(self):
-
         cleaned_data = super(ChooseStudentsToChecker, self).clean()
 
         if 'questions[]' in self.data:
@@ -222,7 +218,7 @@ class ChooseStudentsToChecker(forms.ModelForm):
 
         return self.cleaned_data
 
-      
+
 class AddGradeForm(forms.Form):
     grade = forms.IntegerField()
 
@@ -244,6 +240,7 @@ class AddGradeStudentForm(forms.Form):
 
 
 class CreateInviteLinkForm(forms.Form):
+    group_name = forms.ModelChoiceField(queryset=StudentGroup.objects.none(), label='')
     end_date = forms.DateTimeField()
 
     def save(self):
@@ -255,15 +252,19 @@ class CreateInviteLinkForm(forms.Form):
         except IntegrityError:
             ...
 
-
-
     def __init__(self, *args, **kwargs):
         is_staff = kwargs.pop('is_staff', False)
+        is_tutor = kwargs.pop('is_tutor', False)
+
         super(CreateInviteLinkForm, self).__init__(*args, **kwargs)
+
         if is_staff:
-            all_groups = list(StudentGroup.objects.all()) + list(TutorGroup.objects.all()) + list(AdminGroup.objects.all())
-            self.fields['group_name'] = forms.ChoiceField(choices=[(group.name, str(group)) for group in all_groups], label='Выберите группу')
-        else:
+            all_groups = list(StudentGroup.objects.all()) + list(TutorGroup.objects.all()) + list(
+                AdminGroup.objects.all())
+            self.fields['group_name'] = forms.ChoiceField(choices=[(group.name, str(group)) for group in all_groups],
+                                                          label='Выберите группу')
+
+        if is_tutor:
             self.fields['group_name'].queryset = StudentGroup.objects.all()
             self.fields['group_name'].empty_label = None
             self.fields['group_name'].label = 'Выберите группу'
@@ -273,5 +274,12 @@ class SelectSubjet(forms.Form):
     subject = forms.IntegerField()
 
 
+class AdderToTheCourceForm(forms.Form):
+    subjects_of_this_teacher = forms.IntegerField()
+    enrolled_student_group = forms.JSONField()
 
+    def save(self, selected_group):
+        subjects_of_this_teacher = self.cleaned_data['subjects_of_this_teacher']
+        enrolled_student_group_values = selected_group
 
+        subject = Subject.objects.filter(pk=subjects_of_this_teacher).update(enrolled_groups_id=enrolled_student_group_values)

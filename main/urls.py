@@ -10,6 +10,7 @@ from main.views.tutor.unit.elements.unitTestEdit import UnitTestEdit
 from main.views.tutor.unit.elements.unitTestCreate import UnitTestCreate
 from main.views.general.index import Index
 from .views.admin.AddGroupUserView import AddGroupUserView
+from .views.admin.testing_features.taskUploadFeature import TaskUploadFeature
 
 from .views.authenticate.login import Login
 from .views.authenticate.registration import Registration
@@ -21,6 +22,7 @@ from .views.student.task.showAndEstimateGrade import GradeTask
 from .views.student.task.showWorkStudents import StudentsWorkList
 from .views.student.task.taskUpload import TaskUpload
 from .views.tutor.link.createInviteLinkView import CreateInviteLinkView
+from .views.tutor.student.adderToTheCourceView import AdderToTheCourseView
 from .views.tutor.student.gradeCardList import ShowGradeCardList
 
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
@@ -109,5 +111,18 @@ urlpatterns = [
 
     path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
 
+
     path('tasks_to_check/<int:main_task_id>/', showUncompletedTasks.as_view(), name='tasks_to_check')
+
+    path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
+
+
+    # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
+    # ИХ В основной ФУНКЦИОНАЛ НЕЛЬЗЯ ДОБАВЛЯТЬ
+
+    path('testing/features/taskUpload', TaskUploadFeature.as_view(), name='task_upload_feature')
+
+    # ВЫШЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
+    # ИХ В основной ФУНКЦИОНАЛ НЕЛЬЗЯ ДОБАВЛЯТЬ
+
 ]

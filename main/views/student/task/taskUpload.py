@@ -8,8 +8,8 @@ from main.models import Task, StudentFile, UserTask, User, Unit, Subject, Studen
 
 class TaskUpload(View):
     def get(self, request, task_id):
-
         return render(request, "students/checkTask/task_upload.html", {'form': StudentTaskForm(), 'task_id': task_id})
+
 
     def post(self, request, task_id):
         form = StudentTaskForm(request.POST, request.FILES)
