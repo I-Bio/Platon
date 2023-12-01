@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks
+from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks, Subject
 from django.contrib.auth.models import Group, Permission
 from django.db.utils import IntegrityError
 
@@ -203,8 +203,6 @@ class AddGroupUserForm(forms.Form):
             model_class.objects.create(name=group)
 
 
-
-
 class ChooseStudentsToChecker(forms.ModelForm):
     class Meta:
         model = models.GroupCheck
@@ -258,3 +256,14 @@ class CreateInviteLinkForm(forms.Form):
             self.fields['group_name'].queryset = StudentGroup.objects.all()
             self.fields['group_name'].empty_label = None
             self.fields['group_name'].label = 'Выберите группу'
+
+
+class AdderToTheCourceForm(forms.Form):
+    subjects_of_this_teacher = forms.IntegerField()
+    enrolled_student_group = forms.JSONField()
+
+    def save(self, selected_group):
+        subjects_of_this_teacher = self.cleaned_data['subjects_of_this_teacher']
+        enrolled_student_group_values = selected_group
+
+        subject = Subject.objects.filter(pk=subjects_of_this_teacher).update(enrolled_student_group=enrolled_student_group_values)

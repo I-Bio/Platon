@@ -22,6 +22,7 @@ from .views.student.task.showAndEstimateGrade import GradeTask
 from .views.student.task.showWorkStudents import StudentsWorkList
 from .views.student.task.taskUpload import TaskUpload
 from .views.tutor.link.createInviteLinkView import CreateInviteLinkView
+from .views.tutor.student.adderToTheCourceView import AdderToTheCourseView
 from .views.tutor.student.gradeCardList import ShowGradeCardList
 
 from .views.tutor.student.grades.studentGradeChanger import StudentGradeChanger
@@ -108,6 +109,8 @@ urlpatterns = [
     path('create_invite_link/', CreateInviteLinkView.as_view(), name='create_invite_link'),
 
     path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
+
+    path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
 
 
 
