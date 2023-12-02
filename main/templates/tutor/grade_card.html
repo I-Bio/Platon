@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Список вопросов{% endblock %}
+
+
+{% block content %}
+
+
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1 class="m-0 text-light">Табель {{ info_group_name }} по дисциплине "{{ info_subject }}"</h1>
+                </div>
+                <div class="col-sm-12">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        {% for user in users %}
+        <div class="card card-default bg-gray-dark border border-light collapsed-card">
+            <div class="card-header">
+                <h3 class="card-title">{{ user.name }} </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body" style="display: none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Задание</th>
+                                    <th scope="col">Дата сдачи</th>
+                                    <th scope="col">Оценка</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for work in user.works %}
+                                <tr>
+                                    <td>{{ work.work_name }}</td>
+                                    <td>{{ work.date }}</td>
+                                    <td>{{ work.grade }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+    </section>
+
+
+{% endblock %}

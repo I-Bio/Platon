@@ -2,12 +2,13 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from main.forms import LectureForm
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
-class UnitLectureCreate(View):
+class UnitLectureCreate(TutorRequiredMixin, View):
     def get(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
 

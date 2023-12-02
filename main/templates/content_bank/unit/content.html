@@ -21,7 +21,8 @@
                 <p class="m-0">Содержимое</p>
             </div>
             {% csrf_token %}
-            {% if user.is_staff %}
+            {% if flag_tutor %} {# Проверка на статус персонала#}
+
             <div class="card-body">
                 <div class="small-box shadow-none">
                     <button type="button" class="btn bg-cyan" data-toggle="modal" data-target="#modal-add">Добавить элемент</button>
@@ -46,6 +47,7 @@
                         </div>
                     </div>
                 </div>
+
                 {% endfor %}
                 {% for reference in unit.references.all %}
                 <div class="small-box" data-name="elementReference">
@@ -113,8 +115,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success border-0">Задание</span>
                         </div>
-                        <a class="text-success form-control bg-dark">
-                            <span class="name-text">{{task.name}}</span>
+                        <a class="text-success form-control bg-dark" href=" {% url 'completed_and_notcompleted_work' task_id=task.pk group_id=1 %} ">
+                            <span class="name-text">  {{task.name}}</span>
                         </a>
                         <div class="input-group-append">
                             <button type="button" id="task-{{task.pk}}" name="delButton" class="btn bg-danger" data-toggle="modal" data-target="#modal-delete">Удалить</button>
@@ -131,7 +133,7 @@
                 
                 
             </div>
-            {% else %}
+            {% elif flag_stud %}
             <div class="card-body">
 
                 {% for lecture in unit.lectures.all %}
@@ -195,17 +197,19 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success border-0">Задание</span>
                         </div>
-                        <a href="#PathToFile" class="text-success form-control bg-dark">
+                        <a href=" {% url 'student_task_upload' task_id=1 %} " class="text-success form-control bg-dark">
                             <span class="name-text">{{task.name}}</span>
                         </a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+                <h1>Упс, у вас нет прав для просмотра этого материала</h1>
             {% endif %}
         </div>
 
-        {% if user.is_staff %}
+        {% if flag_tutor %}
         {% load static %}
         <script defer src="{% static 'content_bank/courseCatalog.js' %}"></script>
         <div class="modal fade" id="modal-add">

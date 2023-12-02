@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Генерация ивайт-ссылок</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Создание ссылки</h3>
+                </div>
+
+                <div class="card-body bg-gradient-dark">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                                <label>Выбор группы</label>
+                                <select class="form-control select2 select2-hidden-accessible bg-gray-dark" name="group_name">
+                                   {% if is_staff %}
+                                       {% for value, label in form.group_name.field.choices %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                       {% endfor %}
+                                    {% endif %}
+                                   {% if is_tutor %}
+                                       {% for group in form.group_name.field.queryset %}
+                                       <option value="{{ group.pk }}">{{ group.name }}</option>
+                                       {% endfor %}
+                                   {% endif %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                                <label>Дата</label>
+                            <div class="input-group date" id="dateTo" data-target-input="nearest">
+
+                                <input type="text" class="form-control datetimepicker-input bg-dark" data-target="#dateTo" name="end_date">
+                                <div class="input-group-append datepick" data-target="#dateTo" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                                <label>Генерация</label>
+                                <div class="">
+                                <button type="submit" class="btn bg-primary">Создать ссылку</button>
+                            </div>
+                            </div>
+                        </div>
+                        {% if registration_link %}
+                        <div class="container mt-5 ml-0 ">
+                            <div class="row">
+                                <div class="col-sm col-12">
+                                        Вы можете скопировать эту ссылку по нажатию
+                                </div>
+                            </div>
+                            <hr class="bg-light col-12 pl-0">
+                        </div>
+                        <div class="container mt-3 ml-1 ">
+                            <div class="row">
+                                <div onclick="copyToClipboard()" id="link" class="col-sm text-info" >
+                                    <p>{{registration_link}}</p>
+                                </div>
+                                <div class="float-right">
+                                    <button onclick="copyToClipboardd()" type="button" class="btn bg-info" id="copybutton">Скопировать текст</button>
+                                </div>
+                            </div>
+                        </div>
+                        {%endif%}
+                        </div>
+                    </div>
+                </div>
+        </form>
+            </div>
+            <script defer src="{% static 'content_bank/generateLink.js' %}"></script>
+    </div>
+
+
+</section>
+{% endblock %}

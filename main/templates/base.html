@@ -4,82 +4,124 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}ETS{% endblock %}</title>
+    <title>{% block title %}Platon{% endblock %}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% load static %}
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- BootStrap 4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css"
+          integrity="sha512-rt/SrQ4UNIaGfDyEXZtNcyWvQeOq0QLygHluFQcSjaGB04IxWhal71tKuzP6K8eYXYB6vJV4pHkXcmFGGQ1/0w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css"
+          integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- iCheck -->
-    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{% static 'destination/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.3/skins/all.min.css"
+          integrity="sha512-wcKDxok85zB8F9HzgUwzzzPKJhHG7qMfC7bSKrZcFTC2wZXVhmgKNXYuid02cHVnFSC8KOJCXQ8M83UVA7v5Bw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.4.5/styles/overlayscrollbars.min.css"
+          integrity="sha512-A6YOz/Tv4+wyzq0s1++GYun5D04Lx0vJKJ/qKLhyPNLQfywZGKsktJhObK3SjIURR0Gy/Lw22jXMEoXFY5NUDg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- Splide -->
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css"
+          integrity="sha512-IuO+tczf4J43RzbCMEFggCWW5JuX78IrCJRFFBoQEXNvGI6gkUw4OjuwMidiS4Lm9Q2lILzpJwZuMWuSEeT9UQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"
+      integrity="sha512-lvdq1fIyCp6HMWx1SVzXvGC4jqlX3e7Xm7aCBrhj5F1WdWoLe0dBzU0Sy10sheZYSkJpJcboMNO/4Qz1nJNxfA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
+            integrity="sha512-BHDCWLtdp0XpAFccP2NifCbJfYoYhsRSZOUM3KnAxy2b/Ay3Bn91frud+3A95brA4wDWV3yEOZrJqgV8aZRXUQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed bg-dark">
-    <div class="wrapper">
-        <nav class="main-header navbar navbar-expand navbar-dark">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{% url 'index' %}" class="nav-link">Главная страница</a>
-                </li>
-            </ul>
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-dark">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{% url 'index' %}" class="nav-link">Главная страница</a>
+            </li>
+        </ul>
 
-            <ul class="navbar-nav ml-auto">
-            </ul>
-        </nav>
-
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-
-            <a href="{% url 'index' %}" class="brand-link navbar-success">
-                <img src="" alt="LOGO"
-                    class="brand-image elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">ETS</span>
-            </a>
-
-            <div class="sidebar">
-
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="info">
-                        <a href="#" class="d-block">Профиль</a>
-                    </div>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    {% if new_notifications != 0%}
+                    <span class="badge badge-warning navbar-badge">{{new_notifications}}</span>
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">Уведомления</span>
+                    <div class="dropdown-divider"></div>
+                    {% for notification in notifications|slice:":5" %}
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> {{notification.header}}
+                        <span class="float-right text-muted text-sm">{{notification.time_delivery|timesince|add:" назад"}}</span>
+                    </a>
+                    {% endfor %}
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'notification_menu' %}" class="dropdown-item dropdown-footer">Посмотреть все уведомления</a>
                 </div>
+            </li>
+        </ul>
 
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar nav-flat nav-compact nav-legacy flex-column" data-widget="treeview" role="menu"
+
+    </nav>
+
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+        <a href="{% url 'index' %}" class="brand-link navbar-success">
+            <img src="" alt="LOGO"
+                 class="brand-image elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Platon</span>
+        </a>
+
+        <div class="sidebar">
+
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a href="#" class="d-block">Профиль</a>
+                </div>
+            </div>
+
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar nav-flat nav-compact nav-legacy flex-column" data-widget="treeview"
+                    role="menu"
                     data-accordion="false">
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Дисциплины
+                                  Дисциплины
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             {% for subject in subjects_all %}
                             <li class="nav-item has-treeview">
-                               
+
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-circle"></i>
                                     <p>
@@ -104,96 +146,134 @@
                             {% endfor %}
                         </ul>
                     </li>
+
                     {% if user.is_authenticated %}
-                        {% if user.is_staff %}
-                            <li class="nav-header">Меню преподавателя</li>
-                            <li class="nav-item">
-                                <a href="{% url 'groups_list' %}" class="nav-link">
-                                    <i class="nav-icon far"></i>
-                                    <p>
-                                        Группы студентов
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'questions_list' %}" class="nav-link">
-                                    <i class="nav-icon far"></i>
-                                    <p>
-                                        Банк задач
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'subject_create' %}" class="nav-link">
-                                    <i class="nav-icon far"></i>
-                                    <p>
-                                        Добавление дисциплины
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'unit_create' %}" class="nav-link">
-                                    <i class="nav-icon far"></i>
-                                    <p>
-                                        Добавление темы
-                                    </p>
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-header">Меню студента</li>
-                            <li class="nav-item">
-                                <a href="{% url 'own_grades' %}" class="nav-link">
-                                    <i class="nav-icon far"></i>
-                                    <p>
-                                        Мои оценки
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far"></i>
-                                    <p>
-                                        Моё распределение
-                                    </p>
-                                </a>
-                            </li>
-                        {% endif %}
+                    {% if user.is_staff or user.is_tutor %}
+                  
+                    <li class="nav-header">Меню преподавателя</li>
+                  
+                    <li class="nav-item">
+                        <a href="{% url 'groups_list' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Группы студентов
+                            </p>
+                        </a>
+                    </li>
+                  
+                    <li class="nav-item">
+                        <a href="{% url 'questions_list' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Банк задач
+                            </p>
+                        </a>
+                    </li>
+                  
+                    <li class="nav-item">
+                        <a href="{% url 'subject_create' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Добавление дисциплины
+                            </p>
+                        </a>
+                    </li>
+                  
+                    <li class="nav-item">
+                        <a href="{% url 'unit_create' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Добавление темы
+                            </p>
+                        </a>
+                    </li>
+                  
+                    <li class="nav-item">
+                        <a href="{% url 'create_invite_link' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Создание приглашения
+                            </p>
+                        </a>
+                    </li>                         
+
+
+                    {% else %}
+                  
+                    <li class="nav-header">Меню студента</li>
+                  
+                    <li class="nav-item">
+                        <a href="{% url 'own_grades' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Мои оценки
+                            </p>
+                        </a>
+                    </li>
+                  
+                    <li class="nav-item">
+                            <a href=" {% url 'tasks_to_check' main_task_id=0 %} " class="nav-link">
+                                <i class="nav-icon far"></i>
+                                <p>
+                                    Работы на проверку
+                                </p>
+                            </a>
+                    </li>
+                  
+                    {% endif %}
+                  
                     {% endif %}
                 </ul>
-                </nav>
-            </div>
-        </aside>
-
-        <div class="content-wrapper bg-dark">
-            {% block content %}{% endblock %}
+            </nav>
         </div>
+    </aside>
 
-        <footer class="main-footer bg-dark">
-            <strong>Copyright &copy; 20**-20**</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b></b>
-            </div>
-        </footer>
-
-        <aside class="control-sidebar control-sidebar-dark">
-        </aside>
+    <div class="content-wrapper bg-dark">
+        {% block content %}{% endblock %}
     </div>
 
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Moment -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{% static '/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <!-- Splide -->
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
-    <!-- AdminLTE App -->
-    <script src="{% static 'destination/js/adminlte.js' %}"></script>
+    <footer class="main-footer bg-dark">
+        <strong>Copyright &copy; 20**-20**</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b></b>
+        </div>
+    </footer>
+
+    <aside class="control-sidebar control-sidebar-dark">
+    </aside>
+</div>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Moment -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.min.js"
+        integrity="sha512-7rusk8kGPFynZWu26OKbTeI+QPoYchtxsmPeBqkHIEXJxeun4yJ4ISYe7C6sz9wdxeE1Gk3VxsIWgCZTc+vX3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Splide -->
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"
+        integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- AdminLTE App -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"
+        integrity="sha512-KBeR1NhClUySj9xBB0+KRqYLPkM6VvXiiWaSz/8LCQNdRpUm38SWUrj0ccNDNSkwCD9qPA4KobLliG26yPppJA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- iCheck -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.3/icheck.min.js"
+        integrity="sha512-RGDpUuNPNGV62jwbX1n/jNVUuK/z/GRbasvukyOim4R8gUEXSAjB4o0gBplhpO8Mv9rr7HNtGzV508Q1LBGsfA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- overlayScrollbars -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.4.5/browser/overlayscrollbars.browser.es6.min.js"
+        integrity="sha512-C0rwyfLqz5Asrncj50D9aLJC5SY3QqtRhnkeTpPRLlos8R2seI3fY+z1Dq9zi3Pt/UDau/zXgDfNSMveZGhpjw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>
