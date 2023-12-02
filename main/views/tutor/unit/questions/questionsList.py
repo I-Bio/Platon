@@ -2,12 +2,13 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Question
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
-class QuestionsList(View):
+class QuestionsList(TutorRequiredMixin, View):
     def get(self, request):
         return render(request, "content_bank/question/list.html", {'questions': Question.objects.all()})
 

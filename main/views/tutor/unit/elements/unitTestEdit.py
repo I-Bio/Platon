@@ -5,10 +5,11 @@ from django.views import View
 
 from main import models
 from main.forms import TestForm
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit, Question
 
 #@method_decorator(user_passes_test, name="dispatch")
-class UnitTestEdit(LoginRequiredMixin, View):
+class UnitTestEdit(LoginRequiredMixin, TutorRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = None
 

@@ -1,0 +1,139 @@
+
+{% extends "base.html" %}
+
+{% block title %}Редактирование оценки{% endblock %}
+
+{% load static %}
+{% block content %}
+
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-light">Назначение студента {{ info_task_user.last_name }} {{ info_task_user.first_name }} на проверку студентов </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <section class="content">
+
+                <div class="container-fluid">
+                    <form method="POST" action="{% url 'select_students' user_id=user_id main_task_id=main_task_id %}">
+                    {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header bg-success">
+                                <h3 class="card-title">Основное</h3>
+                            </div>
+
+                            <div class="card-body bg-gradient-dark">
+                                <div class="row">
+                                    <div class="col-lg-6 splide splide--slide splide--ttb splide--draggable is-active is-initialized" id="inTest" role="region" aria-roledescription="carousel">
+                                        <div class="form-group">
+                                            <p class="card-header bg-success">Выбранные студенты</p>
+                                        </div>
+                                        <div class="splide__track small-box bg-dark splide__track--slide splide__track--ttb splide__track--draggable" id="inTest-track" style="padding-top: 0px; padding-bottom: 0px; height: calc((10rem - 0px) - 0px);" aria-live="polite" aria-atomic="true">
+                                            <ul class="splide__list" id="TestList" role="presentation" style="transform: translateY(0px);">
+
+                                                {% for stud in filet_users%}
+                                                <li class="splide__slide">
+                                                    <div class="input-group">
+                                                        <p class="form-control bg-dark">{{ stud.last_name }} {{ stud.first_name }}</p>
+                                                        <div class="input-group-prepend">
+                                                            <button name="removeButton" type="button" id="{{ stud.pk }}" class="btn bg-danger" >Убрать</button>
+                                                            <input type="hidden" name="questions[]" value="{{ stud.pk }}">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </div>
+                                    <ul class="splide__pagination splide__pagination--ttb" role="tablist" aria-label="Select a slide to show" aria-orientation="vertical"></ul></div>
+                                    <div class="col-lg-6 splide splide--slide splide--ttb splide--draggable is-active is-overflow is-initialized" id="inBank" role="region" aria-roledescription="carousel">
+                                        <div class="card-header bg-success row m-0 mb-2">
+                                                <p class="col-4 m-0 p-0">Студенты</p>
+                                                <div class="col-8 flex-row float-right">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-dark">
+                                                                <i class="fas fa-search"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" id="searchField" class="form-control p-0 h-auto bg-dark">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="splide__track small-box bg-dark splide__track--slide splide__track--ttb splide__track--draggable" id="inBank-track" style="padding-top: 0px; padding-bottom: 0px; height: calc((10rem - 0px) - 0px);" aria-live="polite" aria-atomic="true">
+                                                <ul class="splide__list" id="BankList" role="presentation" style="transform: translateY(0px);">
+
+                                                    {% for stud in sasy %}
+                                                    <li class="splide__slide is-active is-visible" id="inBank-slide01" role="tabpanel" aria-roledescription="slide" aria-label="1 of 9" style="height: calc(25%);">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <button name="addButton" type="button" class="btn bg-cyan" id="{{ stud.pk }}">Добавить</button>
+                                                            </div>
+                                                            <p class="form-control bg-dark"> {{ stud.last_name }} {{ stud.first_name }} </p>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </div>
+                                    <ul class="splide__pagination splide__pagination--ttb" role="tablist" aria-label="Select a slide to show" aria-orientation="vertical">
+                                        <li role="presentation"><button class="splide__pagination__page is-active" type="button" role="tab" aria-controls="inBank-slide01 inBank-slide02 inBank-slide03 inBank-slide04" aria-label="Go to page 1" aria-selected="true"></button></li>
+                                        <li role="presentation"><button class="splide__pagination__page" type="button" role="tab" aria-controls="inBank-slide05 inBank-slide06 inBank-slide07 inBank-slide08" aria-label="Go to page 2" tabindex="-1"></button></li>
+                                        <li role="presentation"><button class="splide__pagination__page" type="button" role="tab" aria-controls="inBank-slide06 inBank-slide07 inBank-slide08 inBank-slide09" aria-label="Go to page 3" tabindex="-1"></button></li>
+                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-primary bg-gradient-dark">
+                                    <div class="card-header bg-success">
+                                        <h3 class="card-title">Отправить</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row small-box">
+                                            <button type="submit" class="btn bg-cyan col-12" id="submitButton">Подтвердить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <script defer="" src="{% static 'content_bank/SearchModule.js' %}"></script>
+                    <script defer="" src="{% static 'content_bank/test_form.js' %}"></script>
+                    <template id="RemoveFromQuest">
+                        <li class="splide__slide">
+                            <div class="input-group">
+                                <p class="form-control bg-dark"></p>
+                                <div class="input-group-prepend">
+                                    <button name="removeButton" type="button" class="btn bg-danger">Убрать</button>
+                                    <input type="hidden" name="questions[]">
+                                </div>
+                            </div>
+                        </li>
+                    </template>
+                    <template id="AddQuestToTest">
+                        <li class="splide__slide">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button name="removeButton" type="button" class="btn bg-cyan">Добавить</button>
+                                </div>
+                                <p class="form-control bg-dark"></p>
+                            </div>
+                        </li>
+                    </template>
+                </div>
+            </section>
+
+
+
+
+{% endblock %}

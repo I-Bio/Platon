@@ -2,12 +2,13 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
+from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import User, TestResult
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
-class StudentGradeChanger(View):
+class StudentGradeChanger(TutorRequiredMixin, View):
     def get(self, request, student_pk, grade_pk):
         student = User.objects.filter(pk=student_pk)
 
