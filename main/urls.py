@@ -100,7 +100,7 @@ urlpatterns = [
 
     path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(),
          name='show_grade_card_list'),
-    path('show_grade_card_list_students/<int:user_id>/', ShowGradeCardStudent.as_view(),
+    path('show_grade_card_list_students/', ShowGradeCardStudent.as_view(),
          name='show_grade_card_list_students'),
 
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
@@ -112,7 +112,7 @@ urlpatterns = [
     path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
 
 
-    path('tasks_to_check/<int:main_task_id>/', showUncompletedTasks.as_view(), name='tasks_to_check')
+    path('tasks_to_check/<int:main_task_id>/', showUncompletedTasks.as_view(), name='tasks_to_check'),
 
     path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
 
@@ -120,7 +120,7 @@ urlpatterns = [
     # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
     # ИХ В основной ФУНКЦИОНАЛ НЕЛЬЗЯ ДОБАВЛЯТЬ
 
-    path('testing/features/taskUpload', TaskUploadFeature.as_view(), name='task_upload_feature')
+    path('testing/features/taskUpload', TaskUploadFeature.as_view(), name='task_upload_feature'),
 
     # ВЫШЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
     # ИХ В основной ФУНКЦИОНАЛ НЕЛЬЗЯ ДОБАВЛЯТЬ
