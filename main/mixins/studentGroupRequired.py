@@ -3,5 +3,6 @@ from main.models import StudentGroup
 
 
 class StudentGroupRequiredMixin(UserGroupRequiredMixin):
-    login_url = '/login'
-    userGroup = 'list(StudentGroup.objects.all())'
+
+    def getGroupsList(self):
+        return list(StudentGroup.objects.all())

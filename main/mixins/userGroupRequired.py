@@ -3,13 +3,15 @@ from django.http import HttpResponse
 
 
 class UserGroupRequiredMixin(AccessMixin):
-    login_url = '/'
+    login_url = '/login'
     redirect_field_name = None
-    userGroup = None  # Переопределять либо как "группа", либо как список ["группа1", "группа2"]
+
+    def getGroupsList(self):
+        ...
 
     def hasExistGroup(self):
-        resultString = self.request.user.groups.filter(name=self.userGroup).exists()
-        resultList = self.request.user.groups.filter(name__in=self.userGroup).exists()
+        resultString = self.request.user.groups.filter(name=self.getGroupsList()).exists()
+        resultList = self.request.user.groups.filter(name__in=self.getGroupsList()).exists()
         result = resultString or resultList
         return result
 
@@ -24,7 +26,5 @@ class UserGroupRequiredMixin(AccessMixin):
 
         if not perms:
             return HttpResponse(status=403)
-
-
 
         return super().dispatch(request, *args, **kwargs)

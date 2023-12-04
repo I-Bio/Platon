@@ -3,5 +3,6 @@ from main.models import AdminGroup
 
 
 class AdminRequiredMixin(UserGroupRequiredMixin):
-    login_url = '/login'
-    userGroup = 'list(AdminGroup.objects.all())'
+
+    def getGroupsList(self):
+        return list(AdminGroup.objects.all())

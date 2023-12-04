@@ -3,7 +3,6 @@ from main.models import TutorGroup
 
 
 class TutorRequiredMixin(UserGroupRequiredMixin):
-    login_url = '/login'
-    userGroup = 'list(TutorGroup.objects.all())'
 
-
+    def getGroupsList(self):
+        return list(TutorGroup.objects.all())
