@@ -16,9 +16,11 @@ class GroupsList(TutorRequiredMixin, View):
         subjects = Subject.objects.filter(tutor_id=request.user.pk)
         form = SelectSubjet(request.POST)
 
+
         return render(request, template_name="students/groups_list.html",
                       context={
-                          'groups': StudentGroup.objects.all(),
+                          'groups': Group.objects.filter(id__in=subjects.all().first().enrolled_groups_id)
+,
                           'subjects': subjects,
                           'form' : form,})
 

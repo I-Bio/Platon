@@ -15,6 +15,8 @@ class ShowGradeCardStudent(StudentGroupRequiredMixin, View):
         user = User.objects.filter(id=request.user.pk).first()
         group_user_id = user.groups.first().pk
 
+        print(user, group_user_id)
+
         where_is_sudent_in_subject = []
         for subject in subjects_all:
             if group_user_id in subject.enrolled_groups_id:
