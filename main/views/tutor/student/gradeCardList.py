@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
@@ -14,8 +15,11 @@ class ShowGradeCardList(TutorRequiredMixin, View):
         info_task_user = User.objects.filter(groups=group_id)
         unit_info = Unit.objects.filter(subject_id=subject_id)
 
+
         info_subject = Subject.objects.filter(id=subject_id).first()
 
+        if request.user.pk != info_subject.tutor_id.pk:
+            return HttpResponse(status=400)
 
         all_task_list = [i.tasks.all() for i in unit_info]
         all_tasks = []
