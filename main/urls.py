@@ -51,7 +51,7 @@ urlpatterns = [
 
     path('', Index.as_view(), name="index"),
 
-    path('grades/', StudentOwnGrades.as_view(), name="own_grades"),
+    path('grades/', ShowGradeCardStudent.as_view(), name="own_grades"),
 
     path('groups/', GroupsList.as_view(), name="groups_list"),
     path('students/<int:group_pk>', StudentsList.as_view(), name="students_list"),
@@ -100,9 +100,6 @@ urlpatterns = [
 
     path('show_grade_card_list/<int:group_id>/<int:subject_id>', ShowGradeCardList.as_view(),
          name='show_grade_card_list'),
-    path('show_grade_card_list_students/', ShowGradeCardStudent.as_view(),
-         name='show_grade_card_list_students'),
-
     path('taskTest/<int:task_id>', TaskUpload.as_view(), name='student_task_upload'),
 
     path('add_grade/<int:user_id>/<int:main_task_id>', AddGradeView.as_view(), name='add_grade'),
