@@ -11,7 +11,7 @@ from django.http import HttpResponse, Http404
 from django.core.exceptions import PermissionDenied, ValidationError
 
 from main.forms import RegistrationForm
-from main.models import StudentGroup, User, RegistrationLinks, TutorGroup
+from main.models import StudentGroup, User, RegistrationLinks, TutorGroup, AdminGroup
 from django.contrib.auth.models import Group
 
 
@@ -49,6 +49,9 @@ class Registration(View):
 
                 if TutorGroup.objects.filter(name=user_group):
                     user.is_tutor = True
+
+                if AdminGroup.objects.filter(name=user_group):
+                    user.is_staff = True
 
                 group = Group.objects.get(name=user_group)
 
