@@ -47,10 +47,10 @@ class Registration(View):
                 )
                 user_group = Group.objects.get(name=form.cleaned_data['group'])
 
-                if TutorGroup.objects.get(name=user_group):
+                if TutorGroup.objects.filter(name=user_group):
                     user.is_tutor = True
 
-                if AdminGroup.objects.get(name=user_group):
+                if AdminGroup.objects.filter(name=user_group):
                     user.is_staff = True
 
                 group = Group.objects.get(name=user_group)
