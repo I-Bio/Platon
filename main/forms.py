@@ -276,7 +276,7 @@ class SelectSubjet(forms.Form):
 
 class AdderToTheCourceForm(forms.Form):
     subjects_of_this_teacher = forms.IntegerField()
-    enrolled_student_group = forms.JSONField()
+    enrolled_student_group = forms.JSONField(required=False)
 
     def save(self, selected_group):
         subjects_of_this_teacher = self.cleaned_data['subjects_of_this_teacher']
