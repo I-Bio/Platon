@@ -20,12 +20,13 @@ class GroupsList(TutorRequiredMixin, View):
 
         if subjects.first() != None:
             groups = StudentGroup.objects.filter(id__in=subjects.first().enrolled_groups_id)
-
+            subject_selected_object = subjects.first()
 
         return render(request, template_name="students/groups_list.html",
                       context={
                           'groups': groups,
                           'subjects': subjects,
+                          'subject_selected_object':subject_selected_object,
                           'form' : form,})
 
     def post(self, request):
@@ -38,10 +39,6 @@ class GroupsList(TutorRequiredMixin, View):
 
                 subject_selected_object = subjects.filter(id=subject_selected).first()
                 groups = Group.objects.filter(id__in=subjects.filter(id=subject_selected).first().enrolled_groups_id)
-
-
-
-
 
 
             return render(request, template_name="students/groups_list.html",
