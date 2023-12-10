@@ -17,11 +17,11 @@ class UnitContent(View):
         unit = unit.first()
 
         flag_tutor = False
+        flag_stud= False
 
         if request.user.pk == unit.subject.tutor_id.pk:
             flag_tutor = True
-
-        if request.user.groups.all().first().pk in unit.subject.enrolled_groups_id:
+        elif request.user.groups.all().first().pk in unit.subject.enrolled_groups_id:
             flag_stud = True
         else:
             raise PermissionDenied()
