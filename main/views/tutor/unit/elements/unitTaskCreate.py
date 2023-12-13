@@ -3,7 +3,7 @@ from django.views import View
 
 from main.forms import TaskForm
 from main.mixins.tutorRequired import TutorRequiredMixin
-from main.models import Unit
+from main.models import Unit, User, Notification
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
@@ -20,6 +20,12 @@ class UnitTaskCreate(TutorRequiredMixin, View):
     def post(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
         unit = unit.first()
+
+        enrolled_groups_id = unit.subject.enrolled_groups_id
+        users = User.objects.filter(groups__in=enrolled_groups_id)
+        notification_header = "Появилось задание"
+        notification_body = f"Появилось задание по дисциплине '{unit.subject.name}'"
+
         form = TaskForm(request.POST)
 
         if not form.is_valid():
@@ -28,6 +34,13 @@ class UnitTaskCreate(TutorRequiredMixin, View):
         form.save()
 
         unit.tasks.add(form.instance)
+
+        for user in users:
+            notification = Notification.objects.create(
+                header=notification_header,
+                body=notification_body,
+                user_id=user
+            )
 
         if 'saveAndReturn' in request.POST:
             return redirect('unit_content', unit_id)
