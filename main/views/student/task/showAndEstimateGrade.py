@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from main.forms import UserTaskForm
-from main.models import UserTask, User, Task, GroupCheck, StudentGroup
+from main.models import UserTask, User, Task, GroupCheck, StudentGroup, Notification
 
 
 class GradeTask(View):
@@ -57,6 +57,14 @@ class GradeTask(View):
                 user_task = UserTask.objects.get(user_id=user_id, main_task_id=main_task_id)
                 user_task.grade = selected_grade
                 user_task.save()
+
+                notification_header = f"Вам выставлена оценка за задание '{user_task.main_task_id.name}'"
+                notification_body = f"Вам выставлена оценка {selected_grade} по дисциплине '{user_task.main_task_id.unit.subject.name}' за задание '{user_task.main_task_id.name}'"
+                notification = Notification.objects.create(
+                    header=notification_header,
+                    body=notification_body,
+                    user_id=user_task.user_id
+                )
 
                 return redirect('select_student.html', user_id=user_id, main_task_id=main_task_id, who_check=who_check )
         else:

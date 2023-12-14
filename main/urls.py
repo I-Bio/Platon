@@ -13,6 +13,7 @@ from .views.admin.AddGroupUserView import AddGroupUserView
 from .views.admin.testing_features.taskUploadFeature import TaskUploadFeature
 
 from .views.authenticate.login import Login
+from .views.authenticate.logout import Logout
 from .views.authenticate.registration import Registration
 from .views.notification.noticationMenuView import NotificationMenuView
 from .views.student.grades.gradeCardListStudents import ShowGradeCardStudent
@@ -48,6 +49,7 @@ from main.views.general.unitContent import UnitContent
 urlpatterns = [
     path('login/', Login.as_view(), name="login"),
     path('registration/<str:key>', Registration.as_view(), name="registration"),
+    path('logout/', Logout.as_view(), name="logout"),
 
     path('', Index.as_view(), name="index"),
 
