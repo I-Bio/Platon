@@ -93,7 +93,7 @@
                                     </a>
 
                                     <ul class="nav nav-treeview">
-                                        {% for unit in units_all %}
+                                        {% for unit in subject.unit_set.all %}
                                             {% if unit.subject == subject %}
                                                 <li class="nav-item">
                                                     <a href="{% url 'unit_content' unit.pk %}" class="nav-link">

@@ -23,10 +23,8 @@ def global_models(request):
             subjects_all = subjects_list
     except:
         subjects_all = None
-        print("dfdsgeghjr3infnnjfe")
 
-
-    return {'subjects_all': subjects_all, 'units_all': Unit.objects.all()}
+    return {'subjects_all': subjects_all}
 
 
 def last_notification(request):
