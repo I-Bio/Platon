@@ -21,11 +21,6 @@ class UnitTaskCreate(TutorRequiredMixin, View):
         unit = Unit.objects.filter(pk=unit_id)
         unit = unit.first()
 
-        enrolled_groups_id = unit.subject.enrolled_groups_id
-        users = User.objects.filter(groups__in=enrolled_groups_id)
-        notification_header = "Появилось задание"
-        notification_body = f"Появилось задание по дисциплине '{unit.subject.name}'"
-
         form = TaskForm(request.POST)
 
         if not form.is_valid():
@@ -34,6 +29,11 @@ class UnitTaskCreate(TutorRequiredMixin, View):
         form.save()
 
         unit.tasks.add(form.instance)
+
+        enrolled_groups_id = unit.subject.enrolled_groups_id
+        users = User.objects.filter(groups__in=enrolled_groups_id)
+        notification_header = "Появилось задание"
+        notification_body = f"Появилось задание по дисциплине '{unit.subject.name}'"
 
         for user in users:
             notification = Notification.objects.create(

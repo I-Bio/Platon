@@ -23,11 +23,6 @@ class UnitTestCreate(TutorRequiredMixin, View):
         unit = Unit.objects.filter(pk=unit_id)
         unit = unit.first()
 
-        enrolled_groups_id = unit.subject.enrolled_groups_id
-        users = User.objects.filter(groups__in=enrolled_groups_id)
-        notification_header = "Появился тест"
-        notification_body = f"Появился тест по дисциплине '{unit.subject.name}'"
-
         form = TestForm(request.POST)
 
         if not form.is_valid():
@@ -36,6 +31,11 @@ class UnitTestCreate(TutorRequiredMixin, View):
         form.save()
 
         unit.tests.add(form.instance)
+
+        enrolled_groups_id = unit.subject.enrolled_groups_id
+        users = User.objects.filter(groups__in=enrolled_groups_id)
+        notification_header = "Появился тест"
+        notification_body = f"Появился тест по дисциплине '{unit.subject.name}'"
 
         for user in users:
             notification = Notification.objects.create(
