@@ -15,13 +15,11 @@ class Index(LoginRequiredMixin, View):
             subjects = Subject.objects.filter(tutor_id=request.user).order_by('name')
         else:
             group_user = request.user.groups.first().pk
-            subjects_all = Subject.objects.all()
+            subjects_all = Subject.objects.all().order_by('name')
             subjects = []
             for subject in subjects_all:
                 if group_user in subject.enrolled_groups_id:
                     subjects.append(subject)
-            print(group_user)
-            print(subjects)
 
         return render(request, "index.html", {'subjects': subjects})
 
