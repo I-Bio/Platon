@@ -19,6 +19,7 @@ class UnitContent(View):
         flag_tutor = False
         flag_stud= False
 
+
         if request.user.pk == unit.subject.tutor_id.pk:
             flag_tutor = True
         elif request.user.groups.all().first().pk in unit.subject.enrolled_groups_id:
