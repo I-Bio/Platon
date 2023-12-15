@@ -12,13 +12,7 @@ class AuthorAdmin(admin.ModelAdmin):
     filter_horizontal = ('lectures', 'references', 'files', 'tests', 'tasks')
 
 
-admin.site.register(StudentFile)
-admin.site.register((Test, Question, QuestionOption))
-admin.site.register((Lecture, Reference, File, Task))
-admin.site.register((TestResult))
-admin.site.register((Subject))
-admin.site.register((Papa))
-admin.site.register((RegistrationLinks))
-admin.site.register((StudentGroup))
-admin.site.register((UserTask))
-admin.site.register((Notification))
+models_to_register = (
+    StudentFile, Test, Question, QuestionOption, Lecture, Reference, File, Task, TestResult, Subject, RegistrationLinks,
+    StudentGroup, TutorGroup, AdminGroup, UserTask, Notification)
+admin.site.register(models_to_register)

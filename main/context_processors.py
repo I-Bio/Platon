@@ -5,7 +5,7 @@ def global_models(request):
 
     try:
         subjects_all = Subject.objects.all()
-        if request.user.is_tutor:
+        if request.user.is_staff or request.user.is_tutor:
             tutor_id = request.user.pk
 
             subjects_list = []
@@ -14,7 +14,7 @@ def global_models(request):
                     subjects_list.append(subject)
             subjects_all = subjects_list
         else:
-            group = request.user.groups.all().first().pk
+            group = request.user.groups.first().pk
 
             subjects_list = []
             for subject in subjects_all:

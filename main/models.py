@@ -49,11 +49,12 @@ class User(AbstractUser):
     is_tutor = models.BooleanField(default=False)
 
     def update_grades_for_outdated_tasks(self):
-        outdated_tests = Test.objects.filter(end_date__lt=timezone.now()).exclude(
+        now = timezone.localtime(timezone.now())
+        outdated_tests = Test.objects.filter(end_date__lt=now).exclude(
             pk__in=self.testresult_set.all().values('test'))
 
         for test in outdated_tests:
-            TestResult(student=self, test=test, date=timezone.now(), result=0).save()
+            TestResult(student=self, test=test, date=now, result=0).save()
 
     def get_grades(self):
         self.update_grades_for_outdated_tasks()
@@ -174,8 +175,8 @@ class Task(models.Model):
     name = models.CharField(max_length=256, default="")
     description = models.TextField(default="")
 
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateTimeField(default=timezone.localtime(timezone.now()))
+    end_date = models.DateTimeField(default=timezone.localtime(timezone.now()))
 
     def __str__(self):
         return self.name
@@ -223,7 +224,7 @@ class Notification(models.Model):
     header = models.CharField(max_length=40)
     body = models.CharField(max_length=128)
     is_checked = models.BooleanField(default=False)
-    time_delivery = models.DateTimeField(default=timezone.now)
+    time_delivery = models.DateTimeField(default=timezone.localtime(timezone.now()))
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
 
 

@@ -8,45 +8,45 @@ from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import StudentGroup, Subject, User
 
 
-# @login_required(login_url='/login/', redirect_field_name=None)
-# @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 class GroupsList(TutorRequiredMixin, View):
 
     def get(self, request):
-        subjects = Subject.objects.filter(tutor_id=request.user.pk)
-        form = SelectSubjet(request.POST)
+        return self.init(request, self.doGet)
 
-        groups = None
-
-        if subjects.first() != None:
-            groups = StudentGroup.objects.filter(id__in=subjects.first().enrolled_groups_id)
-            subject_selected_object = subjects.first()
-
-        return render(request, template_name="students/groups_list.html",
-                      context={
-                          'groups': groups,
-                          'subjects': subjects,
-                          'subject_selected_object':subject_selected_object,
-                          'form' : form,})
 
     def post(self, request):
-            subjects = Subject.objects.filter(tutor_id=request.user.pk)
-            form = SelectSubjet(request.POST)
-
-            subject_selected_object = None
-            if form.is_valid():
-                subject_selected = form.cleaned_data['subject']
-
-                subject_selected_object = subjects.filter(id=subject_selected).first()
-                groups = Group.objects.filter(id__in=subjects.filter(id=subject_selected).first().enrolled_groups_id)
+        return self.init(request, self.doPost)
 
 
-            return render(request, template_name="students/groups_list.html",
-                          context={
-                              'subjects': subjects,
-                              'form' : form,
-                              'groups' : groups,
+    def init(self, request, action):
+        form = SelectSubjet(request.POST)
+        subjects = Subject.objects.filter(tutor_id=request.user.pk)
+        subject_selected = None
+        groups = None
+        return action(request, form, subjects, subject_selected, groups)
 
-                              'subject_selected_object' : subject_selected_object,
-                          }
-                          )
+    def doGet(self, request, form, subjects, subject_selected, groups):
+        if subjects.first() != None:
+            subject_selected = subjects.first()
+            groups = StudentGroup.objects.filter(name__in=subject_selected.enrolled_groups_id)
+
+        return self.responseData(request, form, subjects, subject_selected, groups)
+
+    def doPost(self, request, form, subjects, subject_selected, groups):
+        print("Прошёл пост")
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            print(subject)
+            subject_selected = subjects.filter(id=subject).first()
+            groups = Group.objects.filter(id__in=subjects.filter(id=subject).first().enrolled_groups_id)
+
+        return self.responseData(request, form, subjects, subject_selected, groups)
+
+    def responseData(self, request, form, subjects, subject_selected, groups):
+        return render(request, template_name="students/groups_list.html",
+                      context={
+                          'form': form,
+                          'subjects': subjects,
+                          'groups': groups,
+                          'subject_selected_object': subject_selected,
+                      })

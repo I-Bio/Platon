@@ -1,4 +1,6 @@
 const csrf = $("input[name=csrfmiddlewaretoken]").val();
+const Files = "files"
+const Grade = "own_grade"
 
 let submitButton = $("#submitButton")[0];
 let filename = $("#filename")[0];
@@ -38,14 +40,17 @@ function RemoveFile(event){
 
 function Submit(){
 	let formData = new FormData(document.forms.main);
-	formData.delete("files");
+	let grade = $(`input[name=${Grade}]`)[0].value;
+	console.log(grade);
+
+	formData.delete(`${Files}`);
+	formData.append(`${Grade}`, grade);
 
 	for (let item of filesToUpload.values()){
-		formData.append("files", item);
+		formData.append(`${Files}`, item);
 	}
 
 	$.ajax({
-		url: '',
 		type: "post",
 		cache: false,
 		headers: {'X-CSRFToken': csrf},
@@ -54,6 +59,7 @@ function Submit(){
 		data: formData,
 		dataType : 'json',
 		success: function (response){
+			window.location.replace(response.url);
 		}
 	});
 }
