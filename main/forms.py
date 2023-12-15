@@ -92,11 +92,19 @@ class SubjectForm(forms.ModelForm):
 
 
 class UnitForm(forms.ModelForm):
-    subject = forms.ModelChoiceField(queryset=models.Subject.objects, empty_label=None)
+    subject = forms.ModelChoiceField(queryset=models.Subject.objects.none(), empty_label=None)
 
     class Meta:
         model = models.Unit
         fields = ['name', 'subject']
+
+    def __init__(self, *args, **kwargs):
+        tutor_id = kwargs.pop('tutor_id')
+
+        super(UnitForm, self).__init__(*args, **kwargs)
+
+        self.fields['subject'].queryset = Subject.objects.filter(tutor_id=tutor_id)
+
 
 
 class LectureForm(forms.ModelForm):
