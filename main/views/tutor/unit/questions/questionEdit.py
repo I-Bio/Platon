@@ -6,20 +6,18 @@ from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Question
 
 
-# @login_required(login_url='/login/', redirect_field_name=None)
-# @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 class QuestionEdit(TutorRequiredMixin, View):
-    def get(self, request):
+    def get(self, request, id):
         question = Question.objects.filter(pk=id)
 
         if not question.exists():
-            return render('index')
+            return redirect("index")
 
         form = QuestionForm(instance=question.first())
 
         return render(request, "content_bank/question/edit.html", {'form': form})
 
-    def post(self, request):
+    def post(self, request, id):
         question = Question.objects.filter(pk=id)
         form = QuestionForm(request.POST, instance=question.first())
 

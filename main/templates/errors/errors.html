@@ -3,34 +3,33 @@
 
 {% block content %}
 
- <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-light">Ошибка {{error_code}}</h1>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-light">Ошибка {{ error_code }}</h1>
+                </div>
             </div>
         </div>
     </div>
- </div>
 
- <section class="content">
-    <div class="error-page">
-        <h2 class="headline text-warning"> {{error_code}}</h2>
-        <div class="error-content">
-            <h3><i class="fas fa-exclamation-triangle text-warning "></i> {{error_description}}</h3>
-            <p>
-                {{error_message}}
-            </p>
-            <p>
-                Тем временем вы можете вернуться на главную страницу или воспользоваться левой панелью.
-            </p>
-            <form class="search-form">
-                <button type="submit" class="btn bg-cyan col-9 form-control"><a href="index.html" class="text-success bg-dark">
-                    <span class="name-text bg-info"> <a href="index.html" >Главная страница </a></span>
-                </a> </button>
-
-            </form>
+    <section class="content">
+        <div class="error-page">
+            <h2 class="headline text-warning"> {{ error_code }}</h2>
+            <div class="error-content">
+                <h3><i class="fas fa-exclamation-triangle text-warning "></i> {{ error_description }}</h3>
+                <p>
+                    {{ error_message }}
+                </p>
+                <p>
+                    Тем временем вы можете вернуться на главную страницу или воспользоваться левой панелью.
+                </p>
+                <form class="search-form">
+                    <a href="{% url 'index' %}" class="btn bg-cyan col-9 form-control">
+                        Главная страница
+                    </a>
+                </form>
+            </div>
         </div>
-    </div>
- </section>
+    </section>
 {% endblock %}

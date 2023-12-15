@@ -20,6 +20,7 @@
 
     <div class="container-fluid">
         <form method="POST" action=" {% url 'groups_list' %}">
+        {% csrf_token %}
             <div class="card">
                 <div class="card-header bg-success">
                     <h3 class="card-title">Поиск групп</h3>
@@ -35,11 +36,9 @@
 
                 <div class="card-body bg-gradient-dark">
                     <div>
-
-                        {% csrf_token %}
                         <select class="form-control col-lg-2 col-md-2 mb-4 bg-gray-dark"
                                 name="subject"
-                                onchange="this.form.submit()">
+                                onchange="form.submit()">
 
                             {% if subject_selected_object %}
                             <option value="{{subject_selected_object.pk}}" selected>{{subject_selected_object.name}}
