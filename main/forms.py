@@ -172,25 +172,8 @@ class UserTaskForm(forms.ModelForm):
 
 
 class AddGroupUserForm(forms.Form):
-    student = 'Student'
-    tutor = 'Teacher'
-    admin = 'Admin'
-    none = 'None'
-
-    user_choices = [
-        (none, '---'),
-        (student, 'Студенты'),
-        (tutor, 'Преподаватели'),
-        (admin, 'Администрация'),
-    ]
     name = forms.CharField(max_length=50)
-    user_type = forms.ChoiceField(choices=user_choices)
-
-    model_mapping = {
-        student: StudentGroup,
-        tutor: TutorGroup,
-        admin: AdminGroup,
-    }
+    user_type = forms.ChoiceField(choices=[])
 
     def save(self):
         user_type = self.cleaned_data['user_type']
@@ -203,6 +186,50 @@ class AddGroupUserForm(forms.Form):
             group.permissions.set(permissions)
 
             model_class.objects.create(name=group)
+
+    def __init__(self, *args, **kwargs):
+        is_staff = kwargs.pop('is_staff', False)
+        is_tutor = kwargs.pop('is_tutor', False)
+
+        self.model_mapping = {}
+
+        super(AddGroupUserForm, self).__init__(*args, **kwargs)
+
+        if is_staff:
+            student = 'Student'
+            tutor = 'Teacher'
+            admin = 'Admin'
+            none = 'None'
+
+            user_choices = [
+                (none, '---'),
+                (student, 'Студенты'),
+                (tutor, 'Преподаватели'),
+                (admin, 'Администрация'),
+            ]
+
+            self.model_mapping = {
+                student: StudentGroup,
+                tutor: TutorGroup,
+                admin: AdminGroup,
+            }
+
+            self.fields['user_type'] = forms.ChoiceField(choices=user_choices)
+
+        if is_tutor:
+            student = 'Student'
+            none = 'None'
+
+            user_choices = [
+                (none, '---'),
+                (student, 'Студенты'),
+            ]
+
+            self.model_mapping = {
+                student: StudentGroup,
+            }
+
+            self.fields['user_type'] = forms.ChoiceField(choices=user_choices)
 
 
 class ChooseStudentsToChecker(forms.ModelForm):
