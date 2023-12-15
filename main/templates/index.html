@@ -17,46 +17,26 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
+            {% for subject in subjects %}
             <div class="col-lg-4 col-sm-6 col-12">
                 <div class="small-box bg-gradient-cyan">
                     <div class="inner">
-                        <h3>Ещё предмет</h3>
-                        <p>Курс</p>
+                        <h3>{{subject.name}}</h3>
+                        <p>{{subject.tutor_id.last_name}} {{subject.tutor_id.first_name}}</p>
                     </div>
-                    <a href="#" class="small-box-footer bg-gradient-dark">Перейти <i
-                            class="fas fa-arrow-circle-right"></i></a>
+
+                    {% with unit=subject.unit_set.first %}
+                        {% if unit %}
+                            <a href="{% url 'unit_content' unit.pk %}" class="small-box-footer bg-gradient-dark">Перейти<i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        {% else %}
+                             <a href="#" class="small-box-footer bg-gradient-dark">Перейти<i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-12">
-                <div class="small-box bg-gradient-cyan">
-                    <div class="inner">
-                        <h3>Ещё предмет</h3>
-                        <p>Курс</p>
-                    </div>
-                    <a href="#" class="small-box-footer bg-gradient-dark">Перейти <i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-12">
-                <div class="small-box bg-gradient-cyan">
-                    <div class="inner">
-                        <h3>Ещё предмет</h3>
-                        <p>Курс</p>
-                    </div>
-                    <a href="#" class="small-box-footer bg-gradient-dark">Перейти <i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-12">
-                <div class="small-box bg-gradient-cyan">
-                    <div class="inner">
-                        <h3>Ещё предмет</h3>
-                        <p>Курс</p>
-                    </div>
-                    <a href="#" class="small-box-footer bg-gradient-dark">Перейти <i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

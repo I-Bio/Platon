@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from django.shortcuts import render
 from django.views import View
 
@@ -17,6 +18,9 @@ class ShowGradeCardList(TutorRequiredMixin, View):
 
 
         info_subject = Subject.objects.filter(id=subject_id).first()
+
+        if info_subject == None:
+            raise Http404()
 
         if request.user.pk != info_subject.tutor_id.pk:
             raise PermissionDenied()

@@ -2,7 +2,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 
 from main.forms import AddGradeForm, AddGradeStudentForm
-from main.models import UserTask, StudentFile, Task, User
+from main.models import UserTask, StudentFile, Task, User, Notification
 
 from django.http import Http404
 
@@ -44,6 +44,15 @@ class AddGradeView(View):
                           context={'form': form, 'user_id': user_id, 'user': user, 'files': files})
 
         form.save(user)
+
+        grade = self.cleaned_data['grade']
+        notification_header = f"Вам выставлена оценка за задание '{user.main_task_id.name}'"
+        notification_body = f"Вам выставлена оценка {grade} по дисциплине '{user.main_task_id.unit.subject.name}' за задание '{user.main_task_id.name}'"
+        notification = Notification.objects.create(
+            header=notification_header,
+            body=notification_body,
+            user_id=user.user_id
+        )
 
         if 'selectForReviewButton' in request.POST:
             return redirect('', kwargs={'user': user})

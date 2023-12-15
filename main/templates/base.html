@@ -68,6 +68,12 @@
                 </div>
             </div>
 
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a href="{% url 'logout' %}" class="d-block">Log out</a>
+                </div>
+            </div>
+
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar nav-flat nav-compact nav-legacy flex-column" data-widget="treeview"
                     role="menu"
@@ -93,7 +99,7 @@
                                     </a>
 
                                     <ul class="nav nav-treeview">
-                                        {% for unit in units_all %}
+                                        {% for unit in subject.unit_set.all %}
                                             {% if unit.subject == subject %}
                                                 <li class="nav-item">
                                                     <a href="{% url 'unit_content' unit.pk %}" class="nav-link">

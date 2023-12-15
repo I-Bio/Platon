@@ -29,12 +29,20 @@
                                 <select class="form-control select2 select2-hidden-accessible bg-gray-dark" name="group_name">
                                    {% if is_staff %}
                                        {% for value, label in form.group_name.field.choices %}
-                                        <option value="{{ value }}">{{ label }}</option>
+                                        {% if label == group_name %}
+                                            <option value="{{ value }}" selected>{{ label }}</option>
+                                        {% else %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endif %}
                                        {% endfor %}
                                     {% endif %}
                                    {% if is_tutor %}
                                        {% for group in form.group_name.field.queryset %}
-                                       <option value="{{ group.pk }}">{{ group.name }}</option>
+                                        {% if group.name == group_name.name %}
+                                            <option value="{{ group.pk }}" selected>{{ group.name }}</option>
+                                        {% else %}
+                                            <option value="{{ group.pk }}">{{ group.name }}</option>
+                                        {% endif %}
                                        {% endfor %}
                                    {% endif %}
                                 </select>

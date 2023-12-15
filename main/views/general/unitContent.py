@@ -1,8 +1,9 @@
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from main.models import Unit, Lecture, Reference, File, Test, Task, Subject
+from main.models import Unit, Lecture, Reference, File, Test, Task
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
@@ -15,20 +16,16 @@ class UnitContent(View):
 
         unit = unit.first()
 
-        # print('привет', unit.subject.users_id)
-        flag_stud = False
         flag_tutor = False
-
+        flag_stud= False
 
 
         if request.user.pk == unit.subject.tutor_id.pk:
             flag_tutor = True
-
-
-        if request.user.groups.all().first().pk in unit.subject.enrolled_groups_id:
+        elif request.user.groups.all().first().pk in unit.subject.enrolled_groups_id:
             flag_stud = True
         else:
-            return HttpResponse("Вы не зачислены на курс")
+            raise PermissionDenied()
 
         context = {
             'unit': unit,
