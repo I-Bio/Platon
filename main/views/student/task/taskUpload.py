@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.core.files import File
 from django.urls import reverse
 
 from django.views import View
@@ -40,8 +41,9 @@ class TaskUpload(View):
 
     def createFiles(self, form, user_id, task_id):
         files = form.cleaned_data["files"]
+
         for file in files:
-            StudentFile.objects.create(creator=user_id, task_id=task_id, file=file)
+            StudentFile.objects.create(creator=user_id, task_id=task_id, file=File(file))
 
     def deleteFiles(self, task_id, user_id):
         files = StudentFile.objects.filter(task_id=task_id, creator=user_id)
