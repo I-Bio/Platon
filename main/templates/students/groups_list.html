@@ -67,7 +67,7 @@
                                             <div class="input-group-prepend">
 
                                                 <button name="editButton" type="button" class="btn bg-cyan">
-                                                    <a href="StudentCatalog.html">Список студентов</a>
+                                                    <a href="{% url 'students_list' group_pk=group.pk %}">Список студентов</a>
                                                 </button>
                                               
                                                 <button type="button" class="btn bg-primary">
