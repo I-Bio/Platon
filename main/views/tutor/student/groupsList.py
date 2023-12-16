@@ -13,10 +13,8 @@ class GroupsList(TutorRequiredMixin, View):
     def get(self, request):
         return self.init(request, self.doGet)
 
-
     def post(self, request):
         return self.init(request, self.doPost)
-
 
     def init(self, request, action):
         form = SubjectSelector(request.POST)
