@@ -5,50 +5,61 @@
 
 {% block content %}
 
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0 text-light">Задание: {{ name_main_task_info }}</h1>
-                        </div>
-                    </div>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-light">Задание: {{ task }}</h1>
                 </div>
             </div>
+        </div>
+    </div>
 
-                <section class="content">
-                <div class="dropdown content-header">
-                    <button class="btn btn-secondary dropdown-toggle bg-gray-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Группы
-                    </button>
+    <section class="content">
+        <div class="dropdown content-header">
+            <form method="POST" action=" {% url 'tasks_list' subject_id=requestData.subject_id task_id=requestData.task.pk %}">
+                {% csrf_token %}
+                <select class="form-control col-lg-2 col-md-2 mb-4 bg-gray-dark"
+                        name="group"
+                        onchange="form.submit()">
 
+                    {% if selected_group %}
+                        <option value="{{ selected_group.pk }}" selected>{{ selected_group }}
+                        </option>
+                    {% endif %}
 
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(8px, 52px, 0px);">
-                    {% for name_group in name_groups %}
-                        <a class="dropdown-item" href="{% url 'completed_and_notcompleted_work' task_id=name_main_task_info.pk group_id=name_group.pk %}"> {{ name_group.name }}  </a>
+                    {% for group in groups %}
+
+                        {% if group.pk != selected_group.pk %}
+                            <option value="{{ group.pk }}">{{ group }}</option>
+                        {% endif %}
+
                     {% endfor %}
-                    </div>
 
+                </select>
+            </form>
+        </div>
 
-                </div>
-
-                <ul class="list-group list-group-flush content-header ">
-                    {% for stud in user_info %}
-                    <li class="list-group-item bg-gray-dark border border-light">
-                        <span class="badge badge-info w-4 p-3">{{ name_group }}</span>
-                        <a href=""> {{ stud.last_name }} {{ stud.first_name }}
-                                {% if stud.pk in list_checked %}
-                                    <span class="badge badge-success">Выполнено</span>
-                                {% else %}
-                                    <span class="badge badge-danger">Не выполнено</span>
-                                {% endif %}
+        <ul class="list-group list-group-flush content-header ">
+            {% for user in userData.users %}
+                <li class="list-group-item bg-gray-dark border border-light">
+                    <span class="badge badge-info w-4 p-3">{{ selected_group }}</span>
+                    {% if user.pk in userData.users_complete_list %}
+                        <a href="{% url add_grade user_id=user.pk main_task_id=requestData.task.pk %}"> {{ user.last_name }} {{ user.first_name }}
+                            <span class="badge badge-success">Выполнено</span>
                         </a>
-                    </li>
-                    {% endfor %}
+                    {% else %}
+                        <a href="#"> {{ user.last_name }} {{ user.first_name }}
+                            <span class="badge badge-danger">Не выполнено</span>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
 
-                </ul>
+        </ul>
 
-                    </section>
+    </section>
 
-            <script src="themeForm.js"></script>
+    <script src="themeForm.js"></script>
 
 {% endblock %}

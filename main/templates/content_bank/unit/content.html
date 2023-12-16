@@ -115,7 +115,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success border-0">Задание</span>
                         </div>
-                        <a class="text-success form-control bg-dark" href=" {% url 'completed_and_notcompleted_work' task_id=task.pk group_id=1 %} ">
+                        <a class="text-success form-control bg-dark" href=" {% url 'tasks_list' subject_id=unit.subject.pk task_id=task.pk %} ">
                             <span class="name-text">  {{task.name}}</span>
                         </a>
                         <div class="input-group-append">

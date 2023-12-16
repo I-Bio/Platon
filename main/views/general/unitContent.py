@@ -2,12 +2,14 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from main.models import Unit, Lecture, Reference, File, Test, Task
 
 
-# @login_required(login_url='/login/', redirect_field_name=None)
-class UnitContent(View):
+class UnitContent(View, LoginRequiredMixin):
+    login_url = "login/"
+
     def get(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
 
@@ -19,10 +21,9 @@ class UnitContent(View):
         flag_tutor = False
         flag_stud= False
 
-
         if request.user.pk == unit.subject.tutor_id.pk:
             flag_tutor = True
-        elif request.user.groups.all().first().pk in unit.subject.enrolled_groups_id:
+        elif request.user.groups.first().pk in unit.subject.enrolled_groups_id:
             flag_stud = True
         else:
             raise PermissionDenied()
@@ -31,7 +32,7 @@ class UnitContent(View):
             'unit': unit,
             'flag_tutor' : flag_tutor,
             'flag_stud' : flag_stud,
-                   }
+            }
         return render(request, "content_bank/unit/content.html", context=context)
 
     def post(self, request, unit_id):
