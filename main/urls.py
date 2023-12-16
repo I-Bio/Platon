@@ -1,5 +1,3 @@
-import uuid
-
 from django.urls import path
 from main.views.student.tests.testResultDisplay import TestResultDisplay
 from main.views.student.tests.testStudentTesting import TestStudentTesting
@@ -17,10 +15,9 @@ from .views.authenticate.logout import Logout
 from .views.authenticate.registration import Registration
 from .views.notification.noticationMenuView import NotificationMenuView
 from .views.student.grades.gradeCardListStudents import ShowGradeCardStudent
-from .views.student.grades.studentOwnGrades import StudentOwnGrades
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
-from .views.student.task.showWorkStudents import StudentsWorkList
+from main.views.tutor.task.studentsWorkList import StudentsWorkList
 from .views.student.task.taskUpload import TaskUpload
 from .views.tutor.link.createInviteLinkView import CreateInviteLinkView
 from .views.tutor.student.adderToTheCourceView import AdderToTheCourseView
@@ -95,8 +92,8 @@ urlpatterns = [
 
     path('add_group_user/', AddGroupUserView.as_view(), name='add_group_user'),
 
-    path('completed_and_notcompleted_work/<int:task_id>/<int:group_id>', StudentsWorkList.as_view(),
-         name='completed_and_notcompleted_work'), #EDRGVEWRGWSERBWR
+    path('tasks_list/subject_<int:subject_id>/task_<int:task_id>', StudentsWorkList.as_view(),
+         name='tasks_list'),
 
     path('assign_for_review/<int:user_id>/<int:main_task_id>', AssignStudent.as_view(), name='select_students'),
 

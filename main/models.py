@@ -170,6 +170,11 @@ class StudentFile(models.Model):
     task_id = models.IntegerField()
     file = models.FileField(upload_to="student_files/")
 
+    def delete(self, *args, **kwargs):
+        storage, path = self.file.storage, self.file.path
+        super(StudentFile, self).delete(*args, **kwargs)
+        storage.delete(path)
+
 
 class Task(models.Model):
     name = models.CharField(max_length=256, default="")
@@ -199,9 +204,9 @@ class Unit(models.Model):
 
 class UserTask(models.Model):
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
-    last_name = models.CharField(max_length=256, null=True) #
-    first_name = models.CharField(max_length=256, null=True) #
-    group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True) #
+    last_name = models.CharField(max_length=256, null=True)
+    first_name = models.CharField(max_length=256, null=True)
+    group_id = models.ForeignKey('StudentGroup', on_delete=models.PROTECT, null=True)
     main_task_id = models.ForeignKey('Task', on_delete=models.PROTECT)
 
     grade = models.IntegerField(null=True, blank=True, default=0)
