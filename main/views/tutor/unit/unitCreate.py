@@ -9,10 +9,11 @@ from main.mixins.tutorRequired import TutorRequiredMixin
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 class UnitCreate(TutorRequiredMixin, View):
     def get(self, request):
-        return render(request, "content_bank/unit/edit.html", {'form': UnitForm()})
+        form = UnitForm(tutor_id=request.user)
+        return render(request, "content_bank/unit/edit.html", {'form': form})
 
     def post(self, request):
-        form = UnitForm(request.POST)
+        form = UnitForm(request.POST, tutor_id=request.user)
 
         if not form.is_valid():
             return render(request, "content_bank/unit/edit.html", {'form': form})

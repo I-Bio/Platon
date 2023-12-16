@@ -6,10 +6,15 @@ from main.forms import AddGroupUserForm
 class AddGroupUserView(View):
 
     def get(self, request):
-        return render(request, template_name="admin/add_group_user.html", context={'form': AddGroupUserForm()})
+        is_staff = request.user.is_staff
+        is_tutor = request.user.is_tutor
+        form = AddGroupUserForm(is_staff=is_staff, is_tutor=is_tutor)
+        return render(request, template_name="admin/add_group_user.html", context={'form': form})
 
     def post(self, request):
-        form = AddGroupUserForm(request.POST)
+        is_staff = request.user.is_staff
+        is_tutor = request.user.is_tutor
+        form = AddGroupUserForm(request.POST, is_staff=is_staff, is_tutor=is_tutor)
 
         if not form.is_valid():
             return render(request, template_name="admin/add_group_user.html", context={'form': form})

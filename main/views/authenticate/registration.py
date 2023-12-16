@@ -23,7 +23,9 @@ class Registration(View):
         except (ValueError, RegistrationLinks.DoesNotExist):
             raise Http404
 
-        if registration_link.end_date < timezone.now():
+        now = timezone.localtime(timezone.now())
+
+        if registration_link.end_date < now:
             registration_link.delete()
             raise PermissionDenied()
 
