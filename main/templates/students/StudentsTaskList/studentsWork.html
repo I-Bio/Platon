@@ -45,7 +45,7 @@
                 <li class="list-group-item bg-gray-dark border border-light">
                     <span class="badge badge-info w-4 p-3">{{ selected_group }}</span>
                     {% if user.pk in userData.users_complete_list %}
-                        <a href="{% url add_grade user_id=user.pk main_task_id=requestData.task.pk %}"> {{ user.last_name }} {{ user.first_name }}
+                        <a href="{% url 'add_grade' user_id=user.pk main_task_id=requestData.task.pk %}"> {{ user.last_name }} {{ user.first_name }}
                             <span class="badge badge-success">Выполнено</span>
                         </a>
                     {% else %}

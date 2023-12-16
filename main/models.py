@@ -170,6 +170,11 @@ class StudentFile(models.Model):
     task_id = models.IntegerField()
     file = models.FileField(upload_to="student_files/")
 
+    def delete(self, *args, **kwargs):
+        storage, path = self.file.storage, self.file.path
+        super(StudentFile, self).delete(*args, **kwargs)
+        storage.delete(path)
+
 
 class Task(models.Model):
     name = models.CharField(max_length=256, default="")
