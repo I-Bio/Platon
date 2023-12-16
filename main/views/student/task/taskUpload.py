@@ -34,17 +34,14 @@ class TaskUpload(View):
             self.createFiles(form, user.pk, task_id)
             return JsonResponse({"url" : reverse("index")}, safe=False)
         else:
-
             form = StudentTaskForm()
 
         return render(request, "students/checkTask/task_upload.html", {'form': form, 'task_id': task_id})
 
     def createFiles(self, form, user_id, task_id):
         files = form.cleaned_data["files"]
-
         for file in files:
-            file_info = StudentFile(creator=user_id, task_id=task_id, file=file)
-            file_info.save()
+            StudentFile.objects.create(creator=user_id, task_id=task_id, file=file)
 
     def deleteFiles(self, task_id, user_id):
         files = StudentFile.objects.filter(task_id=task_id, creator=user_id)
