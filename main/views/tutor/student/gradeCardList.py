@@ -12,7 +12,8 @@ class ShowGradeCardList(TutorRequiredMixin, View):
 
         tutor_grade_weight, student_grade_weight, own_grade_weight = 0.85, 0.1, 0.05
 
-        info_group = StudentGroup.objects.filter(id=group_id).first().name
+        info_group = StudentGroup.objects.filter(name=group_id).first().name
+
         info_task_user = User.objects.filter(groups=group_id)
         unit_info = Unit.objects.filter(subject_id=subject_id)
 
