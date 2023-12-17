@@ -1,13 +1,8 @@
-import io
-
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.core.files import File
 from django.urls import reverse
-
 from django.views import View
 
-from Platon.settings import DEBUG
 from main.forms import StudentTaskForm
 from main.models import Task, StudentFile, UserTask, User, StudentGroup
 
@@ -23,7 +18,7 @@ class TaskUpload(View):
             user = request.user
             task = Task.objects.filter(id=task_id).first()
             user = User.objects.filter(id=user.pk).first()
-            stud_group = StudentGroup.objects.get(id=user.groups.first().pk)
+            stud_group = StudentGroup.objects.get(name=user.groups.first())
             own_grade = form.cleaned_data['own_grade']
             currentUserTask = UserTask.objects.filter(user_id=user, main_task_id=task).first()
 

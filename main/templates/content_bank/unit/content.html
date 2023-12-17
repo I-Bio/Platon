@@ -197,7 +197,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-success border-0">Задание</span>
                         </div>
-                        <a href=" {% url 'student_task_upload' task_id=1 %} " class="text-success form-control bg-dark">
+                        <a href=" {% url 'student_task_upload' task_id=task.pk %} " class="text-success form-control bg-dark">
                             <span class="name-text">{{task.name}}</span>
                         </a>
                     </div>

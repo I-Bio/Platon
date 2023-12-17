@@ -43,7 +43,7 @@ class StudentsWorkList(TutorRequiredMixin, View):
         return self.responseData(request, subject_id, task, groups, selected_group)
 
     def responseData(self, request, subject_id, task, groups, selected_group):
-        userData = self.createUserDataObject(selected_group.pk, task.pk) if selected_group != None else None
+        userData = self.createUserDataObject(selected_group.pk, task) if selected_group != None else None
         data = {
             'groups': groups,
             'userData': userData,
