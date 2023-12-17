@@ -1,12 +1,15 @@
+import io
+
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.core.files import File
 from django.urls import reverse
 
 from django.views import View
 
+from Platon.settings import DEBUG
 from main.forms import StudentTaskForm
-from main.models import Task, StudentFile, UserTask, User, Unit, Subject, StudentGroup
+from main.models import Task, StudentFile, UserTask, User, StudentGroup
 
 
 class TaskUpload(View):
@@ -28,12 +31,12 @@ class TaskUpload(View):
                 UserTask.objects.create(last_name=user.last_name, group_id=stud_group, first_name=user.first_name,
                                         user_id=user, main_task_id=task, own_grade=own_grade)
             else:
-                currentUserTask.own_grade=own_grade
+                currentUserTask.own_grade = own_grade
                 currentUserTask.save()
                 self.deleteFiles(task_id, user.pk)
 
             self.createFiles(form, user.pk, task_id)
-            return JsonResponse({"url" : reverse("index")}, safe=False)
+            return JsonResponse({"url": reverse("index")}, safe=False)
         else:
             form = StudentTaskForm()
 
@@ -43,11 +46,10 @@ class TaskUpload(View):
         files = form.cleaned_data["files"]
 
         for file in files:
-            StudentFile.objects.create(creator=user_id, task_id=task_id, file=File(file))
+            StudentFile.objects.create(creator=user_id, task_id=task_id, file=file)
 
     def deleteFiles(self, task_id, user_id):
         files = StudentFile.objects.filter(task_id=task_id, creator=user_id)
 
         for file in files:
             file.delete()
-
