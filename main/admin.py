@@ -14,5 +14,5 @@ class AuthorAdmin(admin.ModelAdmin):
 
 models_to_register = (
     StudentFile, Test, Question, QuestionOption, Lecture, Reference, File, Task, TestResult, Subject, RegistrationLinks,
-    StudentGroup, TutorGroup, AdminGroup, UserTask, Notification)
+    StudentGroup, TutorGroup, AdminGroup, UserTask, GroupCheck, Notification)
 admin.site.register(models_to_register)
