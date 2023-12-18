@@ -8,58 +8,64 @@ from main.models import GroupCheck, User, Task, StudentGroup, UserTask
 
 class AssignStudent(View):
     def get(self, request, user_id, main_task_id):
+        return self.init(request, user_id, main_task_id, self.doGet)
 
-        info_task_user = UserTask.objects.filter(user_id=user_id)
+    def post(self, request, user_id, main_task_id):
+        return self.init(request, user_id, main_task_id, self.doPost)
 
-        if info_task_user.count() == 0:
+    def init(self, request, user_id, main_task_id, action):
+        userTasks = UserTask.objects.filter(user_id=user_id)
+
+        if userTasks.exists() == False:
             raise Http404
         else:
-            info_task_user = info_task_user.first()
+            userTask = userTasks.first()
 
-        user_name = User.objects.filter(id=info_task_user.pk).first()
+        user = User.objects.get(id=userTask.pk)
 
-        info_user = User.objects.filter(groups__name=info_task_user.group_id)
+        return action(request, user_id, main_task_id, user, userTask)
 
-        info_user_id_list = GroupCheck.objects.filter(
-            usser_id=user_id).first().user_check_id
+    def doGet(self, request, user_id, main_task_id, user, userTask):
+        groupCheck = GroupCheck.objects.filter(usser_id=user_id).first()
+        return self.responseData(request, user_id, main_task_id, user, userTask, groupCheck)
 
-        filet_users = User.objects.filter(id__in=info_user_id_list)
+    def doPost(self, request, user_id, main_task_id, user, userTask):
+        form = ChooseStudentsToChecker(request.POST)
 
-        sasy = info_user.exclude(id__in=filet_users)
+        if form.is_valid() == False:
+            return HttpResponse("Форма не прошла проверку")
 
-        context = {
-            'user_name': user_name,
-            'filet_users': filet_users,
-            'info_task_user': info_task_user,
+        form.clean()
+        selectedStudents = form.cleaned_data["idList[]"]
+        groupCheck = GroupCheck.objects.filter(usser_id=user_id).first()
+
+        if groupCheck != None:
+            groupCheck.user_check_id = selectedStudents
+        else:
+            groupCheck = GroupCheck(usser_id=user_id, main_task_id=main_task_id, user_check_id=selectedStudents)
+
+        groupCheck.save()
+        return self.responseData(request, user_id, main_task_id, user, userTask, groupCheck)
+
+    def responseData(self, request, user_id, main_task_id, user, userTask, groupCheck):
+        selectedUsers, unselectedUsers = self.collectUsers(userTask, groupCheck)
+        data = {
+            'user': user,
+            'selectedUsers': selectedUsers,
 
             'user_id': user_id,
             'main_task_id': main_task_id,
-            'sasy': sasy,
-
+            'unselectedUsers': unselectedUsers,
         }
-        return render(request, 'students/checkTask/select_student.html', context=context)
+        return render(request, 'students/checkTask/select_student.html', context=data)
 
-    def post(self, request, user_id, main_task_id):
-        list_checker_student = request.POST.getlist('questions[]')
+    def collectUsers(self, userTask, groupCheck):
+        selectedUsers = None
 
-        if GroupCheck.objects.filter(usser_id=user_id).first():
-            a = GroupCheck.objects.filter(usser_id=user_id).first()
-            a.user_check_id = [int(i) for i in list_checker_student]
+        if groupCheck != None:
+            selectedUsers = User.objects.filter(id__in=groupCheck.user_check_id)
+            unselectedUsers = selectedUsers.exclude(id__in=selectedUsers)
         else:
-            a = GroupCheck(usser_id=user_id, main_task_id=main_task_id, user_check_id=list_checker_student)
-        a.save()
+            unselectedUsers = User.objects.filter(groups__name=userTask.group_id)
 
-        form = ChooseStudentsToChecker(request.POST)
-
-        if form.is_valid() == True:
-            context = {
-                'form': form,
-                'questions': GroupCheck.objects.all(),
-
-                'user_id': user_id,
-                'main_task_id': main_task_id,
-            }
-
-            return render(request, "students/checkTask/select_student.html", context=context)
-
-        return redirect('select_students', user_id=user_id, main_task_id=main_task_id)
+        return selectedUsers, unselectedUsers

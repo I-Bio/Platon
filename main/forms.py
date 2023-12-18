@@ -241,15 +241,13 @@ class AddGroupUserForm(forms.Form):
 
 
 class ChooseStudentsToChecker(forms.ModelForm):
-    class Meta:
-        model = models.GroupCheck
-        fields = ['usser_id', 'group_check', 'main_task_id']
+    idList = forms.JSONField()
 
     def clean(self):
         cleaned_data = super(ChooseStudentsToChecker, self).clean()
 
-        if 'questions[]' in self.data:
-            cleaned_data['questions[]'] = list(map(lambda el: int(el), self.data.getlist('questions[]')))
+        if 'idList[]' in self.data:
+            cleaned_data['idList[]'] = list(map(lambda el: int(el), self.data.getlist('idList[]')))
 
         return self.cleaned_data
 

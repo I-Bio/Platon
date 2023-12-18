@@ -45,7 +45,7 @@ class AddGradeView(View):
 
         form.save(user)
 
-        grade = self.cleaned_data['grade']
+        grade = form.cleaned_data['grade']
         notification_header = f"Вам выставлена оценка за задание '{user.main_task_id.name}'"
         notification_body = f"Вам выставлена оценка {grade} по дисциплине '{user.main_task_id.unit.subject.name}' за задание '{user.main_task_id.name}'"
         notification = Notification.objects.create(
@@ -53,9 +53,6 @@ class AddGradeView(View):
             body=notification_body,
             user_id=user.user_id
         )
-
-        if 'selectForReviewButton' in request.POST:
-            return redirect('', kwargs={'user': user})
 
         return render(request, template_name="tutor/addGrade.html",
                       context={'form': form,
