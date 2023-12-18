@@ -22,6 +22,7 @@ class AddGradeView(View):
         context = {
             'form': AddGradeForm,
             'user': user,
+            'user_id': user_id,
             'userTask': userTask,
             'files': files,
             'task_name' : task_name,

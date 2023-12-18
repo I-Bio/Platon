@@ -240,8 +240,8 @@ class AddGroupUserForm(forms.Form):
             self.fields['user_type'] = forms.ChoiceField(choices=user_choices)
 
 
-class ChooseStudentsToChecker(forms.ModelForm):
-    idList = forms.JSONField()
+class ChooseStudentsToChecker(forms.Form):
+    idList = forms.JSONField(required=False)
 
     def clean(self):
         cleaned_data = super(ChooseStudentsToChecker, self).clean()
