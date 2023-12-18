@@ -3,7 +3,7 @@ from django.views import View
 from django.http import Http404
 from django.contrib.auth.models import Group
 
-from main.forms import GroupSelector
+from main.forms import IdSelector
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import UserTask, Task, StudentGroup, User, Subject
 
@@ -35,10 +35,10 @@ class StudentsWorkList(TutorRequiredMixin, View):
         return self.responseData(request, subject_id, task, groups, selected_group)
 
     def doPost(self, request, subject_id, groups, task):
-        form = GroupSelector(request.POST)
+        form = IdSelector(request.POST)
         selected_group = None
         if form.is_valid():
-            selected_group = groups.get(id=form.cleaned_data['group'])
+            selected_group = groups.get(id=form.cleaned_data['id'])
 
         return self.responseData(request, subject_id, task, groups, selected_group)
 

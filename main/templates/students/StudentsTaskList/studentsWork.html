@@ -20,7 +20,7 @@
             <form method="POST" action=" {% url 'tasks_list' subject_id=requestData.subject_id task_id=requestData.task.pk %}">
                 {% csrf_token %}
                 <select class="form-control col-lg-2 col-md-2 mb-4 bg-gray-dark"
-                        name="group"
+                        name="id"
                         onchange="form.submit()">
 
                     {% if selected_group %}

@@ -3,7 +3,7 @@ from django.http import HttpRequest, Http404
 from django.shortcuts import render
 from django.views import View
 
-from main.forms import SubjectSelector
+from main.forms import IdSelector
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import StudentGroup, Subject, User
 
@@ -17,7 +17,7 @@ class GroupsList(TutorRequiredMixin, View):
         return self.init(request, self.doPost)
 
     def init(self, request, action):
-        form = SubjectSelector(request.POST)
+        form = IdSelector(request.POST)
         subjects = Subject.objects.filter(tutor_id=request.user.pk)
         subject_selected = None
         groups = None
@@ -32,7 +32,7 @@ class GroupsList(TutorRequiredMixin, View):
 
     def doPost(self, request, form, subjects, subject_selected, groups):
         if form.is_valid():
-            subject = form.cleaned_data['subject']
+            subject = form.cleaned_data['id']
             subject_selected = subjects.filter(id=subject).first()
             groups = Group.objects.filter(id__in=subjects.filter(id=subject).first().enrolled_groups_id)
 

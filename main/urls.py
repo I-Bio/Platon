@@ -30,7 +30,7 @@ from .views.tutor.student.studentsList import StudentsList
 from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
 from .views.tutor.task.addGradeView import AddGradeView
-from .views.tutor.task.showUncompletedTasks import showUncompletedTasks
+from .views.tutor.task.TaskListDistributor import TaskListDistributor
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
 from .views.tutor.unit.elements.unitLectureCreate import UnitLectureCreate
@@ -108,7 +108,7 @@ urlpatterns = [
     path('notification_menu/', NotificationMenuView.as_view(), name='notification_menu'),
 
 
-    path('tasks_to_check/<int:main_task_id>/', showUncompletedTasks.as_view(), name='tasks_to_check'),
+    path('tasks_to_check/', TaskListDistributor.as_view(), name='tasks_to_check'),
 
     path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
 
