@@ -5,11 +5,11 @@ from django.conf import settings
 
 from main.views.errors.custom403View import Custom403View
 from main.views.errors.custom404View import Custom404View
-from main.views.errors.custom503View import Custom503View
+from main.views.errors.custom500View import Custom500View
 
 handler403 = Custom403View.as_view()
 handler404 = Custom404View.as_view()
-handler503 = Custom503View.as_view()
+handler500 = Custom500View.as_view()
 
 urlpatterns = [
     path('admin/', admin.site.urls),

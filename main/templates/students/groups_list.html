@@ -71,11 +71,7 @@
                                                 </button>
                                               
                                                 <button type="button" class="btn bg-primary">
-                                                    {% if subject_selected_object %}
                                                     <a href="{% url 'show_grade_card_list' group_id=group.id subject_id=subject_selected_object.pk %}">Табель</a>
-                                                    {% else %}
-                                                    <a href="{% url 'show_grade_card_list' group_id=group.id subject_id=1 %}">Табель</a>
-                                                    {% endif %}
                                                 </button>
                                               
                                             </div>

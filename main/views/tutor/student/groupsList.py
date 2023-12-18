@@ -24,9 +24,9 @@ class GroupsList(TutorRequiredMixin, View):
         return action(request, form, subjects, subject_selected, groups)
 
     def doGet(self, request, form, subjects, subject_selected, groups):
-        if subjects.first() != None:
+        if subjects.exists() == True:
             subject_selected = subjects.first()
-            groups = StudentGroup.objects.filter(name__in=subject_selected.enrolled_groups_id)
+            groups = Group.objects.filter(id__in=subject_selected.enrolled_groups_id)
 
         return self.responseData(request, form, subjects, subject_selected, groups)
 
@@ -34,7 +34,7 @@ class GroupsList(TutorRequiredMixin, View):
         if form.is_valid():
             subject = form.cleaned_data['id']
             subject_selected = subjects.filter(id=subject).first()
-            groups = Group.objects.filter(id__in=subjects.filter(id=subject).first().enrolled_groups_id)
+            groups = Group.objects.filter(id__in=subject_selected.enrolled_groups_id)
 
         return self.responseData(request, form, subjects, subject_selected, groups)
 
