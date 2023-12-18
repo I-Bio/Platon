@@ -30,7 +30,7 @@ from .views.tutor.student.studentsList import StudentsList
 from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
 from .views.tutor.task.addGradeView import AddGradeView
-from .views.tutor.task.TaskListDistributor import TaskListDistributor
+from .views.student.task.taskListDistributor import TaskListDistributor
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
 from .views.tutor.unit.elements.unitLectureCreate import UnitLectureCreate
