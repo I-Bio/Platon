@@ -45,7 +45,7 @@
             {% for stud in users %}
                 <li class="list-group-item bg-gray-dark border border-light">
                     <!-- <span class="badge badge-info w-4 p-3"></span> -->
-                    {% if stud.pk in userTasksIds %}
+                    {% if stud.pk in userIds %}
                         <a href="{% url 'add_grade' user_id=stud.pk main_task_id=selected_task.pk %}"> {{ stud.last_name }} {{ stud.first_name }}
                             <span class="badge badge-success">Выполнено</span>
                         </a>

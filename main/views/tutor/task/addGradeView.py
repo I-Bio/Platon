@@ -18,14 +18,12 @@ class AddGradeView(View):
         except (UserTask.DoesNotExist, StudentFile.DoesNotExist):
             raise Http404
 
-
         context = {
             'form': AddGradeForm,
-            'user': user,
             'user_id': user_id,
             'userTask': userTask,
             'files': files,
-            'task_name' : task_name,
+            'task_name': task_name,
         }
 
         return render(request, template_name="tutor/addGrade.html", context=context)
@@ -42,23 +40,24 @@ class AddGradeView(View):
 
         if not form.is_valid():
             return render(request, template_name="tutor/addGrade.html",
-                          context={'form': form, 'user_id': user_id, 'user': user, 'userTask': userTask, 'files': files})
+                          context={'form': form, 'user_id': user_id, 'user': user, 'userTask': userTask,
+                                   'files': files})
 
-        form.save(user)
+        form.save(userTask)
 
+        task = userTask.main_task_id
         grade = form.cleaned_data['grade']
-        notification_header = f"Вам выставлена оценка за задание '{user.main_task_id.name}'"
-        notification_body = f"Вам выставлена оценка {grade} по дисциплине '{user.main_task_id.unit.subject.name}' за задание '{user.main_task_id.name}'"
+        notification_header = f"Вам выставлена оценка за задание '{task}'"
+        notification_body = f"Вам выставлена оценка {grade} по дисциплине '{task.unit_set.all().first().subject}' за задание '{task}'"
         notification = Notification.objects.create(
             header=notification_header,
             body=notification_body,
-            user_id=user.user_id
+            user_id=userTask.user_id
         )
 
         return render(request, template_name="tutor/addGrade.html",
                       context={'form': form,
                                'user_id': user_id,
-                               'grade': user.grade,
-                               'user': user,
+                               'grade': userTask.grade,
                                'userTask': userTask,
                                'files': files})

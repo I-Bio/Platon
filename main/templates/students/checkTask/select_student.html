@@ -10,18 +10,17 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-light">Назначение студента {{ user.last_name }} {{ user.first_name }} на проверку студентов </h1>
+                            <h1 class="m-0 text-light">Назначение студента {{ mainUser.last_name }} {{ mainUser.first_name }} на проверку студентов </h1>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-
             <section class="content">
 
                 <div class="container-fluid">
-                    <form method="POST" action="{% url 'select_students' user_id=user_id main_task_id=main_task_id %}">
+                    <form method="POST" action="{% url 'select_students' user_id=mainUser.pk main_task_id=main_task_id %}">
                     {% csrf_token %}
                         <div class="card">
                             <div class="card-header bg-success">

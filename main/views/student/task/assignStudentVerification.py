@@ -21,7 +21,7 @@ class AssignStudent(View):
         else:
             userTask = userTasks.first()
 
-        user = User.objects.get(id=userTask.pk)
+        user = userTask.user_id
 
         return action(request, user_id, main_task_id, user, userTask)
 
@@ -36,21 +36,22 @@ class AssignStudent(View):
             return HttpResponse("Форма не прошла проверку")
 
         form.clean()
-        selectedStudents = form.cleaned_data["idList[]"]
-        groupCheck = GroupCheck.objects.filter(usser_id=user_id).first()
+        selectedStudents = form.cleaned_data["idList[]"] if "idList[]" in form.cleaned_data else []
+        groupCheck = GroupCheck.objects.filter(usser_id=user).first()
 
         if groupCheck != None:
             groupCheck.user_check_id = selectedStudents
         else:
-            groupCheck = GroupCheck(usser_id=user_id, main_task_id=main_task_id, user_check_id=selectedStudents)
+            groupCheck = GroupCheck(usser_id=user, main_task_id=userTask.main_task_id, user_check_id=selectedStudents)
 
         groupCheck.save()
         return self.responseData(request, user_id, main_task_id, user, userTask, groupCheck)
 
     def responseData(self, request, user_id, main_task_id, user, userTask, groupCheck):
         selectedUsers, unselectedUsers = self.collectUsers(userTask, groupCheck)
+
         data = {
-            'user': user,
+            'mainUser': user,
             'selectedUsers': selectedUsers,
 
             'user_id': user_id,
@@ -61,11 +62,11 @@ class AssignStudent(View):
 
     def collectUsers(self, userTask, groupCheck):
         selectedUsers = None
+        unselectedUsers = User.objects.filter(groups__name=userTask.group_id)
 
         if groupCheck != None:
             selectedUsers = User.objects.filter(id__in=groupCheck.user_check_id)
-            unselectedUsers = selectedUsers.exclude(id__in=selectedUsers)
-        else:
-            unselectedUsers = User.objects.filter(groups__name=userTask.group_id)
+            unselectedUsers = unselectedUsers.exclude(id__in=selectedUsers)
+
 
         return selectedUsers, unselectedUsers

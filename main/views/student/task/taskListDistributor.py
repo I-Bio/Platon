@@ -36,12 +36,12 @@ class TaskListDistributor(View):
         return self.responseData(request, task, groupChecks)
 
     def responseData(self, request, task, groupChecks):
-        tasks, users, userTasksIds = self.collectDataObjects(task, groupChecks)
+        tasks, users, userIds = self.collectDataObjects(task, groupChecks)
         data = {
             'tasks': tasks,
             'selected_task': task,
             'users': users,
-            'userTasksIds': userTasksIds,
+            'userIds': userIds,
         }
 
         return render(request, 'tutor/tasks_to_be_checked.html', context=data)
@@ -58,9 +58,10 @@ class TaskListDistributor(View):
         usersToCheck = groupCheckToShow.user_check_id
         users = User.objects.filter(id__in=usersToCheck)
         userTasks = UserTask.objects.filter(user_id__in=usersToCheck, main_task_id=task)
-        userTasksIds = []
+        userIds = []
 
         for userTask in userTasks:
-            userTasksIds.append(userTask.pk)
+            userIds.append(userTask.user_id.pk)
 
-        return tasks, users, userTasksIds
+        print(tasks, users, userIds)
+        return tasks, users, userIds
