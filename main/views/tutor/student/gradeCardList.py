@@ -54,7 +54,7 @@ class ShowGradeCardList(TutorRequiredMixin, View):
             for test in list:
                 works_sets.append({'name_id': test.student.pk,
                                    'work_name': test.test.name,
-                                   'grade': test.result,
+                                   'grade': test.get_score,
                                     'date': test.date})
 
         users = []

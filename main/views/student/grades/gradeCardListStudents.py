@@ -68,7 +68,7 @@ class ShowGradeCardStudent(StudentGroupRequiredMixin, View):
 
         for test in all_tests:
             if test in user_test_id_list:
-                    grade = user_tests.filter(test=test.pk).first().result
+                    grade = user_tests.filter(test=test.pk).first().get_score
                     date = user_tests.filter(test=test.pk).first().date
             else:
                     grade = 'работа ны выполнена'
