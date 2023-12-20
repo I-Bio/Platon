@@ -7,18 +7,13 @@ from main.models import StudentGroup, User
 
 class StudentsList(TutorRequiredMixin, View):
     def get(self, request, group_pk):
-
-
-        group = StudentGroup.objects.filter(pk=group_pk)
-
-        print(User.objects.filter(groups=group[0].pk))
+        group = StudentGroup.objects.filter(name=group_pk)
 
         if not group.exists():
             return redirect('index')
 
-
         return render(request, "students/students_list.html",
-                      {'students': User.objects.filter(groups=group[0].pk)})
+                      {'students': User.objects.filter(groups=group[0].name)})
 
     def post(self, request, group_pk):
         ...
