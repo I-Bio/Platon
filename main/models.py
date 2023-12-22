@@ -64,6 +64,10 @@ class User(AbstractUser):
                             'date': el.date, 'pk': el.pk}, self.testresult_set.all()))})
 
         grades_list = [el['grade'] for el in ret['grades']]
+
+        if grades_list == []:
+            return {'None' : None}
+
         ret['avarage_grade'] = str(round(sum(grades_list) / len(grades_list), 2))
 
         return ret
