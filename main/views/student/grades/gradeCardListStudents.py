@@ -71,7 +71,7 @@ class ShowGradeCardStudent(StudentGroupRequiredMixin, View):
                     grade = user_tests.filter(test=test.pk).first().get_score
                     date = user_tests.filter(test=test.pk).first().date
             else:
-                    grade = 'работа ны выполнена'
+                    grade = 'работа не выполнена'
                     date = 'None'
 
             works_sets.append({
