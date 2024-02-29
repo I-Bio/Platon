@@ -66,11 +66,20 @@ class User(AbstractUser):
         grades_list = [el['grade'] for el in ret['grades']]
 
         if grades_list == []:
-            return {'None' : None}
+            return {'None': None}
 
         ret['avarage_grade'] = str(round(sum(grades_list) / len(grades_list), 2))
 
         return ret
+
+
+class Subject(models.Model):
+    name = models.CharField(max_length=256, default="")
+    tutor_id = models.ForeignKey('User', on_delete=models.PROTECT, null=True)
+    enrolled_groups_id = models.JSONField(default=list, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class QuestionOption(models.Model):
@@ -84,6 +93,7 @@ class QuestionOption(models.Model):
 class Question(models.Model):
     question_name = models.CharField(max_length=128, default="")
     question_creator = models.ForeignKey(User, on_delete=models.PROTECT)
+    question_subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     question = models.TextField(max_length=1024, default="")
     multiple_answers = models.BooleanField(default=False)
     options = models.ManyToManyField(QuestionOption)
@@ -102,15 +112,6 @@ class Papa(models.Model):
 
     def __str__(self):
         return self.papa
-
-
-class Subject(models.Model):
-    name = models.CharField(max_length=256, default="")
-    tutor_id = models.ForeignKey('User', on_delete=models.PROTECT, null=True)
-    enrolled_groups_id = models.JSONField(default=list, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Lecture(models.Model):
@@ -221,8 +222,6 @@ class UserTask(models.Model):
     time_delivery = models.DateTimeField(auto_now_add=True)
 
 
-
-
 class GroupCheck(models.Model):
     usser_id = models.ForeignKey('User', on_delete=models.PROTECT)
     group_check = models.IntegerField(null=True)
@@ -237,7 +236,5 @@ class Notification(models.Model):
     time_delivery = models.DateTimeField(default=timezone.localtime(timezone.now()))
     user_id = models.ForeignKey('User', on_delete=models.PROTECT)
 
-
     def __str__(self):
         return str(self.user_id)
-      

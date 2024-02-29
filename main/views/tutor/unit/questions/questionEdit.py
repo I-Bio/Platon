@@ -13,20 +13,20 @@ class QuestionEdit(TutorRequiredMixin, View):
         if not question.exists():
             return redirect("index")
 
-        form = QuestionForm(instance=question.first())
+        form = QuestionForm(instance=question.first(), question_creator_id=request.user.pk)
 
-        return render(request, "content_bank/question/edit.html", {'form': form})
+        return render(request, "content_bank/question/edit.html", {'form': form, 'question_subject': question.first().question_subject})
 
     def post(self, request, id):
         question = Question.objects.filter(pk=id)
-        form = QuestionForm(request.POST, instance=question.first())
+        form = QuestionForm(request.POST, instance=question.first(), question_creator_id=request.user.pk)
 
         if not form.is_valid():
-            return render(request, "content_bank/question/edit.html", {'form': form})
+            return render(request, "content_bank/question/edit.html", {'form': form, 'question_subject': question.first().question_subject})
 
         form.save()
 
         if 'saveAndReturn' in request.POST:
             return redirect('questions_list')
 
-        return render(request, "content_bank/question/edit.html", {'form': form})
+        return render(request, "content_bank/question/edit.html", {'form': form, 'question_subject': question.first().question_subject})

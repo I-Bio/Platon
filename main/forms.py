@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
 from Platon import settings
-from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks, Subject
+from .models import StudentGroup, TutorGroup, AdminGroup, User, RegistrationLinks, Subject, Question
 from django.contrib.auth.models import Group, Permission
 from django.db.utils import IntegrityError
 
@@ -51,7 +51,7 @@ class RegistrationForm(forms.Form):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = models.Question
-        fields = ['question_name', 'question']
+        fields = ['question_name', 'question', 'question_subject']
 
     def __init__(self, *args, **kwargs):
         question_creator_id = kwargs.pop('question_creator_id')
@@ -74,6 +74,9 @@ class QuestionForm(forms.ModelForm):
     def save(self, commit=True):
         question = super(QuestionForm, self).save(commit=False)
         question.question_creator = self.question_creator
+
+        question.question_subject = self.cleaned_data['question_subject']
+
         question.save()
 
         for option in question.options.all():
@@ -85,6 +88,7 @@ class QuestionForm(forms.ModelForm):
             question.options.add(option)
 
         question.multiple_answers = self.cleaned_data['question_type']
+
 
         question.save()
 
