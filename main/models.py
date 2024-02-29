@@ -83,6 +83,7 @@ class QuestionOption(models.Model):
 
 class Question(models.Model):
     question_name = models.CharField(max_length=128, default="")
+    question_creator = models.ForeignKey(User, on_delete=models.PROTECT)
     question = models.TextField(max_length=1024, default="")
     multiple_answers = models.BooleanField(default=False)
     options = models.ManyToManyField(QuestionOption)

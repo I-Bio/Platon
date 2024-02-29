@@ -53,6 +53,12 @@ class QuestionForm(forms.ModelForm):
         model = models.Question
         fields = ['question_name', 'question']
 
+    def __init__(self, *args, **kwargs):
+        question_creator_id = kwargs.pop('question_creator_id')
+        self.question_creator = User.objects.get(pk=question_creator_id)
+
+        super(QuestionForm, self).__init__(*args, **kwargs)
+
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
 
@@ -67,7 +73,7 @@ class QuestionForm(forms.ModelForm):
 
     def save(self, commit=True):
         question = super(QuestionForm, self).save(commit=False)
-
+        question.question_creator = self.question_creator
         question.save()
 
         for option in question.options.all():
@@ -104,7 +110,6 @@ class UnitForm(forms.ModelForm):
         super(UnitForm, self).__init__(*args, **kwargs)
 
         self.fields['subject'].queryset = Subject.objects.filter(tutor_id=tutor_id)
-
 
 
 class LectureForm(forms.ModelForm):
@@ -169,7 +174,6 @@ class TaskForm(forms.ModelForm):
 class StudentTaskForm(forms.Form):
     files = MultipleFileField()
     own_grade = forms.IntegerField()
-
 
 
 class UserTaskForm(forms.ModelForm):
@@ -315,4 +319,5 @@ class AdderToTheCourceForm(forms.Form):
         subjects_of_this_teacher = self.cleaned_data['subjects_of_this_teacher']
         enrolled_student_group_values = selected_group
 
-        subject = Subject.objects.filter(pk=subjects_of_this_teacher).update(enrolled_groups_id=enrolled_student_group_values)
+        subject = Subject.objects.filter(pk=subjects_of_this_teacher).update(
+            enrolled_groups_id=enrolled_student_group_values)

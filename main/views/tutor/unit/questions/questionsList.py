@@ -10,12 +10,12 @@ from main.models import Question
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 class QuestionsList(TutorRequiredMixin, View):
     def get(self, request):
-        return render(request, "content_bank/question/list.html", {'questions': Question.objects.all()})
+        return render(request, "content_bank/question/list.html", {'questions': Question.objects.filter(question_creator=request.user)})
 
     def post(self, request):
         if 'toDelete' in request.POST:
 
-            question = Question.objects.filter(pk=int(request.POST['toDelete']))
+            question = Question.objects.filter(pk=int(request.POST['toDelete']), question_creator_id=request.user.pk)
 
             if not question.exists():
                 return HttpResponse()
@@ -24,5 +24,5 @@ class QuestionsList(TutorRequiredMixin, View):
 
             return HttpResponse()
 
-        return render(request, "content_bank/question/list.html", {'questions': Question.objects.all()})
+        return render(request, "content_bank/question/list.html", {'questions': Question.objects.filter(question_creator=request.user)})
 
