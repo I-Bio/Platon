@@ -1,3 +1,4 @@
+{% load static %}
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -28,3 +29,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.4.5/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha512-C0rwyfLqz5Asrncj50D9aLJC5SY3QqtRhnkeTpPRLlos8R2seI3fY+z1Dq9zi3Pt/UDau/zXgDfNSMveZGhpjw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- messages_hide -->
+<script src="{% static 'content_bank/messages_hide.js' %}"></script>

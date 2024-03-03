@@ -4,100 +4,119 @@
 
 
 {% block content %}
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-light">{% if form.instance.pk %}Редактирование{% else %}Создание{% endif %} задание</h1>
+    {% for message in messages %}
+        <div class="alert alert-warning" role="alert">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-light">{% if form.instance.pk %}Редактирование{% else %}Создание{% endif %}
+                        задание</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<section class="content">
+    <section class="content">
 
-    <div class="container-fluid">
-        <form method="post">
-            {% csrf_token %}
-            <div class="card">
-                <div class="card-header bg-success">
-                    <h3 class="card-title">Основное</h3>
-                </div>
-
-                <div class="card-body bg-gradient-dark">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Название - ID</label>
-                                <input type="text" class="form-control bg-dark" name="name" placeholder="Ввод" value="{{form.name.value}}" required>
-                            </div> 
-                        </div>
+        <div class="container-fluid">
+            <form method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header bg-success">
+                        <h3 class="card-title">Основное</h3>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
 
-                            <div class="form-group">
-                                <label>Условие</label>
-                                <textarea class="form-control bg-dark" rows="3" name="description" placeholder="Ввод" style="height: 250px;" required>{{form.description.value}}</textarea>
+                    <div class="card-body bg-gradient-dark">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Название - ID</label>
+                                    <input type="text" class="form-control bg-dark" name="name" placeholder="Ввод"
+                                           value="{{ form.name.value }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+
+                                <div class="form-group">
+                                    <label>Условие</label>
+                                    <textarea class="form-control bg-dark" rows="3" name="description"
+                                              placeholder="Ввод" style="height: 250px;"
+                                              required>{{ form.description.value }}</textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-primary bg-gradient-dark">
-                        <div class="card-header bg-success">
-                            <h3 class="card-title">Ограничение по времени</h3>
-                        </div>
-                        <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary bg-gradient-dark">
+                            <div class="card-header bg-success">
+                                <h3 class="card-title">Ограничение по времени</h3>
+                            </div>
+                            <div class="card-body">
 
-                            <div class="form-group col-lg-6">
-                                <label>Дата с:</label>
-                                <div class="input-group date" id="dateFrom" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input bg-dark" data-target="#dateFrom" name="start_date" required value="{% if form.start_date.value|date:'d.m.y H:i' %} {{ form.start_date.value|date:'d.m.y H:i' }} {% else %} {{ form.start_date.value }} {% endif %}">
-                                    <div class="input-group-append datepick" data-target="#dateFrom" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                <div class="form-group col-lg-6">
+                                    <label>Дата с:</label>
+                                    <div class="input-group date" id="dateFrom" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input bg-dark"
+                                               data-target="#dateFrom" name="start_date" required
+                                               value="{% if form.start_date.value|date:'d.m.y H:i' %} {{ form.start_date.value|date:'d.m.y H:i' }} {% else %} {{ form.start_date.value }} {% endif %}">
+                                        <div class="input-group-append datepick" data-target="#dateFrom"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Дата до:</label>
+                                    <div class="input-group date" id="dateTo" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input bg-dark"
+                                               data-target="#dateTo" name="end_date" required
+                                               value="{% if form.end_date.value|date:'d.m.y H:i' %} {{ form.end_date.value|date:'d.m.y H:i' }} {% else %} {{ form.end_date.value }} {% endif %}">
+                                        <div class="input-group-append datepick" data-target="#dateTo"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary bg-gradient-dark">
+                            <div class="card-header bg-success">
+                                <h3 class="card-title">Сохранение настроек</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn bg-cyan col-12" id="submitButton">Сохранить
+                                            задание
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" class="btn bg-cyan col-12" id="" name="saveAndReturn">
+                                            Сохранить и вернуться к теме
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group col-lg-6">
-                                <label>Дата до:</label>
-                                <div class="input-group date" id="dateTo" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input bg-dark" data-target="#dateTo" name="end_date" required value="{% if form.end_date.value|date:'d.m.y H:i' %} {{ form.end_date.value|date:'d.m.y H:i' }} {% else %} {{ form.end_date.value }} {% endif %}">
-                                    <div class="input-group-append datepick" data-target="#dateTo" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-primary bg-gradient-dark">
-                        <div class="card-header bg-success">
-                            <h3 class="card-title">Сохранение настроек</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <button type="submit" class="btn bg-cyan col-12" id="submitButton">Сохранить задание</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="submit" class="btn bg-cyan col-12" id="" name="saveAndReturn">Сохранить и вернуться к теме</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        {% load static %}
-        <script defer src="{% static 'content_bank/dateFormat.js' %}"></script>
-    </div>
-</section>
+            </form>
+            {% load static %}
+            <script defer src="{% static 'content_bank/dateFormat.js' %}"></script>
+        </div>
+    </section>
 {% endblock %}

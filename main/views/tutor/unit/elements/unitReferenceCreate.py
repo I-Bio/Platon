@@ -4,11 +4,12 @@ from django.views import View
 from main.forms import ReferenceForm
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit
+from main.views.MessageSuccess import MessageSuccess
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
-class UnitReferenceCreate(TutorRequiredMixin, View):
+class UnitReferenceCreate(TutorRequiredMixin, MessageSuccess, View):
     def get(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
 
@@ -27,6 +28,8 @@ class UnitReferenceCreate(TutorRequiredMixin, View):
         form.save()
 
         unit.references.add(form.instance)
+
+        self.get_message_success(request)
 
         if 'saveAndReturn' in request.POST:
             return redirect('unit_content', unit_id)

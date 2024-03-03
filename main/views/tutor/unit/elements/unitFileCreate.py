@@ -4,9 +4,10 @@ from django.views import View
 from main.forms import FileForm
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit
+from main.views.MessageSuccess import MessageSuccess
 
 
-class UnitFileCreate(TutorRequiredMixin, View):
+class UnitFileCreate(TutorRequiredMixin, MessageSuccess, View):
     def get(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
 
@@ -25,6 +26,8 @@ class UnitFileCreate(TutorRequiredMixin, View):
         form.save()
 
         unit.files.add(form.instance)
+
+        self.get_message_success(request)
 
         if 'saveAndReturn' in request.POST:
             return redirect('unit_content', unit_id)

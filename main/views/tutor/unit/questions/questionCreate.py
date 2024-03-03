@@ -3,11 +3,12 @@ from django.views import View
 
 from main.forms import QuestionForm
 from main.mixins.tutorRequired import TutorRequiredMixin
+from main.views.MessageSuccess import MessageSuccess
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
-class QuestionCreate(TutorRequiredMixin, View):
+class QuestionCreate(TutorRequiredMixin, View, MessageSuccess):
     def get(self, request):
         return render(request, "content_bank/question/edit.html", {'form': QuestionForm(question_creator_id=request.user.pk)})
 
@@ -21,5 +22,7 @@ class QuestionCreate(TutorRequiredMixin, View):
 
         if 'saveAndReturn' in request.POST:
             return redirect('questions_list')
+
+        self.get_message_success(request)
 
         return redirect('question_edit', form.instance.pk)

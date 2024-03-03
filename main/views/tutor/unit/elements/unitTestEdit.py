@@ -7,9 +7,11 @@ from main import models
 from main.forms import TestForm
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit, Question
+from main.views.MessageSuccess import MessageSuccess
+
 
 #@method_decorator(user_passes_test, name="dispatch")
-class UnitTestEdit(LoginRequiredMixin, TutorRequiredMixin, View):
+class UnitTestEdit(LoginRequiredMixin, TutorRequiredMixin, MessageSuccess, View):
     login_url = '/login/'
     redirect_field_name = None
 
@@ -43,6 +45,8 @@ class UnitTestEdit(LoginRequiredMixin, TutorRequiredMixin, View):
                           {'form': form, 'questions': Question.objects.exclude(id__in=test.first().questions.all())})
 
         form.save()
+
+        self.get_message_success(request)
 
         if 'saveAndReturn' in request.POST:
             print("Okkk")

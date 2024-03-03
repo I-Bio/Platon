@@ -4,12 +4,13 @@ from django.views import View
 from main.forms import TestForm
 from main.mixins.tutorRequired import TutorRequiredMixin
 from main.models import Unit, Question, User, Notification
+from main.views.MessageSuccess import MessageSuccess
 
 
 # @login_required(login_url='/login/', redirect_field_name=None)
 # @user_passes_test(lambda u: u.is_staff, login_url='/index/', redirect_field_name=None)
 
-class UnitTestCreate(TutorRequiredMixin, View):
+class UnitTestCreate(TutorRequiredMixin, MessageSuccess, View):
     def get(self, request, unit_id):
         unit = Unit.objects.filter(pk=unit_id)
 
@@ -44,6 +45,7 @@ class UnitTestCreate(TutorRequiredMixin, View):
                 user_id=user
             )
 
+        self.get_message_success(request)
 
         if 'saveAndReturn' in request.POST:
             return redirect('unit_content', unit_id)
