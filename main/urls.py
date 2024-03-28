@@ -15,6 +15,7 @@ from .views.authenticate.logout import Logout
 from .views.authenticate.registration import Registration
 from .views.notification.noticationMenuView import NotificationMenuView
 from .views.student.grades.gradeCardListStudents import ShowGradeCardStudent
+from .views.student.studentManualView import StudentManualView
 from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
 from main.views.tutor.task.studentsWorkList import StudentsWorkList
@@ -31,6 +32,7 @@ from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
 from .views.tutor.task.addGradeView import AddGradeView
 from .views.student.task.taskListDistributor import TaskListDistributor
+from .views.tutor.teacherManualView import TeacherManualView
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
 from .views.tutor.unit.elements.unitLectureCreate import UnitLectureCreate
@@ -111,6 +113,10 @@ urlpatterns = [
     path('tasks_to_check/', TaskListDistributor.as_view(), name='tasks_to_check'),
 
     path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
+
+    path('manual_for_student', StudentManualView.as_view(), name='manual_for_student'),
+
+    path('manual_for_teacher', TeacherManualView.as_view(), name='manual_for_teacher'),
 
 
     # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
