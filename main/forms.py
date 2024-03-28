@@ -1,6 +1,7 @@
 from typing import Any, Dict, Mapping, Optional, Type, Union
 from django import forms
 from django.core.files.base import File
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from . import models
@@ -177,7 +178,7 @@ class TaskForm(forms.ModelForm):
 
 class StudentTaskForm(forms.Form):
     files = MultipleFileField()
-    own_grade = forms.IntegerField()
+    own_grade = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
 
 class UserTaskForm(forms.ModelForm):
@@ -261,7 +262,7 @@ class ChooseStudentsToChecker(forms.Form):
 
 
 class AddGradeForm(forms.Form):
-    grade = forms.IntegerField()
+    grade = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     def save(self, user_task):
         if user_task:
@@ -271,7 +272,7 @@ class AddGradeForm(forms.Form):
 
 
 class AddGradeStudentForm(forms.Form):
-    grade = forms.IntegerField()
+    grade = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     def save(self, user_task):
         if user_task:

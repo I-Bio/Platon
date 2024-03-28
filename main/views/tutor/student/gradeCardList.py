@@ -1,5 +1,9 @@
+from datetime import datetime, timedelta
+import pandas as pd
+from datetime import datetime
+
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.views import View
 
@@ -52,9 +56,11 @@ class ShowGradeCardList(TutorRequiredMixin, View):
         grade_tests_lists = [TestResult.objects.filter(test=task.pk) for task in all_tests]
         for list in grade_tests_lists:
             for test in list:
+                a = test.get_score
+                # print(a)
                 works_sets.append({'name_id': test.student.pk,
                                    'work_name': test.test.name,
-                                   'grade': test.get_score,
+                                   'grade': test.get_score(),
                                     'date': test.date})
 
         users = []
@@ -69,14 +75,35 @@ class ShowGradeCardList(TutorRequiredMixin, View):
             users.append({'name': f"{user.last_name} {user.first_name}",
                           'works' : works})
 
+        data_list = []
+        for entry in users:
+            for work_entry in entry['works']:
+                date = datetime.strptime(str(work_entry['date'])[:10], "%Y-%m-%d").strftime("%Y-%m-%d")
+                data_list.append({
+                    'Name': entry['name'],
+                    'Work Name': work_entry['work_name'],
+                    'Grade': work_entry['grade'],
+                    'Date': date
+                })
 
+        df = pd.DataFrame(data_list)
+
+        df.to_excel('media/output.xlsx', index=False)
 
         context = {
             'info_group_name' : info_group,
             'info_subject' : info_subject,
             'info_task_user' : info_task_user,
             'users' : users,
-
-
+            'group_id': group_id,
+            'subject_id': subject_id,
         }
         return render(request, 'tutor/grade_card.html', context=context)
+
+    def post(self, request, group_id, subject_id):
+        if request.method == 'POST':
+            with open('media/output.xlsx', 'rb') as excel_file:
+                response = HttpResponse(excel_file.read(),
+                                        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+                return response

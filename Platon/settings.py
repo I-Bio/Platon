@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-27%5pn5m9=*s2171g-bv_%h^edl!^x!i-&1x#fos-)i7xx(w7u
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -72,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Platon.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -95,7 +92,6 @@ DATETIME_INPUT_FORMATS = [
     '%m/%d/%y %H:%M:%S',
     '%m/%d/%y %H:%M:%S.%f',
     '%m/%d/%y %H:%M']
-
 
 LOCALE_PATHS = (
     path.join(BASE_DIR, 'translations', 'locale'),
@@ -131,7 +127,6 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
