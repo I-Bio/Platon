@@ -55,7 +55,7 @@ class ShowGradeCardStudent(StudentGroupRequiredMixin, View):
                 grade_info = user_tasks.filter(main_task_id=task.pk).first()
                 grade = grade_info.grade * tutor_grade_weight + grade_info.checker_grade * student_grade_weight + grade_info.own_grade * own_grade_weight
             else:
-                grade = 'работа ны выполнена'
+                grade = 'работа не выполнена'
                 date = 'None'
 
             works_sets.append({
