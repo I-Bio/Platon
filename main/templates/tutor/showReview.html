@@ -41,7 +41,12 @@
                 <tbody>
                 {% for line in review %}
                     <tr>
-                        <td>{{ line.main_task_id.name }}</td>
+                        {% url 'tasks_list' subject_id=line.main_task_id|get_subject task_id=line.main_task_id|get_unit as the_url %}
+                        <td>
+                        <a href="{{ the_url }}" class="nav-link">
+                            {{ line.main_task_id.name }}
+                        </a>
+                        </td>
                         <td>{{ line.usser_id.first_name }} {{ line.usser_id.last_name }}</td>
                         <td>
                             <ul>
