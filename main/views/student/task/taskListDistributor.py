@@ -17,7 +17,7 @@ class TaskListDistributor(View):
         groupChecks = GroupCheck.objects.filter(usser_id=request.user.pk)
 
         if groupChecks.exists() == False:
-            raise PermissionDenied()
+            return render (request, "students/not_found_students.html")
 
         return action(request, groupChecks)
 
@@ -37,6 +37,7 @@ class TaskListDistributor(View):
 
     def responseData(self, request, task, groupChecks):
         tasks, users, userIds = self.collectDataObjects(task, groupChecks)
+
         data = {
             'tasks': tasks,
             'selected_task': task,
@@ -63,5 +64,4 @@ class TaskListDistributor(View):
         for userTask in userTasks:
             userIds.append(userTask.user_id.pk)
 
-        print(tasks, users, userIds)
         return tasks, users, userIds

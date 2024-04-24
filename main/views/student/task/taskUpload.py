@@ -5,9 +5,10 @@ from django.views import View
 
 from main.forms import StudentTaskForm
 from main.models import Task, StudentFile, UserTask, User, StudentGroup
+from main.views.MessageSuccess import MessageSuccess
 
 
-class TaskUpload(View):
+class TaskUpload(View, MessageSuccess):
     def get(self, request, task_id):
         return render(request, "students/checkTask/task_upload.html", {'form': StudentTaskForm(), 'task_id': task_id})
 
@@ -31,10 +32,13 @@ class TaskUpload(View):
                 self.deleteFiles(task_id, user.pk)
 
             self.createFiles(form, user.pk, task_id)
-            return JsonResponse({"url": reverse("index")}, safe=False)
+
+            self.get_message_success(request)
+
+            print("dwdwd")
+            # return JsonResponse({"url": reverse("index")}, safe=False)
         else:
             form = StudentTaskForm()
-
         return render(request, "students/checkTask/task_upload.html", {'form': form, 'task_id': task_id})
 
     def createFiles(self, form, user_id, task_id):
