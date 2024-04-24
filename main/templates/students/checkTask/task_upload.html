@@ -5,12 +5,12 @@
 {% load static %}
 
 {% block content %}
-            {% for message in messages %}
-            <div class="alert alert-warning" role="alert">
-                <strong>{{ message }}</strong>
-            </div>
-            {% endfor %}
 
+    {% for message in messages %}
+        <div class="alert alert-warning" role="alert">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
 
 <div class="content-header">
     <div class="container-fluid">

@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
@@ -14,6 +14,8 @@ class TaskUpload(View, MessageSuccess):
 
     def post(self, request, task_id):
         form = StudentTaskForm(request.POST, request.FILES)
+
+        print(request.FILES)
 
         if form.is_valid():
             user = request.user
@@ -33,13 +35,10 @@ class TaskUpload(View, MessageSuccess):
 
             self.createFiles(form, user.pk, task_id)
 
-            self.get_message_success(request)
-
-            print("dwdwd")
-            # return JsonResponse({"url": reverse("index")}, safe=False)
+            return JsonResponse({"url": reverse("index")}, safe=False)
         else:
-            form = StudentTaskForm()
-        return render(request, "students/checkTask/task_upload.html", {'form': form, 'task_id': task_id})
+            self.get_message_success(request, "Ошибка. данные не сохранены. Убедитесь в коректном заполнении")
+            return JsonResponse({"url": reverse("index")}, safe=False)
 
     def createFiles(self, form, user_id, task_id):
         files = form.cleaned_data["files"]
