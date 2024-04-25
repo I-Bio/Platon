@@ -56,8 +56,6 @@ class ShowGradeCardList(TutorRequiredMixin, View):
         grade_tests_lists = [TestResult.objects.filter(test=task.pk) for task in all_tests]
         for list in grade_tests_lists:
             for test in list:
-                a = test.get_score
-                # print(a)
                 works_sets.append({'name_id': test.student.pk,
                                    'work_name': test.test.name,
                                    'grade': test.get_score(),
