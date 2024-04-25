@@ -177,9 +177,17 @@ class TaskForm(forms.ModelForm):
 
 
 class StudentTaskForm(forms.Form):
-    files = MultipleFileField()
-    own_grade = forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    files = MultipleFileField(required=True)
+    own_grade = forms.IntegerField(required=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    def clean(self):
+        cleaned_data = super().clean()
+        files = cleaned_data.get('files')
+        own_grade = cleaned_data.get('own_grade')
 
+        if not files and own_grade is not None:
+            raise forms.ValidationError("Both 'files' and 'own_grade' are required.")
+
+        return cleaned_data
 
 class UserTaskForm(forms.ModelForm):
     class Meta:

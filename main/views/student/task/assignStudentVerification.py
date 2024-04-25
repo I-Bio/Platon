@@ -4,9 +4,10 @@ from django.views import View
 
 from main.forms import ChooseStudentsToChecker
 from main.models import GroupCheck, User, Task, StudentGroup, UserTask
+from main.views.MessageSuccess import MessageSuccess
 
 
-class AssignStudent(View):
+class AssignStudent(View, MessageSuccess):
     def get(self, request, user_id, main_task_id):
         return self.init(request, user_id, main_task_id, self.doGet)
 
@@ -45,6 +46,8 @@ class AssignStudent(View):
             groupCheck = GroupCheck(usser_id=user, main_task_id=userTask.main_task_id, user_check_id=selectedStudents)
 
         groupCheck.save()
+
+        self.get_message_success(request)
 
         if not selectedStudents:
             groupCheck.delete()

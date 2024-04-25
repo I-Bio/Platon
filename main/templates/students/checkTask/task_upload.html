@@ -5,95 +5,103 @@
 {% load static %}
 
 {% block content %}
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-light">Сдача задания</h1>
-                </div>
+
+    {% for message in messages %}
+        <div class="alert alert-warning" role="alert">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-light">Сдача задания</h1>
             </div>
         </div>
     </div>
+</div>
 
 <section class="content">
     <div class="container-fluid">
         <form method="post" enctype="multipart/form-data" action="{% url 'student_task_upload' task_id=task_id %}">
             {% csrf_token %}
-                <div class="card">
-                    <div class="card-header bg-success">
-                        <h3 class="card-title">Основное</h3>
-                    </div>
+
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Основное</h3>
+                </div>
 
 
-                    <div class="card-body bg-gradient-dark">
-                        <div class="row">
-                            <div class="col-lg-6">
+                <div class="card-body bg-gradient-dark">
+                    <div class="row">
+                        <div class="col-lg-6">
 
-                                <div class="form-group">
-                                    <label>Условие</label>
-                                    <p></p>
-                                </div>
+                            <div class="form-group">
+                                <label>Условие</label>
+                                <p></p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <button type="button" class="btn bg-gray-dark border border-light">
-                                            <label class="m-0 p-0" for="file">Добавить файл</label>
-                                        </button>
-                                        <input type="file" class="custom-file-input form-control" multiple=""
-                                               name="files" style="display: none" id="file">
-                                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <button type="button" class="btn bg-gray-dark border border-light">
+                                        <label class="m-0 p-0" for="file">Добавить файл</label>
+                                    </button>
+                                    <input type="file" class="custom-file-input form-control" multiple=""
+                                           name="files" style="display: none" id="file">
                                 </div>
+                            </div>
 
-                                <div><h3 class="text-center"><input type="number"
-                                                            name="own_grade"
-                                                            class="form-control bg-gray-dark border border-light col-6 pb-10 "
-                                                            id="formGroupExampleInput"
-                                                            placeholder="Оценить свою работу"></h3>
+                            <div><h3 class="text-center"><input type="number"
+                                                                name="own_grade"
+                                                                class="form-control bg-gray-dark border border-light col-6 pb-10 "
+                                                                id="formGroupExampleInput"
+                                                                placeholder="Оценить свою работу"></h3>
+                            </div>
+
+                            <div class="row" id="fileContainer">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary bg-gradient-dark">
+                        <div class="card-header bg-success">
+                            <h3 class="card-title">Сохранение настроек</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" id="submitButton" class="btn bg-cyan col-12">Сохранить
+                                    </button>
                                 </div>
-                              
-                                <div class="row" id="fileContainer">
-                                </div>
-                              
                             </div>
                         </div>
                     </div>
                 </div>
-                        
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-primary bg-gradient-dark">
-                            <div class="card-header bg-success">
-                                <h3 class="card-title">Сохранение настроек</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button type="button" id="submitButton" class="btn bg-cyan col-12">Сохранить
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            </div>
+        </form>
 
-            <script defer src="{% static 'content_bank/taskUpload.js' %}"></script>
-            <template id="fileTemplate">
-                <div class="col-lg-6 col-12">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <p class="form-control bg-dark"></p>
-                            <div class="input-group-append">
-                                <button type="button" class="btn bg-danger">Убрать файл</button>
-                            </div>
+        <script defer src="{% static 'content_bank/taskUpload.js' %}"></script>
+        <template id="fileTemplate">
+            <div class="col-lg-6 col-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <p class="form-control bg-dark"></p>
+                        <div class="input-group-append">
+                            <button type="button" class="btn bg-danger">Убрать файл</button>
                         </div>
                     </div>
                 </div>
-            </template>
-        </div>
-    </section>
+            </div>
+        </template>
+    </div>
+</section>
 {% endblock %}
