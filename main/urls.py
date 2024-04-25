@@ -32,6 +32,7 @@ from .views.tutor.subject.subjectCreate import SubjectCreate
 from .views.tutor.subject.subjectEdit import SubjectEdit
 from .views.tutor.task.addGradeView import AddGradeView
 from .views.student.task.taskListDistributor import TaskListDistributor
+from .views.tutor.task.showReviewViev import ShowReviewView
 from .views.tutor.teacherManualView import TeacherManualView
 from .views.tutor.unit.elements.unitFileCreate import UnitFileCreate
 from .views.tutor.unit.elements.unitFileEdit import UnitFileEdit
@@ -114,9 +115,11 @@ urlpatterns = [
 
     path('add_to_the_cource/', AdderToTheCourseView.as_view(), name='add_to_the_cource'),
 
-    path('manual_for_student', StudentManualView.as_view(), name='manual_for_student'),
+    path('manual_for_student/', StudentManualView.as_view(), name='manual_for_student'),
 
-    path('manual_for_teacher', TeacherManualView.as_view(), name='manual_for_teacher'),
+    path('manual_for_teacher/', TeacherManualView.as_view(), name='manual_for_teacher'),
+
+    path('show_review/', ShowReviewView.as_view(), name='show_review'),
 
 
     # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,

@@ -15,7 +15,7 @@ class AssignStudent(View, MessageSuccess):
         return self.init(request, user_id, main_task_id, self.doPost)
 
     def init(self, request, user_id, main_task_id, action):
-        userTasks = UserTask.objects.filter(user_id=user_id)
+        userTasks = UserTask.objects.filter(user_id=user_id, main_task_id=main_task_id)
 
         if userTasks.exists() == False:
             raise Http404
@@ -27,7 +27,7 @@ class AssignStudent(View, MessageSuccess):
         return action(request, user_id, main_task_id, user, userTask)
 
     def doGet(self, request, user_id, main_task_id, user, userTask):
-        groupCheck = GroupCheck.objects.filter(usser_id=user_id).first()
+        groupCheck = GroupCheck.objects.filter(usser_id=user_id, main_task_id=main_task_id).first()
         return self.responseData(request, user_id, main_task_id, user, userTask, groupCheck)
 
     def doPost(self, request, user_id, main_task_id, user, userTask):
@@ -38,7 +38,7 @@ class AssignStudent(View, MessageSuccess):
 
         form.clean()
         selectedStudents = form.cleaned_data["idList[]"] if "idList[]" in form.cleaned_data else []
-        groupCheck = GroupCheck.objects.filter(usser_id=user).first()
+        groupCheck = GroupCheck.objects.filter(usser_id=user, main_task_id=main_task_id).first()
 
         if groupCheck != None:
             groupCheck.user_check_id = selectedStudents
@@ -48,6 +48,10 @@ class AssignStudent(View, MessageSuccess):
         groupCheck.save()
 
         self.get_message_success(request)
+
+        if not selectedStudents:
+            groupCheck.delete()
+            return self.responseData(request, user_id, main_task_id, user, userTask, None)
 
         return self.responseData(request, user_id, main_task_id, user, userTask, groupCheck)
 
