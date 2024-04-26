@@ -7,11 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-light"> Руководство пользователя </h1>
-                <form method="post" action="{% url 'manual_for_student' %}">
-                    {% csrf_token %}
-                    <button name="download" type="submit" class="btn bg-cyan">скачать мануал</button>
-                </form>
+                <h1 class="m-0 text-light"><a href="./media/file/Студ Мануал.docx" download > Руководство пользователя </a></h1
             </div>
         </div>
     </div>
