@@ -20,6 +20,9 @@ from .views.student.task.assignStudentVerification import AssignStudent
 from .views.student.task.showAndEstimateGrade import GradeTask
 from main.views.tutor.task.studentsWorkList import StudentsWorkList
 from .views.student.task.taskUpload import TaskUpload
+from .views.student.tests.TestPreparation import TestPreparation
+from .views.student.tests.TestState import TestState
+from .views.student.tests.TestStateResult import TestStateResult
 from .views.tutor.link.createInviteLinkView import CreateInviteLinkView
 from .views.tutor.student.adderToTheCourceView import AdderToTheCourseView
 from .views.tutor.student.gradeCardList import ShowGradeCardList
@@ -120,6 +123,10 @@ urlpatterns = [
     path('manual_for_teacher/', TeacherManualView.as_view(), name='manual_for_teacher'),
 
     path('show_review/', ShowReviewView.as_view(), name='show_review'),
+
+    path('test_state_preparation/', TestPreparation.as_view(), name='test_preparation' ),
+    path('test_state/', TestState.as_view(), name='test_state' ),
+    path('test_state_result/', TestStateResult.as_view(), name='test_state_result' ),
 
 
     # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
