@@ -8,6 +8,7 @@ from main.views.tutor.unit.elements.unitTestEdit import UnitTestEdit
 from main.views.tutor.unit.elements.unitTestCreate import UnitTestCreate
 from main.views.general.index import Index
 from .views.admin.AddGroupUserView import AddGroupUserView
+from .views.admin.ShowTestsStateDisplay import ShowTestsStateDisplay
 from .views.admin.testing_features.taskUploadFeature import TaskUploadFeature
 
 from .views.authenticate.login import Login
@@ -127,6 +128,8 @@ urlpatterns = [
     path('test_state_preparation/', TestPreparation.as_view(), name='test_preparation' ),
     path('test_state/', TestState.as_view(), name='test_state' ),
     path('test_state_result/', TestStateResult.as_view(), name='test_state_result' ),
+    path('show_test_state_display/', ShowTestsStateDisplay.as_view(), name='show_tests_display' ),
+
 
 
     # НИЖЕ МАРШРУТЫ ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ ДОБАВЛЯЯ СВОИ СТАВЬ ИМ AdminRequiredMixin,
