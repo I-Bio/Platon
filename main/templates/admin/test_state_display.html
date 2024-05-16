@@ -44,7 +44,7 @@
                                 <tbody>
                                 {% for work in works_list %}
                                 <tr>
-                                    <td>{{ work.user }}</td>
+                                    <td>{{ work.user.last_name }} {{ work.user.first_name }}</td>
                                     <td>{{ work.test }}</td>
                                 </tr>
                                 {% endfor %}
