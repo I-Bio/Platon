@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Список вопросов{% endblock %}
+
+
+{% block content %}
+
+
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1 class="m-0 text-light"></h1>
+                </div>
+                <div class="col-sm-12">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="card card-default bg-gray-dark border border-light collapsed-card">
+            <div class="card-header">
+                <h3 class="card-title"> Госэкзамен </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body" style="display: none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Имя</th>
+                                    <th scope="col">Оценка</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for work in works_list %}
+                                <tr>
+                                    <td>{{ work.user.last_name }} {{ work.user.first_name }}</td>
+                                    <td>{{ work.test }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

@@ -116,9 +116,21 @@
                     </li>
 
                     {% if user.is_authenticated %}
-                        {% if user.is_staff or user.is_tutor %}
 
-                            <li class="nav-header">Меню преподавателя</li>
+
+                    {% if user.is_staff or user.is_tutor %}
+                    <li class="nav-header">Меню преподавателя</li>
+
+                    {% if user.is_staff%}
+                    <li class="nav-item">
+                        <a href="{% url 'show_tests_display' %}" class="nav-link">
+                            <i class="nav-icon far"></i>
+                            <p>
+                                Госэкзамен
+                            </p>
+                        </a>
+                    </li>
+                    {% endif %}
 
                             <li class="nav-item">
                                 <a href="{% url 'groups_list' %}" class="nav-link">

@@ -30,6 +30,8 @@ class ShowGradeCardList(TutorRequiredMixin, View):
         if request.user.pk != info_subject.tutor_id.pk:
             raise PermissionDenied()
 
+
+
         all_task_list = [i.tasks.all() for i in unit_info]
         all_tasks = []
         for list in all_task_list:
